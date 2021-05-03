@@ -1,0 +1,17 @@
+name: "GeoDSA"
+title: "GeoDSA"
+description: |
+  GeoDSA
+output_dir: "_site"
+navbar:
+  left:
+    - text: "About"
+      href: about.html
+    - text: "Topics"
+      href: topics.html
+
+  right:
+    - text: "Home"
+      href: index.html
+
+output: distill::distill_article

@@ -1,0 +1,368 @@
+---
+title: "Topics"
+description: |
+  The meet-up topics are as follows:
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Topic 1: Introduction to Geospatial Analytics
+
+### Content
+
+[**Slide**](Topics/Topic01/Topic01-Introduction_to_Geospatial_Analytics.html)
+
+- Introduction to Geospatial Analytics
+    - Demystifying Geospatial Analytics
+    - Geospatial Analytics vs Mapping
+    - Geospatial Analytics vs GIS
+    - Geospatial Analytics vs Statistical Analysis, Data Mining & Machine Learning
+- Motivation of Geospatial Analytics
+- A Tour Through the Geospatial Analytics Zoo
+- Geospatial Analytics and Social Consciousness
+
+
+
+### References
+
+- [“Spatial Data, Spatial Analysis, Spatial Data Science”](https://www.youtube.com/watch?v=MmCYeJ27DsA) by Prof. Luc Anselin. (This is a long lecture 1hr 15minutes but don’t turn away just because it is lengthy.)
+- Xie, Yiqun et. al. (2017) “Transdisciplinary Foundations of Geospatial Data Science” ISPRS international Journal of Geo-information, 2017, Vol.6 (12), p.395.
+- Paez, A., and Scott, D.M. (2004) “Spatial statistics for urban analysis: A review of techniques with examples”, GeoJournal, 61: 53–67.
+- [Geospatial Analytics Will Eat The World, And You Won't Even Know It](https://www.forbes.com/sites/forbestechcouncil/2018/07/16/geospatial-analytics-will-eat-the-world-and-you-wont-even-know-it/#31f961db726a). 
+
+### R packages for Data Science
+
+- [tidyverse](https://www.tidyverse.org/): a family of modern R packages specially designed to meet the tasks of Data Science and Analytics. 
+- [readr](https://readr.tidyverse.org/): a fast and effective library to parse csv, txt, and tsv files as [tibble data.frame](https://r4ds.had.co.nz/tibbles.html) in R.  To get started, refer to Chapter 11 Data import of R for Data Science book.   
+- [tidyr](https://tidyr.tidyverse.org/): an R package for tidying data.  To get started, refer to [Chapter 12 Tidy data](https://r4ds.had.co.nz/tidy-data.html) of R for Data Science book.  
+- [dplyr](https://dplyr.tidyverse.org/): a grammar of data manipulation.  To get started, read articles under [Getting Started](https://dplyr.tidyverse.org/articles/dplyr.html) and Articles tabs.
+- [ggplot2](https://ggplot2.tidyverse.org/): a grammar of graphics.  To get started, read [Chapter 3: Data Visualization](https://r4ds.had.co.nz/data-visualisation.html) and [Chapter 28 Graphics for communication](Chapter 28 Graphics for communication) of R for Data Science book.
+- pipes: a powerful tool for clearly expressing a sequence of multiple operations.  To get started, read [Chapter 18: Pipes](https://r4ds.had.co.nz/pipes.html) of R for Data Science book.     
+
+
+## Lesson 2: Geospatial Data Handling and Wrangling
+
+In this topic, R objects used to store geospatial data will be discussed.  The discussion will focus on **simple features** and **sf** package.  Other R packages for storing (i.e. sp), transforming (i.e. rgdal) and processing (i.e. rgeos) geospatial data will be discussed briefly too.    
+
+### Content
+
+[**Slide**](Topics/Topic02/Lesson02-Wrangling_Geospatial_Data_in_R.html)
+
+- An overview of Geospatial Data Models
+    - Vector and Raster data models
+- Map Projection and Georeferencing
+- Geocoding
+- Classes of Spatial Data in R
+    - Spatial classes
+    - Simple features class
+•	R packages for Handling Spatial Data
+    - sf 
+    - star
+
+### Hand-on Exercise: Geospatial Data Handling, Wrangling and Processing with sf package
+
+[**Handout of Hands-on Exercise**]()
+
+- Importing geospatial data 
+- Converting aspatial data into geospatial data
+- Geocoding data
+- Transforming projection
+- Performing geoprocessing operation
+- Performing georelational operation
+
+### All About R:
+- [sf](https://r-spatial.github.io/sf/) package
+    - 1. [Simple Features for R](https://r-spatial.github.io/sf/articles/sf1.html)
+    - 2. [Reading, Writing and Converting Simple Features](https://r-spatial.github.io/sf/articles/sf2.html)
+    - 3. [Manipulating Simple Feature Geometries](https://r-spatial.github.io/sf/articles/sf3.html)
+    - 4. [Manipulating Simple Features](https://r-spatial.github.io/sf/articles/sf4.html)
+    - 5. [Plotting Simple Features](https://r-spatial.github.io/sf/articles/sf5.html)
+    - 6. [Miscellaneous](https://r-spatial.github.io/sf/articles/sf6.html)
+- [Stars](https://r-spatial.github.io/stars/index.html) package.  To get started, refer to section 
+    - [6.1: A four-dimensional data cube](https://keen-swartz-3146c4.netlify.app/datacube.html#a-four-dimensional-data-cube)
+    - [6.2: Dimensions, attributes, and support](https://keen-swartz-3146c4.netlify.app/datacube.html#dimensions-attributes-and-support)
+    - [6.3 Operations on data cubes](https://keen-swartz-3146c4.netlify.app/datacube.html#dcoperations)
+    - [7.4: Vector data cube examples](https://keen-swartz-3146c4.netlify.app/sf.html#vector-data-cube-examples) of Spatial Data Science.  
+- Pebesma, Edzer, and Roger Bivand. 2018. [sp](https://CRAN.R-project.org/package=sp): Classes and Methods for Spatial Data. 
+- Bivand, Roger, Tim Keitt, and Barry Rowlingson. 2018. [Rgdal](https://CRAN.R-project.org/package=rgdal): Bindings for the ’Geospatial’ Data Abstraction Library. 
+- Bivand, Roger, and Colin Rundel. 2018. [Rgeos](https://CRAN.R-project.org/package=rgeos): Interface to Geometry Engine - Open Source (’Geos’).
+
+
+### Reference
+
+**Must read**
+
+- [Chapter 2 Feature Representation](https://mgimond.github.io/Spatial/feature-representation.html) of Intro to GIS and Spatial Analysis. 
+- [Chapter 9 Coordinate Systems](https://mgimond.github.io/Spatial/coordinate-systems.html) of Intro to GIS and Spatial Analysis.
+- [Geocoding](https://en.wikipedia.org/wiki/Geocoding).
+- Pebesma, Edzer. (2018) [“Simple Features for R: Standardized Support for Spatial Vector Data.”](https://journal.r-project.org/archive/2018/RJ-2018-009/RJ-2018-009.pdf) *The R Journal*, Vol. 10/1, 439:446.
+
+**Additional readings**
+ 
+- Maling, D. H. 1992. Coordinate Systems and Map Projections. 2nd ed. Oxford ; New York: Pergamon Press.
+- Pebesma, Edzer, Thomas Mailund, and James Hiebert. 2016. [“Measurement Units in R.”](https://cran.r-project.org/web/packages/units/vignettes/measurement_units_in_R.html) *The R Journal* 8 (2): 486–94.
+- Andreas Hackeloeer, Klaas Klasing, Jukka M. Krisp & Liqiu Meng (2014) “[Georeferencing: a review of methods and applications](https://www.tandfonline.com/doi/pdf/10.1080/19475683.2013.868826?needAccess=true)”, Annals of GIS, 20:1, 61-69, DOI:10.1080/19475683.2013.86882.
+- Ela Dramowicz (2004) “[Three Standard Geocoding Methods](https://web.archive.org/web/20070601210655/http:/www.directionsmag.com/article.php?article_id=670&trv=1)”, *Directions Magazine*.
+
+
+## Lesson 3: Thematic Mapping and Analysis
+
+Content
+•	Classification of maps
+•	Principles of map design
+•	Thematic mapping techniques
+•	Analytical mapping techniques
+o	Percentile map
+o	Box map
+o	Standard deviation map
+o	Mapping rates
+
+To read before class:
+•	Proportional Symbols.
+•	Choropleth Maps
+•	The Basics of Data Classification
+•	Choropleth Mapping with Exploratory Data Analysis 
+•	Tennekes, M. (2018) “tmap: Thematic Maps in R”, Journal of Statistical Software, Vol 84:6, 1-39.
+
+Additional Reading
+•	The Concept of Map Symbols (https://www.yaaka.cc/unit/the-concept-of-map-symbols/) 
+•	Choropleth map (https://en.wikipedia.org/wiki/Choropleth_map) 
+•	Choropleth Maps – A Guide to Data Classification (https://gisgeography.com/choropleth-maps-data-classification/) 
+•	Bivariate Choropleth (https://www.axismaps.com/guide/multivariate/bivariate-choropleth/) 
+•	Value-by-alpha maps (http://andywoodruff.com/blog/value-by-alpha-maps/) 
+•	What to consider when creating choropleth maps (https://blog.datawrapper.de/choroplethmaps/)  
+
+All About R:
+•	tmap package especially tmap: get started!, tmap: version changes and Chapter 8 Making maps with R of Geocomputation with R.
+
+
+## Lesson 4: Spatial Point Patterns Analysis
+
+Spatial Point Pattern Analysis is the evaluation of the pattern, or distribution, of a set of points on a surface. It can refer to the actual spatial or temporal location of these points or also include data from point sources. It is one of the most fundamental concepts in geography and spatial analysis. 
+
+Content
+•	The basic concepts of spatial point patterns
+•	Density-based point pattern measures (1st order properties)
+o	Quadrat analysis
+o	Kernel density estimation
+•	Distance-based point pattern measures (1st order properties)
+o	Nearest Neighbour Index
+
+To read before class:
+•	Chapter 11 Point Pattern Analysis of Intro to GIS and Spatial Analysis. Section 11.2, 11.3, 11.3.1 and 11.4
+
+To watch before class:
+Prof. Luc Anselin on point pattern analysis (YouTube)
+•	Point Pattern Analysis Concepts 
+•	Point Pattern Analysis: Clustered, Regular and Dispersed Patterns 
+•	Point Pattern Analysis: Nearest Neighbor Statistics 
+•	Point Pattern Analysis: Quadrat Counts
+
+
+
+References
+•	Floch, J.M., Marcon, E. and Puech, F. (2018) “Chapter 4: Spatial distribution of points” in Handbook of Spatial Analysis: Theory and Application with R.
+•	O’Sullivan, D., and Unwin, D. (2010) Geographic Information Analysis, Second Edition. John Wiley & Sons Inc., New Jersey, Canada. Chapter 5-6. 
+•	Baddeley A.,  Rubak E. and Turner R. (2015) Spatial Point Patterns: Methodology and Applications with R, Chapman and Hall/CRC.
+
+
+Applications
+•	Naveen Donthu and Roland T. Rust (1989) “Estimating Geographic Customer Densities Using Kernel Density Estimation”, Marketing Science, Vol. 8, No. 2, pp. 191-203.
+•	Joseph Wartman and Nicholas E. Malasavage (2010). “Spatial Analysis for Identifying Concentrations of Urban Damage” in Methods and Techniques in Urban Engineering, Armando Carlos de Pina Filho and Aloisio Carlos dePina (Ed.), ISBN: 978-953-307-096-4, InTech, Available from: http://www.intechopen.com/books/methods-and-techniques-in-urban-engineering/spatial-analysis-for-identifying-concentrations-of-urban-damage.
+•	Giuseppe Borruso and Andrea Porceddu (2009) “A Tale of Two Cities: Density Analysis of CBD on Two Midsize Urban Areas in Northeastern Italy” in Murgante, Beniamino; Borruso, Giuseppe & Lapucci, Alessandra (2009) Studies in Computational Intelligence, Geocomputation and Urban Planning, pp.37-56.
+•	Kang, Youngok ; Cho, Nahye ; Son, Serin; Chen, Peng (2018) “Spatiotemporal characteristics of elderly population’s traffic accidents in Seoul using space-time cube and space-time kernel density estimation”, PloS one, 2018, Vol.13 (5).
+
+All About R
+•	spatstat package.
+
+
+## Lesson 5: Advanced Spatial Point Patterns Analysis
+
+Content
+•	2nd Order Spatial Point Patterns Analysis
+o	G-function
+o	F-function
+o	K-function
+o	L-function
+•	Spatio-temporal Point Pattern Analysis
+•	Network Constrained Point Patterns Analysis
+o	Network point density estimation methods
+o	Network-Constrained K-function
+
+To read before class:
+•	Ripley’s K-function. 
+•	Chapter 11 Point Pattern Analysis of Intro to GIS and Spatial Analysis especially Section 11.3.2 and 11.4.
+•	Chapter 7 Spatial Point Pattern Analysis of Applied Spatial Data Analysis with R, especially Section 7.3 & 7.5.
+
+To watch before class:
+•	Point Pattern Analysis: F and J Functions 
+•	Point Pattern Analysis: K, L and Kd Functions 
+
+References
+•	Floch, J.M., Marcon, E. and Puech, F. (2018) “Chapter 4: Spatial distribution of points” in Handbook of Spatial Analysis: Theory and Application with R. 
+•	O’Sullivan, D., and Unwin, D. (2010) Geographic Information Analysis, Second Edition. John Wiley & Sons Inc., New Jersey, Canada. Chapter 5-6. 
+•	Baddeley A.,  Rubak E. and Turner R. (2015) Spatial Point Patterns: Methodology and Applications with R, Chapman and Hall/CRC.
+
+All About R
+•	spatstat package.
+
+
+## Lesson 6: Spatial Autocorrelations and Spatial Weights
+
+Content
+•	Tobler’s First law of Geography
+•	Principles of Spatial Autocorrelation
+•	Concepts of Spatial Proximity and Spatial Weights
+•	Measures of Spatial Autocorrelation
+o	Join count, Moran’s I, Geary’s c
+o	Moran scatter plot
+o	Spatial correlogram
+o	Nonparametric spatial correlogram
+
+To read before class:
+•	Chapter 2. Codifying the neighbourhood structure of Handbook of Spatial Analysis.
+•	Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis. Until 3.2.2.
+
+Alternatively
+•	Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition).  This book is available in smu digital library.  Until section 9.3.1.
+
+The following two papers are classics of Global Spatial Autocorrelation.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
+•	Moran, P. A. P. (1950). "Notes on Continuous Stochastic Phenomena". Biometrika, 37 (1): 17–23. 
+•	R. C. Geary (1954)"The Contiguity Ratio and Statistical Mapping". The Incorporated Statistician, Vol. 5, No. 3 (Nov., 1954), pp. 115-127+129-146 (31 pages)
+
+References
+•	D. A. Griffith (2009) “Spatial autocorrelation”.
+•	Getis, A., 2010 “B.3 Spatial Autocorrelation” in Fischer, M.M., and Getis, A. 2010 Handbook of Applied Spatial Analysis: Software Tools, Methods and Applications, Springer.
+•	Anselin, L. (1996) “The Moran scatterplot as an ESDA tool to assess local instability in spatial association”
+
+Applications
+•	Griffith, Daniel (2009) “Modeling spatial autocorrelation in spatial interaction data: empirical evidence from 2002 Germany journey-to-work flows”. Journal of Geographical Systems, Vol.11(2), pp.117-140.
+•	Celebioglu, F., and Dall’erba, S. (2010) “Spatial disparities across the regions of Turkey: An exploratory spatial data analysis”. The Annals of Regional Science, 45:379–400.
+
+
+## Lesson 7: Localised Geospatial Statistics
+
+Localised Geospatial Statistics are a collection of spatial statistical analysis methods for analysing the location related tendency (clusters or outliers) in the attributes of geographically referenced data (points or areas).  These spatial statistics are well suited for:
+•	detecting clusters or outliers;
+•	identifying hot spot or cold spot areas; 
+•	assessing the assumptions of stationarity; and
+•	identifying distances beyond which no discernible association obtains.
+
+Content
+•	Introducing Localised Geospatial Analysis
+o	Local Indicators of Spatial Association (LISA)
+•	Cluster and Outlier Analysis
+o	Local Moran and Local Geary
+o	Moran scatterplot
+o	LISA Cluster Map
+•	Hot Spot and Cold Spot Areas Analysis
+o	Getis and Ord’s G-statistics
+•	Case Studies
+
+To read before class:
+•	Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis.  Section 3.3 including the sub-section. 
+or
+•	Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition).  This book is available in smu digital library.  Section 9.3.2.
+
+The following three articles are classics of Local Spatial Statistics.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
+•	Anselin, L. (1995). "Local indicators of spatial association – LISA". Geographical Analysis, 27(4): 93-115. 
+•	Getis, A. and Ord, J.K. (1992) “The analysis of spatial association by use of distance statistics”. Geographical Analysis, 24(3): 189-206.
+•	Ord, J.K. and Getis, A. (2010) “Local spatial autocorrelation statistics: Distributional issues and an application”. Geographical Analysis, 27(4): 286-306.
+
+References
+•	Mack, Z.W.V. and Kam T.S. (2018) “Is There Space for Violence?: A Data-driven Approach to the Exploration of Spatial-Temporal Dimensions of Conflict” Proceedings of 2nd ACM SIGSPATIAL Workshop on Geospatial Humanities (ACM SIGSPATIAL’18). Seattle, Washington, USA, 10 pages.
+•	TAN, Yong Ying and KAM, Tin Seong (2019). “Exploring and Visualizing Household Electricity Consumption Patterns in Singapore: A Geospatial Analytics Approach”, Information in Contemporary Society: 14th International Conference, iConference 2019, Washington, DC, USA, March 31–April 3, 2019, Proceedings. Pp 785-796. 
+•	Singh A., Pathak P.K., Chauhan R.K., and Pan, W. (2011) “Infant and Child Mortality in India in the Last Two Decades: A Geospatial Analysis”. PLoS ONE 6(11), 1:19.
+
+
+## Lesson 8: Geographical Segmentation with Spatially Constrained Cluster Analysis
+
+Content
+•	Basic concepts of geographic segmentation
+•	Conventional cluster analysis techniques
+•	Approaches for clustering geographically referenced data
+o	Hierarchical clustering with spatial constraints
+o	Minimum spanning trees
+
+To read before class:
+•	Assuncao, R. M., Neves, M.C., Camara, G. and Costa Freitas, C.D. 2006. “Efficient Regionalization Techniques for Socio-Economic Geographical Units Using Minimum Spanning Trees.” International Journal of Geographical Information Science 20: 797–811.
+
+References
+•	Rovan, J. and Sambt, J. (2003) “Socio-economic Differences Among Slovenian Municipalities: A Cluster Analysis Approach”, Developments in Applied Statistics, pp. 265-278. (http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.126.4636&rep=rep1&type=pdf) 
+•	Demeter, T.  and Bratucu, G. (2013) “Statistical Analysis Of The EU Countries from A Touristic Point of View”, Bulletin of the Transilvania University of Braşov, 6(55): 121-130. (https://search-proquest-com.libproxy.smu.edu.sg/docview/1510289237?rfr_id=info%3Axri%2Fsid%3Aprimo)
+•	Brown, N.S. & Watson, P. (2012) “What can a comprehensive plan really tell us about a region?: A cluster analysis of county comprehensive plans in Idaho”, Western Economics Forum. Pp.22-37. (https://ageconsearch.umn.edu/record/176591/files/WEFFall2012v11n2_Brown.pdf) 
+
+All About R
+•	Hierarchical Cluster Analysis (http://uc-r.github.io/hc_clustering). 
+•	skater:  A function from spdep package that implements a SKATER procedure for spatial clustering analysis. (https://www.rdocumentation.org/packages/spdep/versions/0.8-1/topics/skater)
+•	ClustGeo: Hierarchical Clustering with Spatial Constraints (https://cran.r-project.org/web/packages/ClustGeo/index.html)
+•	Introduction to Clustgeo [https://cran.r- (project.org/web/packages/ClustGeo/vignettes/intro_ClustGeo.html]
+•	Chavent, M., Kuentz-Simonet, V., Labenne,A. and Saracco, J. 2018. “ClustGeo: an R package for hierarchical clustering with spatial constraints” Computational Statistics. 33: 1799-1822.
+
+
+## Lesson 9: Geographically Weighted Regression
+
+Content
+•	Basic concepts and principles of linear regression
+o	Simple linear regression
+o	Multiple linear regression
+•	The spatial stationarity assumption of multiple linear regression.
+•	Introducing Geographically Weighted Regression
+o	Weighting functions (kernel)
+o	Weighting schemes
+o	Bandwidth
+•	Interpreting and Visualising 
+
+To read before class:
+•	Brunsdon, C., Fotheringham, A.S., and Charlton, M. (2002) “Geographically weighted regression: A method for exploring spatial nonstationarity”. Geographical Analysis, 28: 281-289.
+•	Brunsdon, C., Fotheringham, A.S. and  Charlton, M., (1999) “Some Notes on Parametric Significance Tests for Geographically Weighted Regression”. Journal of Regional Science, 39(3), 497-524.
+
+References
+•	Mennis, Jeremy (2006) "Mapping the Results of Geographically Weighted Regression", The Cartographic Journal, Vol.43 (2), p.171-179.
+•	Stephen A. Matthews ; Tse-Chuan Yang (2012) "Mapping the results of local statistics: Using geographically weighted regression", Demographic Research, Vol.26, p.151-166.
+
+All About R
+•	GWmodels package, especially 
+o	Gollini, I et. al. (2015) “GWmodel: An R Package for Exploring Spatial Heterogeneity Using Geographically Weighted Models”, Journal of Statistical Software, Volume 63, Issue 17 and 
+o	Binbin Lu, Paul Harris, Martin Charlton & Chris Brunsdon (2014) “The GWmodel R package: further topics for exploring spatial heterogeneity using geographically weighted models”, Geo-spatial Information Science, 17:2, 85-101, DOI: 10.1080/10095020.2014.917453.
+•	lctools package especially gw() and gwr() related functions.
+•	spgwr implements of geographically weighted regression methods for exploring possible non-stationarity.
+•	gwrr: its geographically weighted regression (GWR) models and has tools to diagnose and remediate collinearity in the GWR models. Also fits geographically weighted ridge regression (GWRR) and geographically weighted lasso (GWL) models.  
+
+
+## Lesson 10: Modelling Geographic of Accessibility
+
+Content
+•	Basic concepts of geographic accessibility
+•	Gravitational Law and distance decay function
+•	Introducing Potential Models
+o	The classic model
+o	Hansen potential accessibility model
+o	Two-step floating catchment area (2SFCA) method 
+o	Kernel Density Two-Step Floating Catchment Area (KD2SFCA) Method
+•	Interpreting and visualising modelling results
+
+Read before lesson:
+•	Long, J. (2017). Modelling Accessibility. The Geographic Information Science & Technology Body of Knowledge (3rd Quarter 2017 Edition), John P. Wilson (ed.). DOI: 10.22224/gistbok/2017.3.7
+•	Hansen, W. G. (1959): “How Accessibility Shapes Land Use”. Journal of the American Institute of Planners, 25, 2, p. 73-76.
+•	Luo, W.; Wang, F. (2003) "Measures of spatial accessibility to health care in a GIS environment: synthesis and a case study in the Chicago region". Environment and Planning B: Planning and Design. 30 (6): 865–884. doi:10.1068/b29120.
+•	Luo, W.; Qi, Y. (2009). "An enhanced two-step floating catchment area (E2SFCA) method for measuring spatial accessibility to primary care physicians". Health & Place. 15 (4): 1100–1107.
+
+Reference
+•	Section on “Transportation and Accessibility” in The Geography of Transport Systems.
+•	Rich, D.C. (1980) Potential Models in Human Geography.
+•	Orpana, T./Lampinen, J. (2003) “Building spatial choice models from aggregate data”. Journal of Regional Science,43, 2, p. 319-347.
+•	Two-step floating catchment area method.
+•	Cheng, Gang et. al. (2016) “Spatial difference analysis for accessibility to high level hospitals based on travel time in Shenzhen, China” Habitat International, Vol.53, p.485-494.
+•	Polzin, Pierre ; Borges, José ; Coelho, António  (2014) “An Extended Kernel Density Two-Step Floating Catchment Area Method to Analyze Access to Health Care” Environment and planning. B, Planning & design, Vol.41 (4), p.717-735.     
+
+All About R:
+•	hansen() function in REAT package.
+•	ac() function in SpatialAcc package.

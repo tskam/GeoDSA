@@ -1,0 +1,407 @@
+---
+title: 'Hands-on Exercise 2: Geospatial Data Wrangling with R'
+subtitle: ""
+author: "Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems (Practice)"
+institute: "School of Information Systems,<br/>Singapore Management University"
+date: "10 January 2019 (updated: `r Sys.Date()`)"
+output:
+  html_document:
+    number_sections: yes
+    theme: united
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+In this hands-on exercise, you will learn how to handle geospatial data in R by using appropriate R packages.  
+
+## Learning Outcome
+
+By the end of this hands-on exercise, you should aquire the following competencies:
+
+- import geospatial data by using appropriate functions of sf packages,
+- import geospatial data as R spatial object type by using appropriate functions of sp packages,
+- georeference geospatial data using either apporpriate rgeo  
+understand the concepts of Spatial Data Frame and to apply these understanding in handling geospatial data.
+- understand the concepts of simple features and to apply these understanding in handling geospatial data.
+- perform geospatial data handling tasks by using appropriate functions of sp, rgdal, rgeos and/or sf packages.
+
+## Data Acquisition
+
+Before you can start using R, you are required to extract the necessary data sets from the appropriate source
+
+- Master Plan 2014 Subzone Boundary (Web) from [data.gov.sg](https://data.gov.sg/)
+- Pre-Schools Location from [data.gov.sg](https://data.gov.sg/)
+- Cycling Path from [LTADataMall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+
+## Getting Started
+
+Before we get started, it is important for us to ensure that all the R packages we need have been installed.  
+
+- Using the steps you leanred earlier, check if **sp**, **rgdal** and **rgeos** have been installed, if not, then install the uninstalled package.  After the installation is completed, launch **sp**, **rgdal** and **rgeos**.
+
+The code chunk:
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+packages = c('sp', 'rgdal', 'rgeos', 'sf', 'tidyverse')
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+
+# Working with **sf** package
+
+In this hands-on exercise, you are reuiqred to import the follwing geospatial data into R:
+
+- MP14_SUBZONE_WEB_PL - a polygon feature layer in ESRI shapefile format, 
+- CyclingPath - a line feature layer in ESRI shapefile format, and
+- PreSchool - a point feature layer in kml file format. 
+
+## Importing GIS data using *st_read* 
+
+### Importing polygon feature data in shapefile format
+
+The code chunk below uses *st_read()* function of **sf** package to import MP14_SUBZONE_WEB_PL data into R as simple feature dataframes.
+
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+sf_mpsz = st_read(dsn = "data/geospatial", 
+                  layer = "MP14_SUBZONE_WEB_PL")
+```
+
+### Importing polyline feature data in shapefile format
+
+The code chunk below uses *st_read()* function of **sf** package to import the CyclingPath layer into R as simple feature dataframes.
+
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+
+sf_cyclingpath = st_read(dsn = "data/geospatial", 
+                         layer = "CyclingPath")
+```
+
+
+### Importing GIS data in kml format
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+sf_preschool = st_read("data/geospatial/pre-schools-location-kml.kml")
+```
+
+
+## Checking the contents of a SpatialDataFrame
+
+You can check the contents of mpsz_rg data object by using *summary*.
+
+The code chunk:
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+summary(sf_mpsz)
+```
+
+Let's view the first few records in the spatial data object.
+
+The code chunk
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+head(sf_mpsz, n=4)  
+```
+
+### Plotting the sptial data
+
+To view the spatial data, *plot* function can be used.
+
+The code chunk:
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+plot(sf_mpsz)
+```
+
+
+## Working with Projection
+
+Task 2:  Assigning EPSG code to sf_mpsz simple feature dataframe.
+
+The solution:
+
+First, checking the projection of sf_mpsxz
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+st_crs(sf_mpsz)
+```
+
+Next, assigning EPSG 3414 to sf_mpsz simple feature dataframe.
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+sf_mpsz3414 <- st_set_crs(sf_mpsz, 3414)
+```
+
+Lets check the CSR again.
+
+```{r}
+st_crs(sf_mpsz3414)
+```
+
+### Transforming the projection of sf_preschool from wgs84 to svy21.
+
+The solution:
+
+First, checking the projection of sf_preschool
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+st_crs(sf_preschool)
+```
+
+Next, transforming sf_preschool simple feature dataframe onto svy21 projected coordinate system (i.e. EPSG 3414)
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+sf_preschool3414 <- st_transform(sf_preschool, 3414)
+st_crs(sf_preschool3414)
+```
+
+## Conversion to sp class
+
+Although simple feature data.frame is gaining popularity again sp's Spatial* classes, there are, however, many geospatial analysis packages require the input geospatial data in sp's Spatial* classes.  In this section, you will learn how to convert simple feature data.frame to sp's Spatial* class.
+
+### Converting point feature data.frame to SpatialPointsDataFrame 
+
+The code chunk below uses [*as_Spatial()*](https://r-spatial.github.io/sf/reference/coerce-methods.html) of **sf** package to convert sf_preschool3414 simple feature data.frame to sp's Spatial* class.
+
+```{r echo=TRUE, eval=TRUE}
+sp_preschool <- as_Spatial(sf_preschool3414)
+```
+
+Notice that the output is a **SpatialPointsDataFrame** class.
+
+You can check the content of the SpatialPointsDataFrame by using *summary()* as shown in the code chunk below.
+
+```{r}
+summary(sp_preschool)
+```
+
+> DIY: Using the steps you had learned, convert *sf_mpsz3414* and *sf_mpsz* simple feature data.frame to sp's Spatial* classes.  After the conversion, examine the output spatial classes carefully.  Write short notes to decribe your onservation of the output spatial classes.  
+
+
+## Geoprocessing with sf package
+
+### Buffering
+
+The scenario:
+
+The authority is planning to upgrade the exiting cycling path.  To do so, they need to acquire 5 metres reserve land on the both sides of the current cycling path.  You are tasked to determine the extend of the land need to be acquired and their total areas. 
+
+The solution:
+
+Creating 5-meter buffers around cycling path and calculate the total area of the buffers.
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+sf_buffer_cycling <- st_buffer(sf_cyclingpath, 
+                               dist=5, nQuadSegs = 30)
+sf_buffer_cycling$AREA <- st_area(sf_buffer_cycling)
+sum(sf_buffer_cycling$AREA)
+```
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+hist(sf_buffer_cycling$AREA)
+```
+
+### Point-in-polygon count
+
+The scenario:
+
+A pre-school services group want to find out numbers of pre-school in each Planning Subzone.      
+
+The solution:
+
+The code chunk below first identify pre-schools located inside each Planning Subzone by using [st_intersects()](https://r-spatial.github.io/sf/reference/geos_binary_pred.html).  Then, the *length()* is used to calculate numbers of pre-school fall inside each planning subzone.
+ 
+```{r}
+sf_mpsz3414$`PreSch Count`<- lengths(st_intersects(sf_mpsz3414, sf_preschool3414))
+```
+
+> **Warning**: You should not confuse with [st_intersection()](https://r-spatial.github.io/sf/reference/geos_binary_ops.html). 
+
+You can check the summary statistics of the newly derived *PreSch Count* field by using *summary()* as shown in the code chunk below.
+
+```{r}
+summary(sf_mpsz3414$`PreSch Count`)
+```
+
+To list the planning subzone with the most number of of pre-school, the *top_n()* of **dplyr** package is used as shown in the code chunk below.  
+
+```{r}
+top_n(sf_mpsz3414, 1, `PreSch Count`)
+```
+
+> **Quiz: Calculate the density of pre-school by planning subzone. With the help of appropriate graphical method, describe the distribution of the newly derived variable.**
+
+The code chunk below uses *st_area()* of sf package to derive the area of each planning subzone.
+
+```{r echo=TRUE, eval=TRUE}
+sf_mpsz3414$Area <- sf_mpsz3414 %>%
+  st_area()
+```
+
+```{r echo=TRUE, eval=TRUE}
+sf_mpsz3414 <- sf_mpsz3414 %>%
+  mutate(`PreSch Density` = `PreSch Count`/Area * 1000000)
+```
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+ggplot(data=sf_mpsz3414, 
+       aes(x= as.numeric(`PreSch Density`)))+
+  geom_histogram(bins=20, 
+                 color="black", fill="light blue")
+```
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+ggplot(data=sf_mpsz3414, 
+       aes(y = `PreSch Count`, x= as.numeric(`PreSch Density`)))+
+  geom_point(color="black", fill="light blue")
+```
+
+# Working with **sp**, **gdal** and **rgeos** Packages (Optional)
+
+In this section, you will learn how to handle geospatial data in shapefile format using sp, gdal and rgeos packages in R.    
+
+## Importing a shapefile
+
+In this section, you will learn how to import MP14_SUBZONE_WEB_PL GIS layer into R.  It is stored in shapefile format.  The spatial data model of this GIS data are polygon objects. 
+
+To import the GIS data layer into R, *readOGR()* from **rgdal** package will be used.  
+
+The data importing task is performed by using the code chunk below:
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+mpsz_sp <- readOGR(dsn = "data/geospatial", 
+                   layer = "MP14_SUBZONE_WEB_PL") 
+```
+
+Notice that *mpsz_sp* is in **SpatialPolygonDataFrame**.
+
+
+### Checking the contents of a SpatialPolygonDataFrame
+
+You can check the contents of *mpsz_sp* data object by using *summary()*.
+
+The code chunk:
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+summary(mpsz_sp)
+```
+
+Let's view the first few records in the *mpsz_sp*.
+
+The code chunk
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+head(mpsz_sp, n=4)  
+```
+
+
+### Plotting the sptial data
+
+To view the spatial data, *plot()* of **Base** R can be used.
+
+The code chunk:
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+plot(mpsz_sp)
+```
+
+## Now It's Your Turn
+
+Using the functiions you had learned, import the Pre-School and Cycling Path GIS data files into R spatial objects.
+
+The solution:
+
+The pre-schools GIS data is in kml format.  Before we can import the data file into R, we will use ogrListLayers function of rgdal package to check the actual data structure of the kml data file.
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+ogrListLayers("data/geospatial/pre-schools-location-kml.kml")
+```
+
+
+###  Importing kml GIS data
+
+Notice that the file called pre-schools-location-kml is just the folder (refer to the list above).  In order to important the layer, we need to use PRESCHOOL_LOCATION layer instead.
+
+The code chunk below will do the trick.
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+preschool <- readOGR("data/geospatial/pre-schools-location-kml.kml",
+                     "PRESCHOOLS_LOCATION")
+```
+
+###  Importing GIS data layer from LTADataMall
+
+In this section, you will learn how to import a line geospatial data into R.  The geospatial data is the CyclingPath shapefile from LTA DataMall (https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+cyclingpath <- readOGR (dsn = "data/geospatial", 
+                        layer = "CyclingPath")
+```
+
+- Show the codes you used to check the contents of *preschool* and *cyclingpath* spatial objects.
+- Describe their spatial data models, boundary coordinates, projection, and attribute variables.
+
+### Assigning a coordinate system
+
+- Use *CRS* and *spTransform* functions of **rgdal**
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+mpsz_svy21 <- spTransform(mpsz_sp, 
+                          CRS("+init=epsg:3414"))
+```
+
+## Reprojecting a geospatial data
+
+Now, it is your turn to change the projection system of the *preschool* data set from wgs84 to svy21.
+
+The solution:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+preschool_svy21 <- spTransform(preschool, 
+                          CRS("+init=epsg:3414"))
+```
+
+## Geoprocessing with **rgeos**
+
+The scenario
+
+The authority is planning to upgrade the exiting cycling path.  To do so, they need to acquire 5 metres reserve land on the both sides of the current cycling path.  You are tasked to determine the extend of the land need to be acquired and their total areas. 
+
+The solution:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+buf_cyclingpath <- gBuffer(cyclingpath, width = 5)
+```
+
+The solution:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+buf_cyclingpath <- gBuffer(cyclingpath, byid = TRUE,  
+                           width = 5)
+```
+
+The solution:
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+buf_cyclingpath@data$Area <- gArea(buf_cyclingpath, 
+                                   byid = TRUE)
+sum(buf_cyclingpath@data$Area)
+```
+
+

@@ -1,0 +1,21 @@
+---
+title: "About Geospatial Data Science and Analytics"
+description: ""
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+Where should the next new business outlet to be located in order to optimise the profit? What are the location factors affecting the resale prices of HDB housing units?  Which are the economic or services activities such as IT professional firms, car workshops, fast food chains (ie. KFC, McDonalds), coffee outlets (Starbucks, Ya Kun Kaya Toast, Toast Box) tend located close to each other and which tend to be distance apart?  Are these patterns and processes observed occur at random or constrained by the geography?  These and many other related questions are the challenges faced by data scientists and data analysts today especially when geographical data are used.       
+
+Geospatial analytics offers the solutions to these questions by providing data scientists and analysts a problem-driven and data-centric analysis framework focusing on discovering actionable understanding from geographically referenced data.  It makes extensive use of geospatial data wrangling, geoprocessing, spatial statistical, geospatial machine learning and spatial data visualisation techniques to support decision- and strategy-making.    
+
+This sharing provides participants with an introduction to the concepts, principles and methods of geospatial analytics and their practical applications of geospatial analytics in real world operations.  Emphasis will be placed on
+
+- performing geospatial data science tasks such as importing, tidying, manipulating, transforming, projecting and processing geospatial data programmatically, 
+- visualising, analysing and describing geographical patterns and process using appropriate geovisualisation and mapping analysis techniques, 
+- conducting geospatial analysis by using appropriate spatial statistics and machine learning methods, and 
+- modelling geospatial relationship using geographically weighted regression and Spatial Interaction Models.

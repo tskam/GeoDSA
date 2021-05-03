@@ -1,0 +1,22 @@
+---
+title: "GeoDSA"
+description: |
+  Welcome to the home page for **Geospatial Data Science and Analytics with R**.
+author:
+  - name: "Dr. KAM Tin Seong <br/>Associate Professor of Information Systems"
+    url: https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong
+    affiliation: School of Computing and Information Systems, <br/>Singapore Management University
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This website contains the slides, hands-on exercise and other related materials used in each topic.   
+
+* Meet-up day: Every Monday
+* Time: 7-10:00pm
+* Venue: Webex   
+
+
