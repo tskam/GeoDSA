@@ -68,7 +68,7 @@ In this topic, R objects used to store geospatial data will be discussed.  The d
 
 ### Hand-on Exercise: Geospatial Data Handling, Wrangling and Processing with sf package
 
-[**Handout of Hands-on Exercise**]()
+[**Handout of Hands-on Exercise**](Hands-on_Ex\Hands-on_Ex02\Hands-on_Ex02.html)
 
 - Importing geospatial data 
 - Converting aspatial data into geospatial data

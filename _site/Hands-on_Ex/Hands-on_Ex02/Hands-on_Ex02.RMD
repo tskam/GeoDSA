@@ -2,7 +2,7 @@
 title: 'Hands-on Exercise 2: Geospatial Data Wrangling with R'
 subtitle: ""
 author: "Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems (Practice)"
-institute: "School of Information Systems,<br/>Singapore Management University"
+institute: "School of Computing and Information Systems,<br/>Singapore Management University"
 date: "10 January 2019 (updated: `r Sys.Date()`)"
 output:
   html_document:
@@ -26,14 +26,12 @@ In this hands-on exercise, you will learn how to handle geospatial data in R by 
 
 ## Learning Outcome
 
-By the end of this hands-on exercise, you should aquire the following competencies:
+By the end of this hands-on exercise, you should acquire the following competencies:
 
-- import geospatial data by using appropriate functions of sf packages,
-- import geospatial data as R spatial object type by using appropriate functions of sp packages,
-- georeference geospatial data using either apporpriate rgeo  
-understand the concepts of Spatial Data Frame and to apply these understanding in handling geospatial data.
-- understand the concepts of simple features and to apply these understanding in handling geospatial data.
-- perform geospatial data handling tasks by using appropriate functions of sp, rgdal, rgeos and/or sf packages.
+- importing geospatial and asaptial data by using appropriate functions of sf packages,
+- assigning or transforming a geospatial data from one coordinates system to another coordinates system bu using appropriate functions of sf package,
+- performing geoprocessing (also known as GIS analysis) by using appropriate functions of sf package,
+- optionally, performing the above geospatial data handling, transformation and geoprocessing tasks using appropriate functions of sp, rgdal, and rgeos packages.
 
 ## Data Acquisition
 
@@ -42,12 +40,13 @@ Before you can start using R, you are required to extract the necessary data set
 - Master Plan 2014 Subzone Boundary (Web) from [data.gov.sg](https://data.gov.sg/)
 - Pre-Schools Location from [data.gov.sg](https://data.gov.sg/)
 - Cycling Path from [LTADataMall](https://www.mytransport.sg/content/mytransport/home/dataMall.html)
+- [AirBNB Singapore Listing Data](http://insideairbnb.com/get-the-data.html),download only listings.csv. 
 
 ## Getting Started
 
 Before we get started, it is important for us to ensure that all the R packages we need have been installed.  
 
-- Using the steps you leanred earlier, check if **sp**, **rgdal** and **rgeos** have been installed, if not, then install the uninstalled package.  After the installation is completed, launch **sp**, **rgdal** and **rgeos**.
+- Using the steps you had learned earlier, check if **sf**, **sp**, **rgdal**,  **rgeos** and **tidyverse** have been installed, if not, then install the uninstalled package.  After the installation is completed, launch **sf**, **sp**, **rgdal**, **rgeos** and **tidyverse** packages.
 
 The code chunk:
 
@@ -63,28 +62,30 @@ for (p in packages){
 
 # Working with **sf** package
 
-In this hands-on exercise, you are reuiqred to import the follwing geospatial data into R:
+In this hands-on exercise, you are required to import the following geospatial data into R:
 
-- MP14_SUBZONE_WEB_PL - a polygon feature layer in ESRI shapefile format, 
-- CyclingPath - a line feature layer in ESRI shapefile format, and
-- PreSchool - a point feature layer in kml file format. 
+- *MP14_SUBZONE_WEB_PL* - a polygon feature layer in **ESRI shapefile** format, 
+- *CyclingPath* - a line feature layer in **ESRI shapefile** format, and
+- *PreSchool* - a point feature layer in **kml** file format. 
 
-## Importing GIS data using *st_read* 
+## Importing Geospatial Data by using *st_read()* 
 
-### Importing polygon feature data in shapefile format
+In this section, you will learn how to import geospatial data in ESRI shapefile and Google's KML formats into R as simple feature data.frame.
 
-The code chunk below uses *st_read()* function of **sf** package to import MP14_SUBZONE_WEB_PL data into R as simple feature dataframes.
+Before getting started, you are encouraged to read [2. Reading, Writing and Converting Simple Features](https://r-spatial.github.io/sf/articles/sf2.html)
 
+### Importing a polygon feature data in shapefile format
+
+The code chunk below uses *st_read()* function of **sf** package to import MP14_SUBZONE_WEB_PL data into R as simple feature data.frame.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 sf_mpsz = st_read(dsn = "data/geospatial", 
                   layer = "MP14_SUBZONE_WEB_PL")
 ```
 
-### Importing polyline feature data in shapefile format
+### Importing a polyline feature data in shapefile format
 
-The code chunk below uses *st_read()* function of **sf** package to import the CyclingPath layer into R as simple feature dataframes.
-
+The code chunk below uses *st_read()* function of **sf** package to import the CyclingPath layer into R as simple feature data.frame.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 
@@ -92,17 +93,30 @@ sf_cyclingpath = st_read(dsn = "data/geospatial",
                          layer = "CyclingPath")
 ```
 
+### Importing a point feature data in kml format
 
-### Importing GIS data in kml format
+The code chunk below uses *st_read()* function of **sf** package to import pre-school-location-kml layer into R as simple feature data.frame.  
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 sf_preschool = st_read("data/geospatial/pre-schools-location-kml.kml")
 ```
 
+Notice that sf_preschool simple features data.frame is in **wgs84** coordinates system.  In Section 2.3, you will learn how to transform the data.frame into **svy21** projected coordinates systems.
 
-## Checking the contents of a SpatialDataFrame
 
-You can check the contents of mpsz_rg data object by using *summary*.
+## Checking the contents of a simple features data.frame object
+
+Next, let us examine the structure of the newly created simple feature data.frame.  There are at least two ways you can used to examine the structure of a simple feature data.frame.  
+
+First, we can view the structure of the simple feature data.frame by using the Environment of RStudio.  This is the most handy way.  Alternatively, the *glimpse()* can be used display the structure of the newly created simple feature data.frame. 
+
+```{r}
+glimpse(sf_mpsz)
+```
+
+Notice that the last column of a simple feature data.frame is always called **geometry**. It is known as **simple feature list-column** (an object of class **sfc** (refer to the Topic 2 slides for more discussion.)
+
+You can also check the contents of *sf_mpsz* data.frame by using *summary()*.
 
 The code chunk:
 
@@ -110,38 +124,27 @@ The code chunk:
 summary(sf_mpsz)
 ```
 
-Let's view the first few records in the spatial data object.
-
-The code chunk
+Lastly the *head()* can be used to list the first few records in the data.frame by using the code chunk below.
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 head(sf_mpsz, n=4)  
 ```
 
-### Plotting the sptial data
-
-To view the spatial data, *plot* function can be used.
-
-The code chunk:
-
-```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
-plot(sf_mpsz)
-```
-
-
 ## Working with Projection
 
-Task 2:  Assigning EPSG code to sf_mpsz simple feature dataframe.
+In this section, you will learn how to work with projection by using appropriate functions of **sf** package.
 
-The solution:
+### Assigning projection
 
-First, checking the projection of sf_mpsxz
+In this section, you will learn how to assign EPSG code to *sf_mpsz* simple features data.frame.
+
+First, checking the projection of *sf_mpsz* by using *st_crs()* by using the code chunk below.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 st_crs(sf_mpsz)
 ```
 
-Next, assigning EPSG 3414 to sf_mpsz simple feature dataframe.
+Next, assigning EPSG 3414 to *sf_mpsz* simple features data.frame by using *st_set_crs()*.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 sf_mpsz3414 <- st_set_crs(sf_mpsz, 3414)
@@ -153,28 +156,76 @@ Lets check the CSR again.
 st_crs(sf_mpsz3414)
 ```
 
+Notice that sf_mpsz3414 simple features data.frame is in **EPSG: 3414** now.
+
 ### Transforming the projection of sf_preschool from wgs84 to svy21.
 
-The solution:
-
-First, checking the projection of sf_preschool
+In Section 2.1.3, we had revealed that *sf_preschool* simple features data.frame is in **wgs84** geographic coordinates system. 
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 st_crs(sf_preschool)
 ```
 
-Next, transforming sf_preschool simple feature dataframe onto svy21 projected coordinate system (i.e. EPSG 3414)
+Next, we will transform *sf_preschool* simple features data.frame onto **svy21** projected coordinate system (i.e. EPSG 3414) by using *st_transform()*.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 sf_preschool3414 <- st_transform(sf_preschool, 3414)
 st_crs(sf_preschool3414)
 ```
 
+## Importing and Converting Aspatial Data into simple features
+
+In this section, you will learn how to import an aspatial data (i.e. Singapore Airbnb *listings.csv*) into R as a tibble data.frame.    Then, convert the tibble data.frame into a simple features data.frame by using its x-coordinates and y-coordinates columns.
+
+### Importing the aspatial data
+
+In the code chunk below *read_csv()* of **readr** package is used to parse *listing.csv* into R as a tibble data.frame.
+
+```{r eval=TRUE, echo=TRUE}
+listings <- read_csv("data/aspatial/listings.csv")
+```
+
+- After importing the data file into R, it is important for us to review the data object.
+
+
+### Creating a sf data.frame
+
+The code chunk below converts *listings* data frame into a simple feature data frame by using [*st_as_sf()*](https://r-spatial.github.io/sf/reference/st_as_sf.html) of **sf** packages 
+
+Things to learn from the arguments:
+
+- The *coords* argument requires you to provide the column name of the x-coordinates first then followed by the column name of the y-coordinates.
+- The *crs* argument required you to provide the coordinates system in epsg format.  [EPSG: 3414](https://epsg.io/3414) is Singapore SVY21 Projected Coordinate System.  You can search for other country's epsg code by refering to [epsg.io](https://epsg.io/).
+
+```{r}
+listing_sf <- st_as_sf(listings, 
+                       coords = c("longitude", "latitude"),
+                       crs= 4326)
+glimpse(listing_sf)
+```
+
+### Trasforming Projection
+
+Next, we will transform the listing simple feature from *wgs84* geographic coordinates systems to *svy21* projected coordinates system by using *st_transform()*
+
+```{r echo=TRUE, eval=TRUE}
+listing_sf <- st_transform(listing_sf, 3414)
+glimpse(listing_sf)
+```
+
+## Plotting the spatial data
+
+To view the spatial data, *plot()* function of sf package can be used.
+
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+plot(sf_mpsz)
+```
+
 ## Conversion to sp class
 
 Although simple feature data.frame is gaining popularity again sp's Spatial* classes, there are, however, many geospatial analysis packages require the input geospatial data in sp's Spatial* classes.  In this section, you will learn how to convert simple feature data.frame to sp's Spatial* class.
 
-### Converting point feature data.frame to SpatialPointsDataFrame 
+### Converting a point features data.frame to SpatialPointsDataFrame 
 
 The code chunk below uses [*as_Spatial()*](https://r-spatial.github.io/sf/reference/coerce-methods.html) of **sf** package to convert sf_preschool3414 simple feature data.frame to sp's Spatial* class.
 
@@ -195,6 +246,10 @@ summary(sp_preschool)
 
 ## Geoprocessing with sf package
 
+Beside providing functions to handle and wrangle geospatial data, sf package also provides functions to perform geoprocessing tasks list most GIS toolkits provide.  
+
+In this section, you will learn how to perform two popularly GIS geoprocessing tasks, namely: buffering and point-in-polygon count by using **sf** package.
+
 ### Buffering
 
 The scenario:
@@ -203,7 +258,7 @@ The authority is planning to upgrade the exiting cycling path.  To do so, they n
 
 The solution:
 
-Creating 5-meter buffers around cycling path and calculate the total area of the buffers.
+Creating 5-meter buffers around cycling path by using *st_buffer()* and calculate the total area of the buffers by using *st_area()*.
 
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 sf_buffer_cycling <- st_buffer(sf_cyclingpath, 
@@ -212,8 +267,14 @@ sf_buffer_cycling$AREA <- st_area(sf_buffer_cycling)
 sum(sf_buffer_cycling$AREA)
 ```
 
+Because the output is in tibble data.table format, you can plot the area easily by using *geom_histogram()* of **ggplot2**. 
+
 ```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
-hist(sf_buffer_cycling$AREA)
+ggplot(data = sf_buffer_cycling,
+       aes(x=as.numeric(AREA))) +
+         geom_histogram(bins=30, 
+                        color="black",
+                        fill="light blue")
 ```
 
 ### Point-in-polygon count
@@ -305,7 +366,7 @@ Let's view the first few records in the *mpsz_sp*.
 
 The code chunk
 
-```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
 head(mpsz_sp, n=4)  
 ```
 
@@ -322,7 +383,7 @@ plot(mpsz_sp)
 
 ## Now It's Your Turn
 
-Using the functiions you had learned, import the Pre-School and Cycling Path GIS data files into R spatial objects.
+Using the functions you had learned, import the Pre-School and Cycling Path GIS data files into R spatial objects.
 
 The solution:
 
