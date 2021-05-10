@@ -109,9 +109,12 @@ In this topic, R objects used to store geospatial data will be discussed.  The d
 - Ela Dramowicz (2004) “[Three Standard Geocoding Methods](https://web.archive.org/web/20070601210655/http:/www.directionsmag.com/article.php?article_id=670&trv=1)”, *Directions Magazine*.
 
 
-## Lesson 3: Thematic Mapping and Analysis
+## Lesson 3: Choropleth Mapping and Analysis
 
 ### Content
+
+[**Slide**]()
+
 - Classification of maps
 - Principles of map design
 - Thematic mapping techniques
