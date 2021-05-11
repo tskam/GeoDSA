@@ -30,20 +30,78 @@ class: center, middle, inverse, title-slide
     - Data Classification
     - 
 - Analytical Mapping Techniques
-    - Percentile map
     - Box map
-    - Standard deviation map
     - Mapping rates
 ] 
 
 ---
 ## Choropleth Map
 
-.pull-left[
 .large[
 A choropleth map is a type of thematic map in which areas are shaded or patterned in proportion to a statistical variable that represents an aggregate summary of a geographic characteristic within each area, such as population or per-capita income.
 ]
+
+.center[
+![:scale 75%](img/image3-1.png)
 ]
+
+---
+## Mapping packages in R
+
+.pull-left[
+### Selected popular mapping packages
+
+[CRAN Task View: Analysis of Spatial Data](https://cran.r-project.org/web/views/Spatial.html)
+
+.large[
+- [tmap](https://cran.r-project.org/web/packages/tmap/index.html)
+- [mapsf](https://riatelab.github.io/mapsf/index.html)
+- [leaflet](https://cran.r-project.org/web/packages/leaflet/index.html)
+- [ggplot2](https://ggplot2.tidyverse.org/index.html).  Read [Chapter 6: Maps](https://ggplot2-book.org/maps.html) of  'ggplot2: Elegant Graphics for Data Analysis' for more detail. 
+- [ggmap](https://cran.r-project.org/web/packages/ggmap/index.html)
+- [quickmapr](https://cran.r-project.org/web/packages/quickmapr/index.html)
+- [mapview](https://cran.r-project.org/web/packages/mapview/index.html)
+]
+]
+
+--
+
+.pull-right[
+### Other packages
+
+.large[
+- [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html)
+-  [classInt](https://cran.r-project.org/web/packages/classInt/index.html)]
+]
+
+---
+## Introducing *tmap*
+
+.pull-left[
+.large[
+- [*tmap*](https://github.com/mtennekes/tmap) is a R package specially designed for creating thematic maps using the pricinples of the **Grammar of Graphics**.  
+- It offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and proportional symbol maps.]]
+
+.pull-right[
+![](img/image3-2.jpg)]
+
+---
+## Introducing *tmap*
+### Shape objects
+
+- *tmap* supports the class Spatial or Raster, respectively from the *sp* and the *raster* package. The supported subclasses are:
+.center[
+![](img/image3-3.jpg)]
+
+-  *tmap* also supports **simple features** from the new *sf* package.
+
+---
+## Plotting functions of *tmap*
+
+Two approaches can be used to prepare thematic map using *tmap*, they are:
+
+- Plotting a thematic map quickly by using **qtm()**.
+- Plotting highly customisable thematic map by using tmap elements. 
 
 ---
 ## Basic Choropleth Mapping using tmap 
@@ -146,10 +204,9 @@ popdata &lt;- read_csv("data/aspatial/respopagesextod2011to2020.csv")
 ]]
 
 ---
-## Data Prepation
+## Data Preparation
 
 .pull-left[
-.large[
 You are required to prepare a data table with year 2020 values.  The data table should include the variables PA, SZ, YOUNG, ECONOMY ACTIVE, AGED, TOTAL, DEPENDENCY.
 
 - YOUNG: age group 0 to 4 until age groyup 20 to 24,
@@ -157,11 +214,10 @@ You are required to prepare a data table with year 2020 values.  The data table 
 - AGED: age group 65 and above,
 - TOTAL: all age group, and 
 - DEPENDENCY: the ratio between young and aged against economy active group.
-]]
+]
 
 --
 .pull-right[
-.large[
 The code chunk is:
 
 ```r
@@ -170,7 +226,8 @@ popdata2020 &lt;- popdata %&gt;%
   group_by(PA, SZ, AG) %&gt;%
   summarise(`POP` = sum(`Pop`)) %&gt;%
   ungroup()%&gt;%
-  spread(AG, POP) %&gt;%
+  pivot_wider(names_from=AG, 
+              values_from=POP) %&gt;%
   mutate(YOUNG = rowSums(.[3:6])
          +rowSums(.[12])) %&gt;%
 mutate(`ECONOMY ACTIVE` = rowSums(.[7:11])+
@@ -184,7 +241,7 @@ mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)
        `TOTAL`, `DEPENDENCY`)
 ```
 ]
-]
+
 
 
 
@@ -193,7 +250,7 @@ mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)
 
 .pull-left[
 .large[
-Perform georelation join by using planning sub-zone name as the unique identifier.
+Performing georelation join by using the *SUBZONE_N* field  of *mpsz* simple features data.frame and *SZ* field of *popdata2020* tibble data.frame as the unique identifiers.  Called the output data-frame as *mpszpop2020*.
 ]
 ]
 --
@@ -210,21 +267,11 @@ popdata2020 &lt;- popdata2020 %&gt;%
 mpszpop2020 &lt;- left_join(mpsz, popdata2020,
                by = c("SUBZONE_N" = "SZ"))
 ```
-]
 
----
-### Joining the attribute data and geospatial data
+Things to learn from the code chunk above:
 
-.large[
-Next, *left_join()* of **dplyr** is used to join the geographical data and attribute table using planning subzone name e.g. *SUBZONE_N* and *SZ* as the common identifier.
-
-
-
-```r
-mpsz_popdata2020 &lt;- left_join(mpsz,
-                              popdata2020,
-                              by = c("SUBZONE_N" = "SZ"))
-```
+- Extra step is required to convert the values in PA and SZ fields to uppercase.  This is because the values of PA and SZ fields are made up of upper- and lowercase on the other hand the SUBZONE_N and  PLN_AREA_N are in uppercase.
+- [*left_join()*](https://dplyr.tidyverse.org/reference/mutate-joins.html) of **dplyr** package is used with mpsz simple feature data.frame as the left data table is to ensure that the output will be a simple features data.frame.
 ]
 
 ---
@@ -238,19 +285,19 @@ The code chunk below will draw a cartographic standard choropleth map as shown b
 
 ```r
 tmap_mode("plot")
-qtm(mpsz_popdata2020, 
+qtm(mpszpop2020, 
     fill = "DEPENDENCY")
 ```
 
 Things to learn from the code chunk above:
 
-- *tmap_mode()* with "plot" option is used to produce a static map.
+- *tmap_mode()* with "plot" option is used to produce a static map.  For interactive mode, "view" option should be used.
 
 - *fill* argument is used to map the attribute (i.e. DEPENDENCY)
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-9-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-8-1.png" width="504" /&gt;
 ]
 
 ---
@@ -263,7 +310,7 @@ In the code chunk below, *tm_shpae()* is used to define the input data (i.e *mps
 
 
 ```r
-tm_shape(mpsz_popdata2020) +
+tm_shape(mpszpop2020) +
   tm_polygons()
 ```
 
@@ -273,7 +320,7 @@ Be warned: The "+" sign should be place at the end of a code line and not at the
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-11-1.png" width="432" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-10-1.png" width="432" /&gt;
 
 .center[
 .vlarge[
@@ -290,7 +337,7 @@ To draw a choropleth map showing the geographical distribution of a selected var
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
 * tm_polygons("DEPENDENCY")
 ```
 
@@ -303,14 +350,14 @@ Things to learn from *tm_polygons()*:
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-13-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-12-1.png" width="504" /&gt;
 ]
 
 ---
 ### Now it looks shaper
 
 .pull-left[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-14-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-13-1.png" width="504" /&gt;
 ]
 --
 .pull-right[
@@ -337,7 +384,7 @@ The code chunk below draw a choropleth map by using *tm_fill()* alone.
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
 * tm_fill("DEPENDENCY")
 ```
 
@@ -345,7 +392,7 @@ Notice that the planning subzones are shared according to the respective depende
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-16-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-15-1.png" width="504" /&gt;
 ]
 
 ---
@@ -356,7 +403,7 @@ To add the boundary of the planning subzones, *tm_border*s will be used as shown
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY") +
 * tm_borders(lwd = 0.1,
 *            alpha = 1)
@@ -371,7 +418,7 @@ Notice that light-gray border lines have been added on the choropleth map.
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-18-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-17-1.png" width="504" /&gt;
 ]
 
 ---
@@ -388,7 +435,7 @@ The code chunk below shows a quantile data classification with 8 classes are use
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY",
 *         n = 8,
 *         style = "quantile") +
@@ -397,7 +444,7 @@ tm_shape(mpsz_popdata2020)+
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-20-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-19-1.png" width="504" /&gt;
 
 ]
 
@@ -409,12 +456,12 @@ Notice that the distribution of quantile data classification method are more eve
 
 .pull-left[
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-21-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-20-1.png" width="504" /&gt;
 ]
 
 .pull-right[
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-22-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-21-1.png" width="504" /&gt;
 
 ]
 
@@ -428,7 +475,7 @@ To change the colour, we assign the prefered colour to *palette* argument of *tm
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY",
           n = 6,
           style = "quantile",
@@ -440,7 +487,7 @@ Notice that the choropleth map is shaded in blue.
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-24-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-23-1.png" width="504" /&gt;
 ]
 
 ---
@@ -451,7 +498,7 @@ To reverse the colour shading, add a "-" prefix.
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY",
           style = "quantile",
 *         palette = "-Blues") +
@@ -462,7 +509,7 @@ Notice that the colour scheme has been reversed.
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-26-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-25-1.png" width="504" /&gt;
 ]
 
 ---
@@ -477,7 +524,7 @@ In **tmap**, several *legend* options are provided to change the placement, form
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY", 
           style = "jenks", 
           palette = "Blues", 
@@ -500,7 +547,7 @@ tm_shape(mpsz_popdata2020)+
 
 The output map   
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-28-1.png" width="864" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-27-1.png" width="864" /&gt;
 
 ```
 ## [1] "#E3EEF8" "#BFD8EC" "#7FB9DA" "#4090C5" "#1664AB"
@@ -517,7 +564,7 @@ is used.
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY", 
           style = "quantile", 
           palette = "-Greens") +
@@ -527,7 +574,7 @@ tm_shape(mpsz_popdata2020)+
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-30-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-29-1.png" width="504" /&gt;
 ]
 
 ---
@@ -539,7 +586,7 @@ In the code chunk below, *tm_compass()*, *tm_scale_bar()* and *tm_grid()* are us
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
   tm_fill("DEPENDENCY", 
           style = "quantile", 
           palette = "Blues",
@@ -570,7 +617,7 @@ tmap_style("white")
 
 The output plot
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-33-1.png" width="864" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-32-1.png" width="864" /&gt;
 
 To reset the default style, the code chunk use the code chunk below.
 
@@ -599,7 +646,7 @@ In this example, small multiple choropleth maps are created by defining ***ncols
 
 
 ```r
-tm_shape(mpsz_popdata2020)+
+tm_shape(mpszpop2020)+
 * tm_fill(c("YOUNG", "AGED"),
           style = "equal", 
           palette = "Blues") +
@@ -611,7 +658,7 @@ tm_shape(mpsz_popdata2020)+
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-36-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-35-1.png" width="504" /&gt;
 ]
 
 ---
@@ -622,7 +669,7 @@ In this example, small multiple choropleth maps are created by assigning multipl
 
 
 ```r
-tm_shape(mpsz_popdata2020)+ 
+tm_shape(mpszpop2020)+ 
 * tm_polygons(c("DEPENDENCY","AGED"),
 *         style = c("equal", "quantile"),
 *         palette = list("Blues","Greens")) +
@@ -632,7 +679,7 @@ tm_shape(mpsz_popdata2020)+
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-38-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-37-1.png" width="504" /&gt;
 ]
 
 ---
@@ -643,7 +690,7 @@ In this example, multiple small choropleth maps are created by using **tm_facets
 
 
 ```r
-tm_shape(mpsz_popdata2020) +
+tm_shape(mpszpop2020) +
   tm_fill("DEPENDENCY",
           style = "quantile",
           palette = "Blues",
@@ -660,7 +707,7 @@ tm_shape(mpsz_popdata2020) +
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-40-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-39-1.png" width="504" /&gt;
 ]
 
 ---
@@ -671,12 +718,12 @@ In this example, multiple small choropleth maps are created by creating multiple
 
 
 ```r
-youngmap &lt;- tm_shape(mpsz_popdata2020)+ 
+youngmap &lt;- tm_shape(mpszpop2020)+ 
   tm_polygons("YOUNG", 
               style = "quantile", 
               palette = "Blues")
 
-agedmap &lt;- tm_shape(mpsz_popdata2020)+ 
+agedmap &lt;- tm_shape(mpszpop2020)+ 
   tm_polygons("AGED", 
               style = "quantile", 
               palette = "Blues")
@@ -686,7 +733,7 @@ agedmap &lt;- tm_shape(mpsz_popdata2020)+
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-42-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-41-1.png" width="504" /&gt;
 ]
 
 ---
@@ -697,7 +744,7 @@ Instead of creating small multiple choropleth map, you can also use selection fu
 
 
 ```r
-*tm_shape(mpsz_popdata2020[mpsz_popdata2020$REGION_N=="CENTRAL REGION", ]) +
+*tm_shape(mpszpop2020[mpszpop2020$REGION_N=="CENTRAL REGION", ]) +
   tm_fill("DEPENDENCY", 
           style = "quantile", 
           palette = "Blues", 
@@ -718,7 +765,7 @@ Instead of creating small multiple choropleth map, you can also use selection fu
 
 The output choropleth maps.
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-44-1.png" width="864" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-43-1.png" width="864" /&gt;
 
 ```
 ## [1] "#E3EEF8" "#BFD8EC" "#7FB9DA" "#4090C5" "#1664AB"
@@ -730,11 +777,11 @@ The output choropleth maps.
 Although both choropleth maps were created using the same variable (i.e. aged population) but the choropleth maps produced look very different.  This is because the choropleth maps were created using two different data classification methods.  For the choropleth map on the left, quantile classification method was used and for choropleth on the right, equal interval classification method was used.   
 
 .pull-left[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-45-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-44-1.png" width="504" /&gt;
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-46-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-45-1.png" width="504" /&gt;
 ]
 
 &gt;**Challenge:** 
@@ -747,7 +794,7 @@ Although both choropleth maps were created using the same variable (i.e. aged po
 .large[
 - **Boxplot** is one one the popular Exploratory Data Analysis (EDA) technique used to show the statistics and distribution of data values.]
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-47-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-46-1.png" width="288" style="display: block; margin: auto;" /&gt;
 ]
 --
 .pull-right[
@@ -949,7 +996,7 @@ The code chunk on the left is an R function to create a box map.
 boxmap("ECONOMY ACTIVE", mpszpop2020a)
 ```
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-54-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-53-1.png" width="504" /&gt;
 ]
 
 .pull-right[
@@ -1010,18 +1057,18 @@ boxmap("AGED%",mpszpop2020a)
 ## [1] -2.17276  0.00000 11.28169 16.48199 20.25132 33.70576 95.00000
 ```
 
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-57-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-56-1.png" width="504" /&gt;
 ]
 
 ---
 ### Comparing Absolute and Rate Choropleth Maps
 
 .pull-left[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-58-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-57-1.png" width="504" /&gt;
 ]
 
 .pull-right[
-&lt;img src="Topic03_files/figure-html/unnamed-chunk-59-1.png" width="504" /&gt;
+&lt;img src="Topic03_files/figure-html/unnamed-chunk-58-1.png" width="504" /&gt;
 ]
 
 
