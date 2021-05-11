@@ -122,7 +122,7 @@ In this topic, R objects used to store geospatial data will be discussed.  The d
     - Standard deviation map
     - Mapping rates
 
-### Lesson Slides and Hands-on Notes 
+### Meet-up Slides and Hands-on Notes 
 
 Slides and hands-on notes in [html](Topics/Topic03/Topic03.html) and [pdf](Topics/Topic03/Topic03.pdf) formats
 
@@ -170,7 +170,12 @@ Spatial Point Pattern Analysis is the evaluation of the pattern, or distribution
     - K-function
     - L-function
 
-To read before class:
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
 
 - [Chapter 7 Spatial Point Pattern Analysis](https://link-springer-com.libproxy.smu.edu.sg/chapter/10.1007/978-1-4614-7618-4_7) of Roger S. Bivand, Edzer Pebesma and Virgilio Gómez-Rubio (2013) **Applied Spatial Data Analysis with R** (2nd Edition), Springer.
 - [Chapter 4: Spatial distribution of points](https://www.insee.fr/en/statistiques/fichier/3635545/imet131-h-chapitre-4.pdf) of Floch, J.M., Marcon, E. and Puech, F. (2018) **Handbook of Spatial Analysis: Theory and Application with R**.
@@ -214,7 +219,12 @@ Prof. Luc Anselin on point pattern analysis (YouTube):
     - Network-Constrained K-function
 - Spatio-temporal Point Pattern Analysis
 
-To read before class:
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
 
 ### References
 
@@ -238,6 +248,13 @@ To read before class:
     - Moran scatter plot
     - Spatial correlogram
     - Nonparametric spatial correlogram
+
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
 
 To read before class:
 - Chapter 2. Codifying the neighbourhood structure of Handbook of Spatial Analysis.
@@ -282,6 +299,13 @@ Localised Geospatial Statistics are a collection of spatial statistical analysis
     - Getis and Ord’s G-statistics
 - Case Studies
 
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
+
 To read before class:
 
 - Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis.  Section 3.3 including the sub-section. 
@@ -309,6 +333,13 @@ The following three articles are classics of Local Spatial Statistics.  The link
 - Approaches for clustering geographically referenced data
     - Hierarchical clustering with spatial constraints
     - Minimum spanning trees
+
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
 
 To read before class:
 
@@ -340,6 +371,13 @@ To read before class:
     - Bandwidth
     - Interpreting and Visualising 
 
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
+
 To read before class:
 
 - Brunsdon, C., Fotheringham, A.S., and Charlton, M. (2002) “Geographically weighted regression: A method for exploring spatial nonstationarity”. Geographical Analysis, 28: 281-289.
@@ -368,6 +406,13 @@ To read before class:
 - Two-step floating catchment area (2SFCA) method 
 - Kernel Density Two-Step Floating Catchment Area (KD2SFCA) Method
 - Interpreting and visualising modelling results
+
+### Meet-up Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+
+
+### Self-reading Before Meet-up
 
 Read before lesson:
 
