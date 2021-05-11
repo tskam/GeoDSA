@@ -113,8 +113,6 @@ In this topic, R objects used to store geospatial data will be discussed.  The d
 
 ### Content
 
-[**Slide**]()
-
 - Classification of maps
 - Principles of map design
 - Thematic mapping techniques
@@ -123,6 +121,10 @@ In this topic, R objects used to store geospatial data will be discussed.  The d
     - Box map
     - Standard deviation map
     - Mapping rates
+
+### Lesson Slides and Hands-on Notes 
+
+Slides and hands-on notes in [html](Topics/Topic03/Topic03.html) and [pdf](Topics/Topic03/Topic03.pdf) formats
 
 
 ### References
