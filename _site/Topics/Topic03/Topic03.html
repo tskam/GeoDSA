@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Topic 3: Choropleth Mapping and Analysis
 ### Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems
 ### School of Computing and Information Systems,<br/>Singapore Management University
-### 2019/11/25 (updated: 2021-05-11)
+### 2019/11/25 (updated: 2021-05-12)
 
 ---
 
@@ -65,7 +65,6 @@ A choropleth map is a type of thematic map in which areas are shaded or patterne
 ]
 
 --
-
 .pull-right[
 ### Other packages
 
@@ -80,7 +79,10 @@ A choropleth map is a type of thematic map in which areas are shaded or patterne
 .pull-left[
 .large[
 - [*tmap*](https://github.com/mtennekes/tmap) is a R package specially designed for creating thematic maps using the pricinples of the **Grammar of Graphics**.  
-- It offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and proportional symbol maps.]]
+- It offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and proportional symbol maps.
+- It supports two modes: *plot*(static maps) and *view* (interactive maps).
+- It provides shiny integration(with *tmapOutput* and *renderTmap*).
+]]
 
 .pull-right[
 ![](img/image3-2.jpg)]
@@ -89,19 +91,10 @@ A choropleth map is a type of thematic map in which areas are shaded or patterne
 ## Introducing *tmap*
 ### Shape objects
 
-- *tmap* supports the class Spatial or Raster, respectively from the *sp* and the *raster* package. The supported subclasses are:
+-  *tmap* supports **simple features** from the new *sf* package.
+- It also supports the class Spatial and Raster, respectively from the *sp* and the *raster* package. The supported subclasses are:
 .center[
 ![](img/image3-3.jpg)]
-
--  *tmap* also supports **simple features** from the new *sf* package.
-
----
-## Plotting functions of *tmap*
-
-Two approaches can be used to prepare thematic map using *tmap*, they are:
-
-- Plotting a thematic map quickly by using **qtm()**.
-- Plotting highly customisable thematic map by using tmap elements. 
 
 ---
 ## Basic Choropleth Mapping using tmap 
@@ -117,7 +110,7 @@ Two approaches can be used to prepare thematic map using *tmap*, they are:
 ]
 
 ---
-# Getting Started
+## Getting Started
 
 .pull-left[
 .large[
@@ -148,13 +141,13 @@ for (p in packages){
 ]
 
 ---
-## Importing geospatial data
+## Importing Geospatial Data
 
 .pull-left[
 .large[
-In this exercise, URA's Master Plan 2014 Subzone Boundary (i.e. MP14_SUBZONE_WEB_PL) will be used.
+In order to prepare a choropleth map, we need a geospatial data and an associated attribute data.  In this exercise,  the geospatial data is URA's Master Plan 2014 Subzone Boundary (i.e. MP14_SUBZONE_WEB_PL).  It can be downloaded from data.gov.sg.
 
-- Show the code chunk used to import the geospatial data into R as an sf data.frame.  Name the sf data.frame *mpsz*.
+- Write a code chunk to import *MP14_SUBZONE_WEB_PL* into R as an sf data.frame.  Name the sf data.frame *mpsz*.
 ]]
 
 --
@@ -214,6 +207,8 @@ You are required to prepare a data table with year 2020 values.  The data table 
 - AGED: age group 65 and above,
 - TOTAL: all age group, and 
 - DEPENDENCY: the ratio between young and aged against economy active group.
+
+To fully appreciate the functions used in the code chunk on the right, you are recommended to read the reference guide of [filter()](https://dplyr.tidyverse.org/reference/filter.html), [group_by()](https://dplyr.tidyverse.org/reference/group_by.html), [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) and [select()](https://dplyr.tidyverse.org/reference/select.html) functions of [dplyr](https://dplyr.tidyverse.org/index.html) package and [pivot_wider()](https://tidyr.tidyverse.org/reference/pivot_wider.html) of [tidyr](https://tidyr.tidyverse.org/index.html) package. 
 ]
 
 --
@@ -275,7 +270,15 @@ Things to learn from the code chunk above:
 ]
 
 ---
-## Plotting a choropleth map quickly by using *qtm()*
+## Plotting functions of *tmap*
+
+Two approaches can be used to prepare thematic map using *tmap*, they are:
+
+- Plotting a thematic map quickly by using **qtm()**.
+- Plotting highly customisable thematic map by using tmap elements. 
+
+---
+### Plotting a choropleth map quickly by using *qtm()*
 
 .pull-left[
 The easiest and quickest to draw a choropleth map using **tmap** is using *qtm()*.  It is concise and provides a good default visualisation in many cases. 
@@ -299,6 +302,52 @@ Things to learn from the code chunk above:
 .pull-right[
 &lt;img src="Topic03_files/figure-html/unnamed-chunk-8-1.png" width="504" /&gt;
 ]
+
+---
+## *tmap* elements
+### tm_shape()
+
+- The first element to start with is tm_shape(), which specifies the shape object. 
+
+.center[
+![:scale 70%](img/image3-4.jpg)]
+
+---
+## *tmap* elements
+### Base layers
+
+- Next, one, or a combination of the following drawing layers should be specified:
+
+.center[
+![:scale 70%](img/image3-5.jpg)]
+
+---
+
+## *tmap* element
+### Base layers
+.large[
+* Each of these functions specifies the geometry, mapping,
+and scaling component of the LGTM. 
+* An aesthetic can take a constant value, a data variable
+name, or a vector consisting of values or variable names. 
+* If a data variable is provided, the scale is automatically configured according to the values of this variable, but can be adjusted with several arguments. For instance, the main scaling arguments for a color aesthetic are color palette, the preferred number of classes,
+and a style to create classes. 
+* Also, for each aesthetic, except for the text labels, a legend is automatically created. 
+* If a vector of variable names is provided, small multiples are created, which will be explained further below.]
+
+---
+## *tmap* elements
+### Derived layers
+
+- The supported derived layers are as follows:
+.center[
+![:scale 70%](img/image3-6.jpg)]
+
+---
+# *tmap* elements
+### Derived layers
+
+* Each aesthetic can take a constant value or a data variable name. For instance, tm_fill(col="blue") colors all polygons blue, while tm_fill(col="var1"), where "var1" is the name of a data variable in the shape object, creates a choropleth.
 
 ---
 ## Drawing a base map
@@ -1069,6 +1118,27 @@ boxmap("AGED%",mpszpop2020a)
 
 .pull-right[
 &lt;img src="Topic03_files/figure-html/unnamed-chunk-58-1.png" width="504" /&gt;
+]
+
+---
+## References
+
+.pull-left[
+### All About **tmap** package
+
+- [tmap: Thematic Maps in R](https://www.jstatsoft.org/article/view/v084i06)
+
+- [Development site](https://github.com/mtennekes/tmap)
+
+- [tmap User Guide](https://cran.r-project.org/web/packages/tmap/index.html)
+
+- [tmap: get started!](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html)
+
+- [tmap: changes in version 2.0](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-changes-v2.html)
+
+- [tmap: creating thematic maps in a flexible way (useR!2015)](http://von-tijn.nl/tijn/research/presentations/tmap_user2015.pdf)
+
+- [Exploring and presenting maps with tmap (useR!2017)](http://von-tijn.nl/tijn/research/presentations/tmap_user2017.pdf)
 ]
 
 
