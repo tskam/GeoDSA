@@ -1264,7 +1264,6 @@ boxmap("AGED%",mpszpop2020a)
 
 
 
-
 ```{r echo=FALSE, eval=FALSE}
 library(pagedown)
 pagedown::chrome_print("Topic03.html")
