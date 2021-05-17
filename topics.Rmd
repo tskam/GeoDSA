@@ -159,7 +159,9 @@ Spatial Point Pattern Analysis is the evaluation of the pattern, or distribution
 
 ### Content
 
-- The basic concepts of spatial point patterns
+- Introducing Spatial Point Patterns
+    - The basic concepts of spatial point patterns
+    - Spatial Point Patterns in real world
 - 1st Order Spatial Point Patterns Analysis
     - Quadrat analysis
     - Kernel density estimation
@@ -172,7 +174,7 @@ Spatial Point Pattern Analysis is the evaluation of the pattern, or distribution
 
 ### Meet-up Slides and Hands-on Notes 
 
-Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+Slides and hands-on notes in [html](Topics/Topic04/Topic04-SPPA.html) and [pdf](Topics/Topic04/Topic04-SPPA.pdf) formats
 
 
 ### Self-reading Before Meet-up

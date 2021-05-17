@@ -35,13 +35,18 @@ style_duo_accent(
 # Content
 .large[
 - Introducing Spatial Point Patterns
-
-- Spatial Point Patterns Analysis
+    - The basic concepts of spatial point patterns
     - 1st Order versus 2nd Order
-
+    - Spatial Point Patterns in real world
 - 1st Order Spatial Point Patterns Analysis
-    - Density-based
-    - Distance-based
+    - Quadrat analysis
+    - Kernel density estimation
+- 2nd Order Spatial Point Patterns Analysis
+    - Nearest Neighbour Index
+    - G-function
+    - F-function
+    - K-function
+    - L-function
 ]
 
 ---
@@ -599,6 +604,6 @@ Adaptive schemes adjust itself according to the density of data:
 
 ```{r echo=FALSE, eval=FALSE}
 library(pagedown)
-pagedown::chrome_print("Lesson04-SPPA.html")
+pagedown::chrome_print("Topic04-SPPA.html")
 ```
 
