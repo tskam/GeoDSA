@@ -31,7 +31,6 @@ style_duo_accent(
   inverse_header_color = "#FFFFFF")
 ```
 
-
 # Content
 .large[
 - Introducing Spatial Point Patterns

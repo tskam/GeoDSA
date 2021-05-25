@@ -174,8 +174,8 @@ Spatial Point Pattern Analysis is the evaluation of the pattern, or distribution
 
 ### Meet-up Slides and Hands-on Notes 
 
-Slides and hands-on notes in [html](Topics/Topic04/Topic04-SPPA.html) and [pdf](Topics/Topic04/Topic04-SPPA.pdf) formats
-
+* Slides in [html](Topics/Topic04/Topic04-SPPA.html) and [pdf](Topics/Topic04/Topic04-SPPA.pdf) formats
+* [**Handout of Hands-on Exercise**](Hands-on_Ex\Hands-on_Ex04\Hands-on_Ex04_SPPA_spatstat.html)
 
 ### Self-reading Before Meet-up
 

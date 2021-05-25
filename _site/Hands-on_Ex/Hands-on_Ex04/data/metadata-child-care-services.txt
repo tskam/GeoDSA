@@ -1,0 +1,38 @@
+# Metadata for Child Care Services
+---
+Identifier: 'c985e771-8c39-4e4f-b472-00fd3d1bd6fd'
+Name: 'child-care-services'
+Title: 'Child Care Services'
+Description: 'Directory of Child Care Services'
+Topics:
+  - 'Society'
+Keywords:
+  - 'OneMap'
+  - 'child care'
+  - 'childcare'
+  - 'ecda'
+Publisher:
+  Name: 'Early Childhood Development Agency'
+  Admin 1:
+    Name: 'Nur Aisyah Haji Rapii'
+    Department: 'EARLY CHILDHOOD DEVELOPMENT AGENCY'
+    Email: 'Nur_Aisyah_RAPII@ecda.gov.sg'
+Sources:
+  - 'Early Childhood Development Agency'
+Source Url: 'http://www.onemap.sg/API/Help/'
+License: 'https://data.gov.sg/open-data-licence'
+Frequency: 'Ad-hoc'
+Last Updated: '2020-08-29T00:02:57.244769'
+Resources:
+  -
+    Identifier: '195b6c5f-c277-4ba9-bcdc-25c264e3ee5c'
+    Title: 'Child Care Services (KML)'
+    Url: 'https://geo.data.gov.sg/childcare/2020/08/26/kml/childcare.kml'
+    Format: 'KML'
+    Last Updated: '2020-08-25T16:00:00'
+  -
+    Identifier: 'd5d984bc-331b-4865-9c43-29588f7f78ff'
+    Title: 'Child Care Services (GEOJSON)'
+    Url: 'https://geo.data.gov.sg/childcare/2020/08/26/geojson/childcare.geojson'
+    Format: 'GeoJSON'
+    Last Updated: '2020-08-25T16:00:00'
