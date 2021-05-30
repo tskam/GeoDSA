@@ -1,0 +1,190 @@
+---
+title: "Hands-on Exercise 5: Network Constrained Spatial Point Patterns Analysis (NetKDE)"
+description: 
+author:
+  - name: Dr. Kam Tin Seong, Associate Professor of Information Systems (Practice) 
+    url: https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong
+    affiliation: School of Computing and Information Systems, Singapore Management University
+    affiliation_url: https://scis.smu.edu.sg/
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    code_folding: false
+    toc: true
+    toc_depth: 4
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval=TRUE, message=FALSE, warning = FALSE)
+```
+
+# Overview
+
+# The Data
+
+## Installing and launching the R packages
+
+In this hands-on exercise, five R packages will be used, they are:
+
+-[rgdal](https://cran.r-project.org/web/packages/rgdal/index.html), which provides bindings to the ['Geospatial' Data Abstraction Library (GDAL) (>= 1.11.4)](https://gdal.org/) and access to projection/transformation operations from the [PROJ](https://proj.org/) library.  In this exercise, rgdal will be used to import geospatial data in R and store as [sp](https://cran.r-project.org/web/packages/sp/vignettes/intro_sp.pdf) objects. 
+
+- [**spatstat**](https://spatstat.org/), which has a wide range of useful functions for point pattern analysis.  In this hands-on exercise, it will be used to perform 1st- and 2nd-order spatial point patterns analysis and derive kernel density estimation (KDE) layer.
+
+- [**raster**](https://cran.r-project.org/web/packages/raster/) which reads, writes, manipulates, analyses and model of gridded spatial data (i.e. raster).  In this hands-on exercise, it will be used to convert image output generate by spatstat into raster format.
+
+- [**maptools**](https://cran.r-project.org/web/packages/maptools/index.html) which provides a set of tools for manipulating geographic data.  In this hands-on exercise, we mainly use it to convert *Spatial* objects into *ppp* format of **spatstat**.
+
+- [**tmap**](https://cran.r-project.org/web/packages/tmap/index.html) which provides functions for plotting cartographic quality static point patterns maps or interactive maps by using [leaflet](https://leafletjs.com/) API.
+
+Use the code chunk below to install and launch the five R packages.
+
+```{r}
+packages = c('sp', 'rgeos', 'rgdal', 'maptools', 'spNetwork', 'raster', 'classInt', 'RColorBrewer', 'ggplot2', 'tmap')
+for (p in packages){
+if(!require(p, character.only = T)){
+install.packages(p)
+}
+library(p,character.only = T)
+}
+```
+
+
+# Data Import and Preparation
+
+```{r}
+networkgpkg <- system.file("extdata", "networks.gpkg",
+                           package = "spNetwork", mustWork = TRUE)
+eventsgpkg <- system.file("extdata", "events.gpkg",
+                          package = "spNetwork", mustWork = TRUE)
+```
+
+```{r}
+mtl_network <- rgdal::readOGR(networkgpkg,layer="mtl_network",verbose = FALSE)
+bike_accidents <- rgdal::readOGR(eventsgpkg,layer="bike_accidents", verbose = FALSE)
+```
+
+Then plotting the data
+
+```{r}
+plot(mtl_network)
+plot(bike_accidents,add=T,col='red',pch = 19)
+```
+
+```{r}
+tmap_mode('view')
+tm_shape(bike_accidents)+
+  tm_dots()
+tmap_mode('plot')
+```
+
+Then calculating some lixels to use as sampling points
+
+```{r}
+lixels <- lixelize_lines(mtl_network,200,mindist = 50)
+samples <- lines_center(lixels)
+```
+
+# Network Constrained KDE
+
+Performing NetKDE
+
+```{r}
+densities <- nkde(mtl_network, 
+                  events = bike_accidents,
+                  w = rep(1,nrow(bike_accidents)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 300, div= "bw", 
+                  method = "discontinuous", digits = 1, tol = 1,
+                  grid_shape = c(1,1), max_depth = 8,
+                  agg = 5, #we aggregate events within a 5m radius (faster calculation)
+                  sparse = TRUE,
+                  verbose = FALSE)
+```
+
+```{r}
+samples$density <- densities
+```
+
+## Mapping NKDE
+
+
+```{r}
+# rescaling to help the mapping
+samples$density <- samples$density*1000
+```
+
+```{r}
+# using a discretization method
+breaks <- classIntervals(samples$density, n = 7, style = "jenks", intervalClosure = "right")
+
+colorRamp <- brewer.pal(n = 7, name = "Spectral")
+colorRamp <- rev(colorRamp)
+```
+
+```{r}
+samples$class <- as.character(cut(samples$density,breaks$brks,colorRamp,include.lowest =TRUE))
+
+xy <- coordinates(samples)
+samples$x <- xy[,1]
+samples$y <- xy[,2]
+```
+
+```{r}
+# and finally map with ggplot
+labels <- names(print(breaks))
+#> style: jenks
+#>           [0,0.001632707] (0.001632707,0.004335161] (0.004335161,0.007797132] 
+#>                      1537                       662                       475 
+#>   (0.007797132,0.0123777]    (0.0123777,0.01880141]   (0.01880141,0.02859257] 
+#>                       268                       144                        57 
+#>   (0.02859257,0.04626886] 
+#>                        19
+mtl_network$line_id <- 1:nrow(mtl_network)
+Mapnetwork <- fortify(mtl_network,id="line_id")
+
+df <- samples@data[order(samples@data$density),]
+
+ggplot() + 
+  geom_path(data = Mapnetwork, mapping = aes(x=long,y=lat,group=group), color="black")+
+  geom_point(data = df, mapping = aes(x=x,y=y,color=class))+
+  scale_color_manual("density",
+    breaks = colorRamp, values = colorRamp, 
+    label = labels)+
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank()) +
+  coord_fixed()+
+  labs(title = "bike accident density by kilometres in 2016",
+          subtitle = "within a radius of 300 metres",
+          caption = "using the quartic kernel")
+```
+
+# Network Constrained G- and K-Function Analysis
+
+```{r}
+main_network_mtl <- rgdal::readOGR(networkgpkg,layer="main_network_mtl", verbose = FALSE)
+mtl_libraries <- rgdal::readOGR(eventsgpkg,layer="mtl_libraries", verbose = FALSE)
+mtl_theatres <- rgdal::readOGR(eventsgpkg,layer="mtl_theatres", verbose = FALSE)
+```
+
+```{r}
+par(mar = c(0, 0, 0, 0))
+sp::plot(main_network_mtl)
+sp::plot(mtl_libraries, col = "blue", add=T, pch = 20)
+sp::plot(mtl_theatres, col = "red", add=T, pch = 20)
+```
+
+As one can see, the theatres seems to be more clustered than the libraries.
+
+```{r}
+kfun_theatre <- kfunctions(main_network_mtl, mtl_theatres,
+                           start = 0, end = 5000, step = 50, 
+                           width = 1000, nsim = 50, resolution = 50,
+                           verbose = FALSE, conf_int = 0.05)
+kfun_theatre$plotk
+```

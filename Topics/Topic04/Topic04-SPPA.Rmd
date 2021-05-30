@@ -19,6 +19,7 @@ output:
   pdf_document: default
   ioslides_presentation: default
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.retina = 3, warning = FALSE, message = FALSE)
 ```
