@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Topic 5: Network Constrained Spatial Point Patterns Analysis (NetSPPA)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Kam Tin Seong Assoc. Professor of Information Systems (Practice)" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/text.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Topic 5: Network Constrained Spatial Point Patterns Analysis (NetSPPA)
+### Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems (Practice)
+### School of Computing and Information Systems,<br/>Singapore Management University
+### 2021-5-5 (updated: 2021-05-31)
+
+---
+
+
+
+
+
+
+# Content
+
+.large[
+- Motivation 
+- Network Constrained Kernel Density Estimation (NetKDE)
+- Network Constrained 2nd-Order Point Patterns Analysis
+    - Network Constrained K-function
+    - Network Constrained G-function
+]
+
+---
+# Motivation
+
+.large[
+- Real world geography are heterogeneous and anisotropy.
+]
+
+.pull-left[
+![](img/image01a.jpg)
+]
+
+.pull-right[
+![](img/image01b.jpg)
+]
+
+
+---
+## What is Network Constrained events
+
+.center[
+![:scale 80%](img/image02.jpg)
+]
+
+---
+## Alongside-network relations
+
+.large[
+- (a) an access point (the black circle) of a polygon to a network (the horizontal line segment), 
+- (b) a boundary line segment of a polygon shared with a network (the bold line segment) 
+- (c) an intersection point of two networks (the black circles), 
+- (d) a network intersecting an area (the bold line segment).
+]
+
+.center[
+![:scale 75%](img/image04.jpg)
+]
+
+---
+## Real world network constrained events
+
+.pull-left[
+.large[
+- A traffic accident events at downtown area.
+![](img/image05a.jpg)
+]]
+
+--
+.pull-right[
+.large[
+- Distribution of Airbnb listing at Central region.
+![](img/image05b.jpg)
+]]
+
+---
+## Examples of real world questions
+
+.large[
+Typical network constrained events questionsare as follows:
+- How can we obtain the catchment areas of parking lots in a downtown area including one-way streets, assuming that drivers access their nearest parking lots?
+- Do coffee outlets tend to stand side-by-side alongside streets in a downtown area?
+- Do Airbnb listings  tend to locate near to MRT stations?
+- Is the roadside retail rental price of a street segment similar to those of the adjacent street segments?
+- How can we locate clusters of childcare centres within HDB towns?
+- How can we estimate the density of traffic accidents and street crimes incidence, and how can we identify locations where the densities of those occurrence are high, referred to as black spots and hot spots?
+- How can we spatially interpolate an unknown PM2.5 density at an arbitrary point on a road using known PM2.5 densities at observation points at CBD?
+]
+
+---
+## Why is it important to consider the underlying geography?
+
+.large[
+- With reference to (a), we will conclude that the spatial event is nonrandomly distributed points on a bounded plane,
+- By constraining the points on a network, (b) reveals a randomly distributed patterns.
+]
+
+.center[
+![:scale 65%](img/image03.jpg)
+]]
+
+---
+## Planar KDE versus Network Constraied KDE (NetKDE)
+
+.pull-left[
+.large[
+- Kernel function of the Kernel Density estimation
+]
+![:scale 90%](img/image06a.jpg)
+]
+
+--
+.pull-right[
+.large[
+- Shortest Path Tree: The grid point and the activities are projected on the nearest edge.
+]
+![:scale 80%](img/image06b.jpg)
+]
+
+---
+### NetKDE algorithm: Basic step
+
+.large[
+- To perform a NKDE, the events must be snapped on the network. The snapped events are shown here in green.
+]
+
+.center[
+![:scale 50%](img/image07a.jpg)
+]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+### NetKDE: The kernel function
+
+.pull-left[
+.large[
+The mass of each event can be seen as a third dimension and is evaluated by a selected kernel function (K) within a specified bandwidth. The kernel function must satisfy the following conditions:
+
+![:scale 60%](img/image08a.jpg)
+
+The total mass of an event is 1, and is spread according to the function K within the bandwidth distance.
+]
+]
+
+.pull-right[
+.large[
+We can see that the “influence” of each point is limited within the bandwidth and decreases when we move away from the event.
+
+![](img/image08b.jpg)
+]]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+### More than one point
+
+.pull-left[
+.large[In the figure below, 3 sampling points (s1, s2 and s3) are added in blue.
+
+![](img/image09a.jpg)
+]]
+
+.pull-right[
+.large[
+The NetKDE formula can be defined as follow:
+
+![](img/image09b.jpg)
+]]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+### The general formula of NetKDE
+
+.pull-left[
+.large[
+The general formula of NetKDE is defined as:
+
+.center[
+![:scale 60%](img/image10a.jpg)
+]
+
+with dsi the density estimated at the sample point si, bw the bandwidth and ej an event.
+]
+]
+
+--
+.pull-right[
+.large[
+The proposed kernel functions in the spNetwork package are:
+
+![](img/image10b.jpg)
+
+]
+]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+## The Simple Method
+
+.large[
+The simple method was proposed by Xie and Yan (2008). They defined the NetKDE with the following formula:]
+
+![](img/image11a.jpg)
+
+--
+.center[
+![:scale 45%](img/image11b.jpg)
+]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+## Discontinuous NetKDE
+
+.pull-left[
+.large[
+The algorithm is proposed by Sugihara, Satoh, and Okabe (2010).  It is easily presented visually below:
+]
+
+![](img/image12a.jpg)
+]
+
+--
+.pull-right[
+.center[
+![:scale 75%](img/image12b.jpg)
+]]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+## Continuous NetKDE
+
+.pull-left[
+.large[
+The continuous NKDE merges the best of the two worlds:] 
+
+- it adjusts the values of the NetKDE at intersections to ensure that it integrates to 1 on its domain, and 
+- applies a backward correction to force the density values to be continuous. 
+
+![:scale 90%](img/image13a.jpg)
+]
+
+--
+.pull-right[
+.large[
+This process is accomplished by a recursive function. It is more time consuming, so it might be necessary to stop it when the recursion is too deep. 
+
+.center[
+![:scale 75%](img/image13b.jpg)
+]
+]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+]
+
+
+---
+## Adaptive bandwidth NetKDE
+
+.center[
+![](img/image14.jpg)
+
+]
+
+.small[
+Reference: [Network Kernel Density Estimate](https://cran.r-project.org/web/packages/spNetwork/vignettes/NKDE.html)
+]
+
+---
+## Planar K-function versus Network K-function 
+
+.center[
+![:scale 85%](img/image15.jpg)
+]
+
+---
+## Typical Network K-function question
+
+.large[
+**Ho: The observed spatial point events (i.e airbnb listings, coffee outlets, traffic accident locations etc) are uniformly
+distributed over a street network in a study area.**
+
+- The assumption of the binomial point process implies the hypothesis that objects represented by P (say, airbnb listings) are uniformly and independently distributed over the street network Lp.  
+
+- If this hypothesis is rejected, we may infer that the
+spatial point events are spatially interacting and dependent on each other; as a result, they may form nonuniform patterns.
+]
+
+---
+## Spatial Point Patterns on network
+
+.large[
+In general, there are two types of nonuniform spatial point patterns on network, they are:
+
+- clustering whereby the spatial point events tend to be close together (such as in Figure a), and
+- repelling (also know as regular) whereby the spatial point event tend to keep away from each other (such as in Figure b). 
+]
+
+.center[
+![:scale 70%](img/image15b.jpg)
+]
+
+.small[
+Reference: Atsuyuki Okabe and Ikuho Yarnada (2001) "The K-Function Method on a Network and Its Computational Implementation", **Geographical Analysis**, Vol. 33, No. 3, pp. 271-290
+]
+
+---
+## The Network K-function 
+
+.large[
+Under the assumption of the binomial point process, network k-function K(t) (Atsuyuki Okabe and Ikuho Yarnada, 2001) is defined as:
+]
+
+.center[
+![:scale 75%](img/image16a.jpg)
+
+
+![:scale 85%](img/image16b.jpg)
+]
+
+.small[
+Reference: Atsuyuki Okabe and Ikuho Yarnada (2001) "The K-Function Method on a Network and Its Computational Implementation", **Geographical Analysis**, Vol. 33, No. 3, pp. 271-290
+]
+
+---
+## Typical Network Cross K-function question
+
+.large[
+For instance, the set A may be the set of Airbnb listings and the set B may be the set of MRT stations. We are concerned with whether the locations of MRT stations affect the distribution of Airbnb listing. 
+
+**Ho:  Airbnb listings are distributed according to the binomial point process.** 
+
+- This assumption implies that Airbnb listings are uniformly and independently distributed over LT regardless of the locations of MRT stations. 
+
+- If the above hypothesis is rejected, we may infer that the locations of MRT stations affect the distribution of Airbnb listing. 
+
+It should be noted that no assumption is made with respect to the distribution of points B.
+]
+
+---
+## The Network Cross K-function 
+
+.center[
+
+![](img/image17.jpg)
+]
+
+.small[
+Reference: Atsuyuki Okabe and Ikuho Yarnada (2001) "The K-Function Method on a Network and Its Computational Implementation", **Geographical Analysis**, Vol. 33, No. 3, pp. 271-290
+]
+
+
+---
+# References
+
+.large[
+Okabe, Atsuyuki and Yarnada, Ikuho (2001) "The K-Function Method on a Network and Its Computational Implementation", *Geographical Analysis*, Vol. 33, No. 3, pp. 271-290
+
+
+Abramson, Ian S. 1982. “On Bandwidth Variation in Kernel Estimates-a Square Root Law.” *The Annals of Statistics*, 1217–23.
+
+Okabe, Atsuyuki, and Kokichi Sugihara. (2012) **Spatial Analysis Along Networks: Statistical and Computational Methods**. John Wiley &amp; Sons.
+
+Sugihara, Kokichi, Toshiaki Satoh, and Atsuyuki Okabe (2010) “Simple and Unbiased Kernel Function for Network Analysis.” *In 2010 10th International Symposium on Communications and Information Technologies*, 827–32. IEEE.
+
+Xie, Zhixiao, and Jun Yan (2008) “Kernel Density Estimation of Traffic Accidents in a Network Space.” *Computers, Environment and Urban Systems* 32 (5): 396–406.
+
+
+]
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

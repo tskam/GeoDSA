@@ -3,7 +3,7 @@ title: "Topic 5: Network Constrained Spatial Point Patterns Analysis (NetSPPA)"
 subtitle:
 author: "Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems (Practice)"
 institute: "School of Computing and Information Systems,<br/>Singapore Management University"
-date: "2020-5-5 (updated: `r Sys.Date()`)"
+date: "2021-5-5 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     css: [xaringan-themer.css, "css/text.css"]
@@ -55,6 +55,15 @@ style_duo_accent(
 .large[
 - Real world geography are heterogeneous and anisotropy.
 ]
+
+.pull-left[
+![](img/image01a.jpg)
+]
+
+.pull-right[
+![](img/image01b.jpg)
+]
+
 
 ---
 ## What is Network Constrained events
