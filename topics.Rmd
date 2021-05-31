@@ -223,8 +223,9 @@ Prof. Luc Anselin on point pattern analysis (YouTube):
 
 ### Meet-up Slides and Hands-on Notes 
 
-Slides and hands-on notes in [html](Topics/Topic05/Topic05-NetSPPA.html) and [pdf](Topics/Topic05/Topic05-NetSPPA.pdf) formats
+* Slides in [html](Topics/Topic05/Topic05-NetSPPA.html) and [pdf](Topics/Topic05/Topic05-NetSPPA.pdf) formats
 
+* [**Handout of Hands-on Exercise**](Hands-on_Ex\Hands-on_Ex05\Hands-on_Ex05_NetSPPA.html)
 
 ### Self-reading Before Meet-up
 
