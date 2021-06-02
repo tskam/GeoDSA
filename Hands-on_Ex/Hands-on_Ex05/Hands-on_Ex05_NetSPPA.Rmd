@@ -33,7 +33,7 @@ In this hands-on exercise, you are going to gain hands-on experience on using ap
 In this study, we will analyse the spatial distribution of childcare centre in [Punggol planning area](https://en.wikipedia.org/wiki/Punggol).  For the purpose of this study, two geospatial data sets will be used.  They are:
 
 - *Punggol_St*, a line features geospatial data which store the road network within Punggol Planning Area.
-- *Punggol_CC*, a point feature geospatial data which store the location of childcare centres within Puggol Planning Area.
+- *Punggol_CC*, a point feature geospatial data which store the location of childcare centres within Punggol Planning Area.
 
 Both data sets are in ESRI shapefile format. 
 
