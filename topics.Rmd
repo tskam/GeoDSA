@@ -239,47 +239,41 @@ Prof. Luc Anselin on point pattern analysis (YouTube):
 - spatstat package.
 
 
-## Lesson 6: Spatial Autocorrelations and Spatial Weights
+## Lesson 6: Spatial Weights and Applications
 
 ### Content
 
 - Tobler’s First law of Geography
 - Principles of Spatial Autocorrelation
 - Concepts of Spatial Proximity and Spatial Weights
-- Measures of Spatial Autocorrelation
-    - Join count, Moran’s I, Geary’s c
-    - Moran scatter plot
-    - Spatial correlogram
-    - Nonparametric spatial correlogram
+- Contiguity-Based Spatial Weights
+    - Rook's
+    - Queen's
+- Distance-Band Spatial Weights
+- Applications of Spatial Weights
 
 ### Meet-up Slides and Hands-on Notes 
 
-Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+* Slides in [html](Topics/Topic06/Topic06-Spatial_Weights.html) and [pdf](Topics/Topic06/Topic06-Spatial_Weights.pdf) formats
 
+* [Handout of Hands-on Exercise](Hands-on_Ex\Hands-on_Ex06\Hands-on_Ex06_Spatial_Weights.html)
 
 ### Self-reading Before Meet-up
 
 To read before class:
-- Chapter 2. Codifying the neighbourhood structure of Handbook of Spatial Analysis.
+
+- Chapter 2. [Codifying the neighbourhood structure](https://www.insee.fr/en/statistiques/fichier/3635545/imet131-f-chapitre-2.pdf) of [Handbook of Spatial Analysis: Theory and Application with R](https://www.insee.fr/en/information/3635545).
 - Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis. Until 3.2.2.
 
 Alternatively
+
 - Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition).  This book is available in smu digital library.  Until section 9.3.1.
 
-The following two papers are classics of Global Spatial Autocorrelation.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
-
-- Moran, P. A. P. (1950). "Notes on Continuous Stochastic Phenomena". Biometrika, 37 (1): 17–23. 
-- R. C. Geary (1954)"The Contiguity Ratio and Statistical Mapping". The Incorporated Statistician, Vol. 5, No. 3 (Nov., 1954), pp. 115-127+129-146 (31 pages)
-
 ### References
-- D. A. Griffith (2009) “Spatial autocorrelation”.
-- Getis, A., 2010 “B.3 Spatial Autocorrelation” in Fischer, M.M., and Getis, A. 2010 Handbook of Applied Spatial Analysis: Software Tools, Methods and Applications, Springer.
-- Anselin, L. (1996) “The Moran scatterplot as an ESDA tool to assess local instability in spatial association”
 
-#### Applications
+* François Bavaud (2010) ["Models for Spatial Weights: A Systematic Look"](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4632.1998.tb00394.x) *Geographical Analysis*, Vol. 30, No.2, pp 153-171.
 
-- Griffith, Daniel (2009) “Modeling spatial autocorrelation in spatial interaction data: empirical evidence from 2002 Germany journey-to-work flows”. Journal of Geographical Systems, Vol.11(2), pp.117-140.
-- Celebioglu, F., and Dall’erba, S. (2010) “Spatial disparities across the regions of Turkey: An exploratory spatial data analysis”. The Annals of Regional Science, 45:379–400.
+* Tony H. Grubesic and Andrea L. Rosso (2014) ["The Use of Spatially Lagged Explanatory Variables for Modeling Neighborhood Amenities and Mobility in Older Adults"](https://www-jstor-org.libproxy.smu.edu.sg/stable/26326897?sid=primo&seq=1#metadata_info_tab_contents), *Cityscape*, Vol. 16, No. 2, pp. 205-214.
 
 
 ## Lesson 7: Localised Geospatial Statistics
@@ -315,6 +309,11 @@ To read before class:
 or
 - Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition).  This book is available in smu digital library.  Section 9.3.2.
 
+The following two papers are classics of Global Spatial Autocorrelation.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
+
+- Moran, P. A. P. (1950). "Notes on Continuous Stochastic Phenomena". Biometrika, 37 (1): 17–23. 
+- R. C. Geary (1954)"The Contiguity Ratio and Statistical Mapping". The Incorporated Statistician, Vol. 5, No. 3 (Nov., 1954), pp. 115-127+129-146 (31 pages)
+
 The following three articles are classics of Local Spatial Statistics.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
 
 - Anselin, L. (1995). "Local indicators of spatial association – LISA". Geographical Analysis, 27(4): 93-115. 
@@ -322,11 +321,14 @@ The following three articles are classics of Local Spatial Statistics.  The link
 - Ord, J.K. and Getis, A. (2010) “Local spatial autocorrelation statistics: Distributional issues and an application”. Geographical Analysis, 27(4): 286-306.
 
 ### References
-
+- D. A. Griffith (2009) “Spatial autocorrelation”.
+- Getis, A., 2010 “B.3 Spatial Autocorrelation” in Fischer, M.M., and Getis, A. 2010 Handbook of Applied Spatial Analysis: Software Tools, Methods and Applications, Springer.
+- Anselin, L. (1996) “The Moran scatterplot as an ESDA tool to assess local instability in spatial association”
+- Griffith, Daniel (2009) “Modeling spatial autocorrelation in spatial interaction data: empirical evidence from 2002 Germany journey-to-work flows”. Journal of Geographical Systems, Vol.11(2), pp.117-140.
+- Celebioglu, F., and Dall’erba, S. (2010) “Spatial disparities across the regions of Turkey: An exploratory spatial data analysis”. The Annals of Regional Science, 45:379–400.
 - Mack, Z.W.V. and Kam T.S. (2018) “Is There Space for Violence?: A Data-driven Approach to the Exploration of Spatial-Temporal Dimensions of Conflict” Proceedings of 2nd ACM SIGSPATIAL Workshop on Geospatial Humanities (ACM SIGSPATIAL’18). Seattle, Washington, USA, 10 pages.
 - TAN, Yong Ying and KAM, Tin Seong (2019). “Exploring and Visualizing Household Electricity Consumption Patterns in Singapore: A Geospatial Analytics Approach”, Information in Contemporary Society: 14th International Conference, iConference 2019, Washington, DC, USA, March 31–April 3, 2019, Proceedings. Pp 785-796. 
 - Singh A., Pathak P.K., Chauhan R.K., and Pan, W. (2011) “Infant and Child Mortality in India in the Last Two Decades: A Geospatial Analysis”. PLoS ONE 6(11), 1:19.
-
 
 ## Lesson 8: Geographical Segmentation with Spatially Constrained Cluster Analysis
 

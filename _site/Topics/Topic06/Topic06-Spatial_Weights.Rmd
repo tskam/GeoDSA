@@ -1,0 +1,332 @@
+---
+title: "Lesson 6: Spatial Weights and Applications"
+subtitle: ""
+author: "Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems"
+institute: "School of Computing and Information Systems,<br/>Singapore Management University"
+date: "2020-5-1 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, "css/text.css"]
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "js/macros.js"
+  beamer_presentation: default
+  slidy_presentation: default
+  pdf_document: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.retina = 3, warning = FALSE, message = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0", 
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF")
+```
+
+
+# Content
+
+.large[
+
+- The concept of spatial autocorrelation and how it help us to understand real world phenomena
+
+- Defining spatial Neighbourhoods and Weights
+- Contiguity-Based Spatial Weights
+    - Rook's
+    - Queen's
+- Distance-Band Spatial Weights
+- Applications of Spatial Weights
+]
+
+---
+## What is geographically referenced attribute?
+
+.large[
+A kind of data that is very similar to an ordinary data.  The only difference is that each observation is associated with some form of geography such as numbers of aged population by planning zone.
+
+```{r echo=FALSE, eval=TRUE}
+packages = c('ggstatsplot', 'DT', 'sf', 'tmap', 'tidyverse')
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+
+```{r tx-wrangle, highlight.output = 9:13}
+geodemog <- readRDS("data/geodemog.RDS")
+glimpse(geodemog)
+```
+]
+
+---
+## Describing attribute distribution
+
+The dependency ratio values by planning subzone are normally distributed.
+
+.center[
+```{r echo=FALSE, eval=TRUE, fig.width=8, fig.height=6}
+gghistostats(data = geodemog, 
+             x = DEPENDENCY,
+             xlab = "Dependency ratio",
+             centrality.parameter = "median",
+             normal.curve = TRUE,
+             normal.curve.args = list(color = "red", size = 1)
+  )
+
+```
+]
+
+---
+## Geographical distribution question
+
+.large[
+Are the planning subzones with high proportion of dependency ratio randomly distributed over space?]
+
+.center[
+
+```{r, echo=FALSE, eval=TRUE, fig.width=15, fig.height=6}
+
+tm_shape(geodemog)+
+  tm_fill("DEPENDENCY", 
+          style = "quantile", 
+          palette = "Blues",
+          title = "Dependency ratio") +
+  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            frame = TRUE) +
+  tm_borders(alpha = 0.5) 
+```
+]
+
+---
+## Geographical distribution question
+
+.large[
+Are the planning subzones with high proportion of dependency ratio randomly distributed over space?]
+.center[
+
+```{r, echo=FALSE, eval=TRUE, fig.width=15, fig.height=6}
+
+tm_shape(geodemog)+
+  tm_fill("DEPENDENCY", 
+          style = "jenks", 
+          palette = "Blues",
+          title = "Dependency ratio") +
+  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone",
+            main.title.position = "center",
+            main.title.size = 1.2,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            frame = TRUE) +
+  tm_borders(alpha = 0.5) 
+```
+]
+
+---
+# Tobler’s First law of Geography
+
+.center[
+## Everything is related to everything else,<br/> but near things are more related than distant things.
+].
+
+.pull-left[
+.large[
+The foundation of the fundamental concepts of:
+
+- spatial dependence, and 
+
+- spatial autocorrelation
+]]
+
+.pull-right[
+![](img/image6-1.jpg)]
+
+.small[[Reference: A Computer Movie Simulating Urban Growth in the Detroit Region](http://www.geog.ucsb.edu/~tobler/publications/pdf_docs/A-Computer-Movie.pdf)
+]
+
+
+---
+## Spatial Dependency
+
+.pull-left[
+.large[
+- Spatial dependence is the spatial relationship of variable values (for themes defined over space, such as rainfall) or locations (for themes defined as objects, such as cities). 
+
+- Spatial dependence is measured as the existence of statistical dependence in a collection of random variables, each of which is associated with a different geographical location.
+]]
+
+.pull-right[
+![](img/image6-2.jpg)]
+
+---
+## Spatial Autocorrelation
+
+.large[
+- Spatial autocorrelation is the term used to describe the presence of systematic spatial variation in a variable. 
+
+- The variable can assume values either: 
+    - at any point on a continuous surface (such as land use type or annual precipitation levels in a region); 
+    - at a set of fixed sites located within a region (such as prices at a set of retail outlets); or 
+    - across a set of areas that subdivide a region (such as the count or proportion of households with two or more cars in a set of Census tracts that divide an urban region).]
+    
+.center[
+![](img/image6-3.jpg)]
+
+---
+## Positive Spatial Autocorrelation
+
+.pull-left[
+.large[
+- Clustering
+    - like values tend to be in similar locations.
+
+- Neighbours are similar
+    - more alike than they would be under spatial randomness.
+    
+- Compatible with diffusion
+    - but not necessary caused by diffusion.
+]]
+
+.pull-right[
+![:scale 80%](img/image6-4.jpg)]
+
+---
+## Negative Spatial Autocorrelation
+
+.pull-left[
+.large[
+- Checkerboard patterns
+    - “opposite” of clustering
+
+- Neighbours are dissimilar
+    - more dissimilar than they would be under spatial randomness
+
+- Compatible to competition
+    - but not necessary competition
+]]
+
+.pull-right[
+![:scale 80%](img/image6-5.jpg)]
+
+---
+# What are Spatial Weights *(wij)*
+
+.large[
+- A way to define spatial neighbourhood.]
+
+.center[
+![:scale 65%](img/image6-6.jpg)]
+
+---
+## Defining Spatial Weight Matrices
+
+.center[
+![:scale 70%](img/image6-7.jpg)]
+
+---
+## Contiguity Neighbours
+
+.large[
+- Contiguity (common boundary)
+
+- What is a “shared” boundary?]
+
+.center[
+![](img/image6-8.jpg)]
+
+---
+### Beyond the basic contiguity neighbours
+
+.large[
+There are also second-order, third-order, forth-order, etc contiguity]
+
+.center[
+![:scale 60%](img/image6-18.jpg)]
+
+---
+## Weights matrix: Adjacency-based neighbours
+
+.large[
+**Quiz**: With reference to the figure below, list down the neighbour(s) of area 1202 using Rook case]
+
+.center[
+![:scale 80%](img/image6-9.jpg)]
+
+---
+## Weights Matrix: Distance-based neighbours
+
+.large[
+**Quiz:** With reference to the figure below, create a weights matrix for d = 650.
+]
+
+.center[
+![:scale 80%](img/image6-10.jpg)]
+
+---
+## Weights matrix: Measured distances
+
+.center[
+![:scale 80%](img/image6-11.jpg)]
+
+---
+## Row standardisation
+
+.large[
+- Row-standardised weights increase the influence of links from observations with few neighbours, which binary weights vary the influence of observations.
+    - Those with many neighbours are up-weighted compared to those with few.]
+
+.center[
+![:scale 70%](img/image6-12.jpg)]
+
+---
+## Spatially Lagged Variables
+
+.large[
+With a neighbor structure defined by the non-zero elements of the spatial weights matrix W, a **spatially lagged variable** is a weighted sum or a weighted average of the neighboring values for that variable. In most commonly used notation, the spatial lag of y is then expressed as Wy.
+
+Formally, for observation i, the spatial lag of yi, referred to as [Wy]i (the variable Wy observed for location i) is:] 
+
+.center[
+![:scale 40%](img/image6-17.jpg)]
+
+.large[where the weights wij consist of the elements of the i-th row of the matrix W, matched up with the corresponding elements of the vector y.
+]
+
+---
+### Application of Spatially Lagged Variables
+
+.large[
+In this project, spatially lagged variables approach is used to delineate potential locations for new DELCO stores of a Quick Service Restaurants (QSR) in Singapore.]
+
+.center[
+![:scale 75%](img/image6-19.jpg)]
+
+---
+# References
+
+
+
+
+
+
+```{r echo=FALSE, eval=FALSE}
+library(pagedown)
+pagedown::chrome_print("Topic06-Spatial_Weights.html")
+```
+
+
+

@@ -92,8 +92,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2021-06-02"/>
-  <meta property="article:created" itemprop="dateCreated" content="2021-06-02"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-06-06"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-06-06"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="GeoDSA: Topics"/>
@@ -111,7 +111,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Topics"]},{"type":"character","attributes":{},"value":["The meet-up topics are as follows:\n"]},{"type":"character","attributes":{},"value":["2021-06-02"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Topics"]},{"type":"character","attributes":{},"value":["The meet-up topics are as follows:\n"]},{"type":"character","attributes":{},"value":["2021-06-06"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2056,7 +2056,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Topics","description":"The meet-up topics are as follows:","authors":[],"publishedDate":"2021-06-02T00:00:00.000+08:00"}
+{"title":"Topics","description":"The meet-up topics are as follows:","authors":[],"publishedDate":"2021-06-06T00:00:00.000+08:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2129,7 +2129,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#references-3">References</a></li>
 <li><a href="#all-about-r-3">All About R</a></li>
 </ul></li>
-<li><a href="#lesson-6-spatial-autocorrelations-and-spatial-weights">Lesson 6: Spatial Autocorrelations and Spatial Weights</a>
+<li><a href="#lesson-6-spatial-weights-and-applications">Lesson 6: Spatial Weights and Applications</a>
 <ul>
 <li><a href="#content-5">Content</a></li>
 <li><a href="#meet-up-slides-and-hands-on-notes-3">Meet-up Slides and Hands-on Notes</a></li>
@@ -2406,40 +2406,39 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <ul>
 <li>spatstat package.</li>
 </ul>
-<h2 id="lesson-6-spatial-autocorrelations-and-spatial-weights">Lesson 6: Spatial Autocorrelations and Spatial Weights</h2>
+<h2 id="lesson-6-spatial-weights-and-applications">Lesson 6: Spatial Weights and Applications</h2>
 <h3 id="content-5">Content</h3>
 <ul>
 <li>Tobler’s First law of Geography</li>
 <li>Principles of Spatial Autocorrelation</li>
 <li>Concepts of Spatial Proximity and Spatial Weights</li>
-<li>Measures of Spatial Autocorrelation
+<li>Contiguity-Based Spatial Weights
 <ul>
-<li>Join count, Moran’s I, Geary’s c</li>
-<li>Moran scatter plot</li>
-<li>Spatial correlogram</li>
-<li>Nonparametric spatial correlogram</li>
+<li>Rook’s</li>
+<li>Queen’s</li>
 </ul></li>
+<li>Distance-Band Spatial Weights</li>
+<li>Applications of Spatial Weights</li>
 </ul>
 <h3 id="meet-up-slides-and-hands-on-notes-3">Meet-up Slides and Hands-on Notes</h3>
-<p>Slides and hands-on notes in <a href="Topics/Topic03/Topic04.html">html</a> and <a href="Topics/Topic03/Topic04.pdf">pdf</a> formats</p>
-<h3 id="self-reading-before-meet-up-2">Self-reading Before Meet-up</h3>
-<p>To read before class: - Chapter 2. Codifying the neighbourhood structure of Handbook of Spatial Analysis. - Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis. Until 3.2.2.</p>
-<p>Alternatively - Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition). This book is available in smu digital library. Until section 9.3.1.</p>
-<p>The following two papers are classics of Global Spatial Autocorrelation. The links provided bring you directly into smu digital library. You should login the library using smu account. Be warned: All classic papers assume that the readers are academic researchers.</p>
 <ul>
-<li>Moran, P. A. P. (1950). “Notes on Continuous Stochastic Phenomena”. Biometrika, 37 (1): 17–23.</li>
-<li>R. C. Geary (1954)“The Contiguity Ratio and Statistical Mapping”. The Incorporated Statistician, Vol. 5, No. 3 (Nov., 1954), pp. 115-127+129-146 (31 pages)</li>
+<li><p>Slides in <a href="Topics/Topic06/Topic06-Spatial_Weights.html">html</a> and <a href="Topics/Topic06/Topic06-Spatial_Weights.pdf">pdf</a> formats</p></li>
+<li><p><a href="Hands-on_Ex\Hands-on_Ex06\Hands-on_Ex06_Spatial_Weights.html">Handout of Hands-on Exercise</a></p></li>
+</ul>
+<h3 id="self-reading-before-meet-up-2">Self-reading Before Meet-up</h3>
+<p>To read before class:</p>
+<ul>
+<li>Chapter 2. <a href="https://www.insee.fr/en/statistiques/fichier/3635545/imet131-f-chapitre-2.pdf">Codifying the neighbourhood structure</a> of <a href="https://www.insee.fr/en/information/3635545">Handbook of Spatial Analysis: Theory and Application with R</a>.</li>
+<li>Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis. Until 3.2.2.</li>
+</ul>
+<p>Alternatively</p>
+<ul>
+<li>Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition). This book is available in smu digital library. Until section 9.3.1.</li>
 </ul>
 <h3 id="references-4">References</h3>
 <ul>
-<li>D. A. Griffith (2009) “Spatial autocorrelation”.</li>
-<li>Getis, A., 2010 “B.3 Spatial Autocorrelation” in Fischer, M.M., and Getis, A. 2010 Handbook of Applied Spatial Analysis: Software Tools, Methods and Applications, Springer.</li>
-<li>Anselin, L. (1996) “The Moran scatterplot as an ESDA tool to assess local instability in spatial association”</li>
-</ul>
-<h4 id="applications-1">Applications</h4>
-<ul>
-<li>Griffith, Daniel (2009) “Modeling spatial autocorrelation in spatial interaction data: empirical evidence from 2002 Germany journey-to-work flows”. Journal of Geographical Systems, Vol.11(2), pp.117-140.</li>
-<li>Celebioglu, F., and Dall’erba, S. (2010) “Spatial disparities across the regions of Turkey: An exploratory spatial data analysis”. The Annals of Regional Science, 45:379–400.</li>
+<li><p>François Bavaud (2010) <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4632.1998.tb00394.x">“Models for Spatial Weights: A Systematic Look”</a> <em>Geographical Analysis</em>, Vol. 30, No.2, pp 153-171.</p></li>
+<li><p>Tony H. Grubesic and Andrea L. Rosso (2014) <a href="https://www-jstor-org.libproxy.smu.edu.sg/stable/26326897?sid=primo&amp;seq=1#metadata_info_tab_contents">“The Use of Spatially Lagged Explanatory Variables for Modeling Neighborhood Amenities and Mobility in Older Adults”</a>, <em>Cityscape</em>, Vol. 16, No. 2, pp. 205-214.</p></li>
 </ul>
 <h2 id="lesson-7-localised-geospatial-statistics">Lesson 7: Localised Geospatial Statistics</h2>
 <p>Localised Geospatial Statistics are a collection of spatial statistical analysis methods for analysing the location related tendency (clusters or outliers) in the attributes of geographically referenced data (points or areas). These spatial statistics are well suited for:</p>
@@ -2475,6 +2474,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li>Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis. Section 3.3 including the sub-section. or</li>
 <li>Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition). This book is available in smu digital library. Section 9.3.2.</li>
 </ul>
+<p>The following two papers are classics of Global Spatial Autocorrelation. The links provided bring you directly into smu digital library. You should login the library using smu account. Be warned: All classic papers assume that the readers are academic researchers.</p>
+<ul>
+<li>Moran, P. A. P. (1950). “Notes on Continuous Stochastic Phenomena”. Biometrika, 37 (1): 17–23.</li>
+<li>R. C. Geary (1954)“The Contiguity Ratio and Statistical Mapping”. The Incorporated Statistician, Vol. 5, No. 3 (Nov., 1954), pp. 115-127+129-146 (31 pages)</li>
+</ul>
 <p>The following three articles are classics of Local Spatial Statistics. The links provided bring you directly into smu digital library. You should login the library using smu account. Be warned: All classic papers assume that the readers are academic researchers.</p>
 <ul>
 <li>Anselin, L. (1995). “Local indicators of spatial association – LISA”. Geographical Analysis, 27(4): 93-115.</li>
@@ -2483,6 +2487,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 <h3 id="references-5">References</h3>
 <ul>
+<li>D. A. Griffith (2009) “Spatial autocorrelation”.</li>
+<li>Getis, A., 2010 “B.3 Spatial Autocorrelation” in Fischer, M.M., and Getis, A. 2010 Handbook of Applied Spatial Analysis: Software Tools, Methods and Applications, Springer.</li>
+<li>Anselin, L. (1996) “The Moran scatterplot as an ESDA tool to assess local instability in spatial association”</li>
+<li>Griffith, Daniel (2009) “Modeling spatial autocorrelation in spatial interaction data: empirical evidence from 2002 Germany journey-to-work flows”. Journal of Geographical Systems, Vol.11(2), pp.117-140.</li>
+<li>Celebioglu, F., and Dall’erba, S. (2010) “Spatial disparities across the regions of Turkey: An exploratory spatial data analysis”. The Annals of Regional Science, 45:379–400.</li>
 <li>Mack, Z.W.V. and Kam T.S. (2018) “Is There Space for Violence?: A Data-driven Approach to the Exploration of Spatial-Temporal Dimensions of Conflict” Proceedings of 2nd ACM SIGSPATIAL Workshop on Geospatial Humanities (ACM SIGSPATIAL’18). Seattle, Washington, USA, 10 pages.</li>
 <li>TAN, Yong Ying and KAM, Tin Seong (2019). “Exploring and Visualizing Household Electricity Consumption Patterns in Singapore: A Geospatial Analytics Approach”, Information in Contemporary Society: 14th International Conference, iConference 2019, Washington, DC, USA, March 31–April 3, 2019, Proceedings. Pp 785-796.</li>
 <li>Singh A., Pathak P.K., Chauhan R.K., and Pan, W. (2011) “Infant and Child Mortality in India in the Last Two Decades: A Geospatial Analysis”. PLoS ONE 6(11), 1:19.</li>
