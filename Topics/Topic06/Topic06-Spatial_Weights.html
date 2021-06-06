@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lesson 6: Spatial Weights and Applications</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Kam Tin Seong Assoc. Professor of Information Systems" />
+    <script src="libs/header-attrs-2.8/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/text.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lesson 6: Spatial Weights and Applications
+### Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems
+### School of Computing and Information Systems,<br/>Singapore Management University
+### 2020-5-1 (updated: 2021-06-06)
+
+---
+
+
+
+
+
+
+
+# Content
+
+.large[
+
+- The concept of spatial autocorrelation and how it help us to understand real world phenomena
+
+- Defining spatial Neighbourhoods and Weights
+- Contiguity-Based Spatial Weights
+    - Rook's
+    - Queen's
+- Distance-Band Spatial Weights
+- Applications of Spatial Weights
+]
+
+---
+## What is geographically referenced attribute?
+
+.large[
+A kind of data that is very similar to an ordinary data.  The only difference is that each observation is associated with some form of geography such as numbers of aged population by planning zone.
+
+
+
+
+```
+## Rows: 323
+## Columns: 12
+## $ SUBZONE_N        &lt;chr&gt; "MARINA SOUTH", "PEARL'S HILL", "BOAT QUAY", "HENDERS~
+## $ SUBZONE_C        &lt;fct&gt; MSSZ01, OTSZ01, SRSZ03, BMSZ08, BMSZ03, BMSZ07, BMSZ0~
+## $ PLN_AREA_N       &lt;fct&gt; MARINA SOUTH, OUTRAM, SINGAPORE RIVER, BUKIT MERAH, B~
+## $ PLN_AREA_C       &lt;fct&gt; MS, OT, SR, BM, BM, BM, BM, SR, QT, QT, QT, BM, ME, R~
+## $ REGION_N         &lt;fct&gt; CENTRAL REGION, CENTRAL REGION, CENTRAL REGION, CENTR~
+## $ REGION_C         &lt;fct&gt; CR, CR, CR, CR, CR, CR, CR, CR, CR, CR, CR, CR, CR, C~
+*## $ YOUNG            &lt;dbl&gt; NA, 1100, 0, 2620, 2840, 2910, 2850, 0, 1120, 30, NA,~
+*## $ `ECONOMY ACTIVE` &lt;dbl&gt; NA, 3420, 50, 7500, 6260, 7560, 8340, 50, 2750, 210, ~
+*## $ AGED             &lt;dbl&gt; NA, 2110, 20, 3260, 1630, 3310, 3590, 10, 560, 50, NA~
+*## $ TOTAL            &lt;dbl&gt; NA, 6630, 70, 13380, 10730, 13780, 14780, 60, 4430, 2~
+*## $ DEPENDENCY       &lt;dbl&gt; NA, 0.9385965, 0.4000000, 0.7840000, 0.7140575, 0.822~
+## $ geometry         &lt;MULTIPOLYGON [m]&gt; MULTIPOLYGON (((31495.56 30..., MULTIPOL~
+```
+]
+
+---
+## Describing attribute distribution
+
+The dependency ratio values by planning subzone are normally distributed.
+
+.center[
+&lt;img src="Topic06-Spatial_Weights_files/figure-html/unnamed-chunk-2-1.png" width="576" /&gt;
+]
+
+---
+## Geographical distribution question
+
+.large[
+Are the planning subzones with high proportion of dependency ratio randomly distributed over space?]
+
+.center[
+
+&lt;img src="Topic06-Spatial_Weights_files/figure-html/unnamed-chunk-3-1.png" width="1080" /&gt;
+]
+
+---
+## Geographical distribution question
+
+.large[
+Are the planning subzones with high proportion of dependency ratio randomly distributed over space?]
+.center[
+
+&lt;img src="Topic06-Spatial_Weights_files/figure-html/unnamed-chunk-4-1.png" width="1080" /&gt;
+]
+
+---
+# Tobler’s First law of Geography
+
+.center[
+## Everything is related to everything else,&lt;br/&gt; but near things are more related than distant things.
+].
+
+.pull-left[
+.large[
+The foundation of the fundamental concepts of:
+
+- spatial dependence, and 
+
+- spatial autocorrelation
+]]
+
+.pull-right[
+![](img/image6-1.jpg)]
+
+.small[[Reference: A Computer Movie Simulating Urban Growth in the Detroit Region](http://www.geog.ucsb.edu/~tobler/publications/pdf_docs/A-Computer-Movie.pdf)
+]
+
+
+---
+## Spatial Dependency
+
+.pull-left[
+.large[
+- Spatial dependence is the spatial relationship of variable values (for themes defined over space, such as rainfall) or locations (for themes defined as objects, such as cities). 
+
+- Spatial dependence is measured as the existence of statistical dependence in a collection of random variables, each of which is associated with a different geographical location.
+]]
+
+.pull-right[
+![](img/image6-2.jpg)]
+
+---
+## Spatial Autocorrelation
+
+.large[
+- Spatial autocorrelation is the term used to describe the presence of systematic spatial variation in a variable. 
+
+- The variable can assume values either: 
+    - at any point on a continuous surface (such as land use type or annual precipitation levels in a region); 
+    - at a set of fixed sites located within a region (such as prices at a set of retail outlets); or 
+    - across a set of areas that subdivide a region (such as the count or proportion of households with two or more cars in a set of Census tracts that divide an urban region).]
+    
+.center[
+![](img/image6-3.jpg)]
+
+---
+## Positive Spatial Autocorrelation
+
+.pull-left[
+.large[
+- Clustering
+    - like values tend to be in similar locations.
+
+- Neighbours are similar
+    - more alike than they would be under spatial randomness.
+    
+- Compatible with diffusion
+    - but not necessary caused by diffusion.
+]]
+
+.pull-right[
+![:scale 80%](img/image6-4.jpg)]
+
+---
+## Negative Spatial Autocorrelation
+
+.pull-left[
+.large[
+- Checkerboard patterns
+    - “opposite” of clustering
+
+- Neighbours are dissimilar
+    - more dissimilar than they would be under spatial randomness
+
+- Compatible to competition
+    - but not necessary competition
+]]
+
+.pull-right[
+![:scale 80%](img/image6-5.jpg)]
+
+---
+# What are Spatial Weights *(wij)*
+
+.large[
+- A way to define spatial neighbourhood.]
+
+.center[
+![:scale 65%](img/image6-6.jpg)]
+
+---
+## Defining Spatial Weight Matrices
+
+.center[
+![:scale 70%](img/image6-7.jpg)]
+
+---
+## Contiguity Neighbours
+
+.large[
+- Contiguity (common boundary)
+
+- What is a “shared” boundary?]
+
+.center[
+![](img/image6-8.jpg)]
+
+---
+### Beyond the basic contiguity neighbours
+
+.large[
+There are also second-order, third-order, forth-order, etc contiguity]
+
+.center[
+![:scale 60%](img/image6-18.jpg)]
+
+---
+## Weights matrix: Adjacency-based neighbours
+
+.large[
+**Quiz**: With reference to the figure below, list down the neighbour(s) of area 1202 using Rook case]
+
+.center[
+![:scale 80%](img/image6-9.jpg)]
+
+---
+## Weights Matrix: Distance-based neighbours
+
+.large[
+**Quiz:** With reference to the figure below, create a weights matrix for d = 650.
+]
+
+.center[
+![:scale 80%](img/image6-10.jpg)]
+
+---
+## Weights matrix: Measured distances
+
+.center[
+![:scale 80%](img/image6-11.jpg)]
+
+---
+## Row standardisation
+
+.large[
+- Row-standardised weights increase the influence of links from observations with few neighbours, which binary weights vary the influence of observations.
+    - Those with many neighbours are up-weighted compared to those with few.]
+
+.center[
+![:scale 70%](img/image6-12.jpg)]
+
+---
+## Spatially Lagged Variables
+
+.large[
+With a neighbor structure defined by the non-zero elements of the spatial weights matrix W, a **spatially lagged variable** is a weighted sum or a weighted average of the neighboring values for that variable. In most commonly used notation, the spatial lag of y is then expressed as Wy.
+
+Formally, for observation i, the spatial lag of yi, referred to as [Wy]i (the variable Wy observed for location i) is:] 
+
+.center[
+![:scale 40%](img/image6-17.jpg)]
+
+.large[where the weights wij consist of the elements of the i-th row of the matrix W, matched up with the corresponding elements of the vector y.
+]
+
+---
+### Application of Spatially Lagged Variables
+
+.large[
+In this project, spatially lagged variables approach is used to delineate potential locations for new DELCO stores of a Quick Service Restaurants (QSR) in Singapore.]
+
+.center[
+![:scale 75%](img/image6-19.jpg)]
+
+---
+# References
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
