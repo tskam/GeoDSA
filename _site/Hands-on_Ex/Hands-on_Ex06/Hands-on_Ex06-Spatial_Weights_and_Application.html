@@ -1,0 +1,2805 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Hands-on Exercise 6: Spatial Weights and Application</title>
+
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-06-07"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-06-07"/>
+  <meta name="article:author" content="Dr. Kam Tin Seong, Associate Professor of Information Systems (Practice)"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Hands-on Exercise 6: Spatial Weights and Application"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Hands-on Exercise 6: Spatial Weights and Application"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Hands-on Exercise 6: Spatial Weights and Application"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Dr. Kam Tin Seong, Associate Professor of Information Systems (Practice)"]},{"type":"character","attributes":{},"value":["https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong"]},{"type":"character","attributes":{},"value":["School of Computing and Information Systems, Singapore Management University"]},{"type":"character","attributes":{},"value":["https://scis.smu.edu.sg/"]}]}]},{"type":"character","attributes":{},"value":["2021-06-07"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["code_folding","toc","toc_depth","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[4]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["data/aspatial/Dictionary.xlsx","data/aspatial/Hunan_2012.csv","data/geospatial/Hunan.dbf","data/geospatial/Hunan.prj","data/geospatial/Hunan.qpj","data/geospatial/Hunan.shp","data/geospatial/Hunan.shx","Hands-on_Ex06-Spatial_Weights_and_Application_files/anchor-4.2.2/anchor.min.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/bowser-1.9.3/bowser.min.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/distill-2.2.21/template.v2.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-12-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-13-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-14-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-16-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-17-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-18-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-21-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-22-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-25-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-26-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-26-2.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-29-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-35-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-39-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-44-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-47-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-48-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-49-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-5-1.png","Hands-on_Ex06-Spatial_Weights_and_Application_files/header-attrs-2.8/header-attrs.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/jquery-1.11.3/jquery.min.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/popper-2.6.0/popper.min.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy-bundle.umd.min.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy-light-border.css","Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy.css","Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy.umd.min.js","Hands-on_Ex06-Spatial_Weights_and_Application_files/webcomponents-2.0.0/webcomponents.js","style.css"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/header-attrs-2.8/header-attrs.js"></script>
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/popper-2.6.0/popper.min.js"></script>
+  <link href="Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="Hands-on_Ex06-Spatial_Weights_and_Application_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Hands-on Exercise 6: Spatial Weights and Application","authors":[{"author":"Dr. Kam Tin Seong, Associate Professor of Information Systems (Practice)","authorURL":"https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong","affiliation":"School of Computing and Information Systems, Singapore Management University","affiliationURL":"https://scis.smu.edu.sg/","orcidID":""}],"publishedDate":"2021-06-07T00:00:00.000+08:00","citationText":"(Practice), 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Hands-on Exercise 6: Spatial Weights and Application</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+
+</div>
+
+<div class="d-byline">
+  Dr. Kam Tin Seong, Associate Professor of Information Systems (Practice) <a href="https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong" class="uri">https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong</a> (School of Computing and Information Systems, Singapore Management University)<a href="https://scis.smu.edu.sg/" class="uri">https://scis.smu.edu.sg/</a>
+  
+<br/>2021-06-07
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#the-study-area-and-data">The Study Area and Data</a>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+</ul></li>
+<li><a href="#getting-the-data-into-r-environment">Getting the Data Into R Environment</a>
+<ul>
+<li><a href="#import-shapefile-into-r-environment">Import shapefile into r environment</a></li>
+<li><a href="#import-csv-file-into-r-environment">Import csv file into r environment</a></li>
+<li><a href="#performing-relational-join">Performing relational join</a></li>
+<li><a href="#visualising-regional-development-indicator">Visualising Regional Development Indicator</a></li>
+</ul></li>
+<li><a href="#computing-contiguity-spatial-weights">Computing Contiguity Spatial Weights</a>
+<ul>
+<li><a href="#computing-queen-contiguity-based-neighbours">Computing (QUEEN) contiguity based neighbours</a></li>
+<li><a href="#creating-rook-contiguity-based-neighbours">Creating (ROOK) contiguity based neighbours</a></li>
+<li><a href="#visualising-contiguity-weights">Visualising contiguity weights</a>
+<ul>
+<li><a href="#plotting-rook-contiguity-based-neighbours-maps">Plotting Rook contiguity based neighbours maps</a></li>
+<li><a href="#section"></a></li>
+</ul></li>
+<li><a href="#computing-distance-based-neighbours">Computing distance based neighbours</a>
+<ul>
+<li><a href="#determine-the-cut-off-distance">Determine the cut-off distance</a></li>
+<li><a href="#computing-fixed-distance-weight-matrix">Computing fixed distance weight matrix</a></li>
+<li><a href="#plotting-fixed-distance-weight-matrix">Plotting fixed distance weight matrix</a></li>
+<li><a href="#computing-adaptive-distance-weight-matrix">Computing adaptive distance weight matrix</a></li>
+<li><a href="#plotting-distance-based-neighbours">Plotting distance based neighbours</a></li>
+</ul></li>
+<li><a href="#weights-based-on-idw">Weights based on IDW</a></li>
+<li><a href="#row-standardised-weights-matrix">Row-standardised weights matrix</a></li>
+</ul></li>
+<li><a href="#application-of-spatial-weight-matrix">Application of Spatial Weight Matrix</a>
+<ul>
+<li><a href="#spatial-lag-with-row-standardized-weights">Spatial lag with row-standardized weights</a></li>
+<li><a href="#spatial-window-sum">Spatial window sum</a></li>
+</ul></li>
+<li><a href="#references">References</a></li>
+</ul>
+</nav>
+</div>
+<h1 id="overview">Overview</h1>
+<p>In this hands-on exercise, you will learn how to compute spatial weights using R. By the end to this hands-on exercise, you will be able to:</p>
+<ul>
+<li>import geospatial data using appropriate function(s) of <strong>rgdal</strong> package,</li>
+<li>import csv file using appropriate function of <strong>readr</strong> package,</li>
+<li>perform relational join using appropriate join function of <strong>dplyr</strong> package,</li>
+<li>compute spatial weights using appropriate R functions, and</li>
+<li>calculate spatially lag attributes using appropriate functions of <strong>spdep</strong> package.</li>
+</ul>
+<h1 id="the-study-area-and-data">The Study Area and Data</h1>
+<p>Two data sets will be used in this hands-on exercise, they are:</p>
+<ul>
+<li>Hunan county boundary layer. This is a geospatial data set in ESRI shapefile format.</li>
+<li>Hunan_2012.csv: This csv file contains selected Hunan’s local development indicators in 2012.</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<p>Before we get started, we need to ensure that <strong>spdep</strong>, <strong>sf</strong>, <strong>tmap</strong> and <strong>tidyverse</strong> packages of R are currently installed in your R.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'rgdal'</span>, <span class='st'>'sf'</span>, <span class='st'>'spdep'</span>, <span class='st'>'tmap'</span>, <span class='st'>'tidyverse'</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='va'>packages</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>p</span>, character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+  <span class='op'>}</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>p</span>,character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<h1 id="getting-the-data-into-r-environment">Getting the Data Into R Environment</h1>
+<p>In this section, you will learn how to bring a geospatial data and its associated attribute table into R environment. The geospatial data is in ESRI shapefile format and the attribute table is in csv fomat.</p>
+<h2 id="import-shapefile-into-r-environment">Import shapefile into r environment</h2>
+<p>The code chunk below uses <a href="https://r-spatial.github.io/sf/reference/st_read.html"><em>st_read()</em></a> of <strong>sf</strong> package to import Hunan shapefile into R. The imported shapefile will be <strong>simple features</strong> Object of <strong>sf</strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>hunan</span> <span class='op'>&lt;-</span> <span class='fu'>st_read</span><span class='op'>(</span>dsn <span class='op'>=</span> <span class='st'>"data/geospatial"</span>, 
+                 layer <span class='op'>=</span> <span class='st'>"Hunan"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Reading layer `Hunan&#39; from data source `D:\tskam\GeoDSA\Hands-on_Ex\Hands-on_Ex06\data\geospatial&#39; using driver `ESRI Shapefile&#39;
+Simple feature collection with 88 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 108.7831 ymin: 24.6342 xmax: 114.2544 ymax: 30.12812
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+<h2 id="import-csv-file-into-r-environment">Import csv file into r environment</h2>
+<p>Next, we will import <em>Hunan_2012.csv</em> into R by using <em>read_csv()</em> of <strong>readr</strong> package. The output is R dataframe class.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>hunan2012</span> <span class='op'>&lt;-</span> <span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"data/aspatial/Hunan_2012.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="performing-relational-join">Performing relational join</h2>
+<p>The code chunk below will be used to update the attribute table of <em>hunan</em>’s SpatialPolygonsDataFrame with the attribute fields of <em>hunan2012</em> dataframe. This is performed by using <em>left_join()</em> of <strong>dplyr</strong> package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>hunan</span> <span class='op'>&lt;-</span> <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>hunan</span>,<span class='va'>hunan2012</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="visualising-regional-development-indicator">Visualising Regional Development Indicator</h2>
+<p>Now, we are going to prepare a choropleth map showing the distribution of GDPPC 2012 by using <em>qtm()</em> of <strong>tmap</strong> package.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>qtm</span><span class='op'>(</span><span class='va'>hunan</span>, <span class='st'>"GDPPC"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-5-1.png" width="960" /></p>
+</div>
+<h1 id="computing-contiguity-spatial-weights">Computing Contiguity Spatial Weights</h1>
+<p>In this section, you will learn how to use <a href="https://r-spatial.github.io/spdep/reference/poly2nb.html"><em>poly2nb()</em></a> of <strong>spdep</strong> package to compute contiguity weight matrices for the study area. This function builds a neighbours list based on regions with contiguous boundaries. If you look at the documentation you will see that you can pass a “queen” argument that takes TRUE or FALSE as options. If you do not specify this argument the default is set to TRUE, that is, if you don’t specify queen = FALSE this function will return a list of first order neighbours using the Queen criteria.</p>
+<h2 id="computing-queen-contiguity-based-neighbours">Computing (QUEEN) contiguity based neighbours</h2>
+<p>The code chunk below is used to compute Queen contiguity weight matrix.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wm_q</span> <span class='op'>&lt;-</span> <span class='fu'>poly2nb</span><span class='op'>(</span><span class='va'>hunan</span>, queen<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>wm_q</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 448 
+Percentage nonzero weights: 5.785124 
+Average number of links: 5.090909 
+Link number distribution:
+
+ 1  2  3  4  5  6  7  8  9 11 
+ 2  2 12 16 24 14 11  4  2  1 
+2 least connected regions:
+30 65 with 1 link
+1 most connected region:
+85 with 11 links</code></pre>
+</div>
+<p>The summary report above shows that there are 88 area units in Hunan. The most connected area unit has 11 neighbours. There are two area units with only one heighbours.</p>
+<p>For each polygon in our polygon object, <em>wm_q</em> lists all neighboring polygons. For example, to see the neighbors for the first polygon in the object, type:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wm_q</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1]  2  3  4 57 85</code></pre>
+</div>
+<p>Polygon 1 has 5 neighbors. The numbers represent the polygon IDs as stored in hunan SpatialPolygonsDataFrame class.</p>
+<p>We can retrive the county name of Polygon ID=1 by using the code chunk below:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>hunan</span><span class='op'>$</span><span class='va'>NAME_3</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Anxiang&quot;</code></pre>
+</div>
+<p>The output reveals that Polygon ID=1 is Anxiang county.</p>
+<p>To reveal the county names of the five neighboring polygons, the code chunk will be used:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>hunan</span><span class='op'>$</span><span class='va'>NAME_3</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>57</span>,<span class='fl'>85</span><span class='op'>)</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Hanshou&quot; &quot;Jinshi&quot;  &quot;Li&quot;      &quot;Nan&quot;     &quot;Taoyuan&quot;</code></pre>
+</div>
+<p>You can display the complete weight matrix by using <em>str()</em>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>wm_q</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>List of 88
+ $ : int [1:5] 2 3 4 57 85
+ $ : int [1:5] 1 57 58 78 85
+ $ : int [1:4] 1 4 5 85
+ $ : int [1:4] 1 3 5 6
+ $ : int [1:4] 3 4 6 85
+ $ : int [1:5] 4 5 69 75 85
+ $ : int [1:4] 67 71 74 84
+ $ : int [1:7] 9 46 47 56 78 80 86
+ $ : int [1:6] 8 66 68 78 84 86
+ $ : int [1:8] 16 17 19 20 22 70 72 73
+ $ : int [1:3] 14 17 72
+ $ : int [1:5] 13 60 61 63 83
+ $ : int [1:4] 12 15 60 83
+ $ : int [1:3] 11 15 17
+ $ : int [1:4] 13 14 17 83
+ $ : int [1:5] 10 17 22 72 83
+ $ : int [1:7] 10 11 14 15 16 72 83
+ $ : int [1:5] 20 22 23 77 83
+ $ : int [1:6] 10 20 21 73 74 86
+ $ : int [1:7] 10 18 19 21 22 23 82
+ $ : int [1:5] 19 20 35 82 86
+ $ : int [1:5] 10 16 18 20 83
+ $ : int [1:7] 18 20 38 41 77 79 82
+ $ : int [1:5] 25 28 31 32 54
+ $ : int [1:5] 24 28 31 33 81
+ $ : int [1:4] 27 33 42 81
+ $ : int [1:3] 26 29 42
+ $ : int [1:5] 24 25 33 49 54
+ $ : int [1:3] 27 37 42
+ $ : int 33
+ $ : int [1:8] 24 25 32 36 39 40 56 81
+ $ : int [1:8] 24 31 50 54 55 56 75 85
+ $ : int [1:5] 25 26 28 30 81
+ $ : int [1:3] 36 45 80
+ $ : int [1:6] 21 41 47 80 82 86
+ $ : int [1:6] 31 34 40 45 56 80
+ $ : int [1:4] 29 42 43 44
+ $ : int [1:4] 23 44 77 79
+ $ : int [1:5] 31 40 42 43 81
+ $ : int [1:6] 31 36 39 43 45 79
+ $ : int [1:6] 23 35 45 79 80 82
+ $ : int [1:7] 26 27 29 37 39 43 81
+ $ : int [1:6] 37 39 40 42 44 79
+ $ : int [1:4] 37 38 43 79
+ $ : int [1:6] 34 36 40 41 79 80
+ $ : int [1:3] 8 47 86
+ $ : int [1:5] 8 35 46 80 86
+ $ : int [1:5] 50 51 52 53 55
+ $ : int [1:4] 28 51 52 54
+ $ : int [1:5] 32 48 52 54 55
+ $ : int [1:3] 48 49 52
+ $ : int [1:5] 48 49 50 51 54
+ $ : int [1:3] 48 55 75
+ $ : int [1:6] 24 28 32 49 50 52
+ $ : int [1:5] 32 48 50 53 75
+ $ : int [1:7] 8 31 32 36 78 80 85
+ $ : int [1:6] 1 2 58 64 76 85
+ $ : int [1:5] 2 57 68 76 78
+ $ : int [1:4] 60 61 87 88
+ $ : int [1:4] 12 13 59 61
+ $ : int [1:7] 12 59 60 62 63 77 87
+ $ : int [1:3] 61 77 87
+ $ : int [1:4] 12 61 77 83
+ $ : int [1:2] 57 76
+ $ : int 76
+ $ : int [1:5] 9 67 68 76 84
+ $ : int [1:4] 7 66 76 84
+ $ : int [1:5] 9 58 66 76 78
+ $ : int [1:3] 6 75 85
+ $ : int [1:3] 10 72 73
+ $ : int [1:3] 7 73 74
+ $ : int [1:5] 10 11 16 17 70
+ $ : int [1:5] 10 19 70 71 74
+ $ : int [1:6] 7 19 71 73 84 86
+ $ : int [1:6] 6 32 53 55 69 85
+ $ : int [1:7] 57 58 64 65 66 67 68
+ $ : int [1:7] 18 23 38 61 62 63 83
+ $ : int [1:7] 2 8 9 56 58 68 85
+ $ : int [1:7] 23 38 40 41 43 44 45
+ $ : int [1:8] 8 34 35 36 41 45 47 56
+ $ : int [1:6] 25 26 31 33 39 42
+ $ : int [1:5] 20 21 23 35 41
+ $ : int [1:9] 12 13 15 16 17 18 22 63 77
+ $ : int [1:6] 7 9 66 67 74 86
+ $ : int [1:11] 1 2 3 5 6 32 56 57 69 75 ...
+ $ : int [1:9] 8 9 19 21 35 46 47 74 84
+ $ : int [1:4] 59 61 62 88
+ $ : int [1:2] 59 87
+ - attr(*, &quot;class&quot;)= chr &quot;nb&quot;
+ - attr(*, &quot;region.id&quot;)= chr [1:88] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+ - attr(*, &quot;call&quot;)= language poly2nb(pl = hunan, queen = TRUE)
+ - attr(*, &quot;type&quot;)= chr &quot;queen&quot;
+ - attr(*, &quot;sym&quot;)= logi TRUE</code></pre>
+</div>
+<p>Be warned: The output might cut across several pages. Save the trees if you are going to print out the report.</p>
+<h2 id="creating-rook-contiguity-based-neighbours">Creating (ROOK) contiguity based neighbours</h2>
+<p>The code chunk below is used to compute Rook contiguity weight matrix.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wm_r</span> <span class='op'>&lt;-</span> <span class='fu'>poly2nb</span><span class='op'>(</span><span class='va'>hunan</span>, queen<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>wm_r</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 440 
+Percentage nonzero weights: 5.681818 
+Average number of links: 5 
+Link number distribution:
+
+ 1  2  3  4  5  6  7  8  9 10 
+ 2  2 12 20 21 14 11  3  2  1 
+2 least connected regions:
+30 65 with 1 link
+1 most connected region:
+85 with 10 links</code></pre>
+</div>
+<p>The summary report above shows that there are 88 area units in Hunan. The most connect area unit has 10 neighbours. There are two area units with only one heighbours.</p>
+<h2 id="visualising-contiguity-weights">Visualising contiguity weights</h2>
+<p>A connectivity graph takes a point and displays a line to each neighboring point. We are working with polygons at the moment, so we will need to get points in order to make our connectivity graphs. The most typically method for this will be polygon centroids. We will calculate these in the sf package before moving onto the graphs. Getting Latitude and Longitude of Polygon Centroids</p>
+<p>We will need points to associate with each polygon before we can make our connectivity graph. It will be a little more complicated than just running st_centroid on the sf object: us.bound. We need the coordinates in a separate data frame for this to work. To do this we will use a mapping function. The mapping function applies a given function to each element of a vector and returns a vector of the same length. Our input vector will be the geometry column of us.bound. Our function will be st_centroid. We will be using map_dbl variation of map from the purrr package. For more documentation, check out map documentation</p>
+<p>To get our longitude values we map the st_centroid function over the geometry column of us.bound and access the longitude value through double bracket notation [[]] and 1. This allows us to get only the longitude, which is the first value in each centroid.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>longitude</span> <span class='op'>&lt;-</span> <span class='fu'>map_dbl</span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, <span class='op'>~</span><span class='fu'>st_centroid</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>We do the same for latitude with one key difference. We access the second value per each centroid with [[2]].</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>latitude</span> <span class='op'>&lt;-</span> <span class='fu'>map_dbl</span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, <span class='op'>~</span><span class='fu'>st_centroid</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Now that we have latitude and longitude, we use cbind to put longitude and latitude into the same object.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>coords</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>longitude</span>, <span class='va'>latitude</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>We check the first few observations to see if things are formatted correctly.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>coords</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>     longitude latitude
+[1,]  112.1531 29.44362
+[2,]  112.0372 28.86489
+[3,]  111.8917 29.47107
+[4,]  111.7031 29.74499
+[5,]  111.6138 29.49258
+[6,]  111.0341 29.79863</code></pre>
+</div>
+<p>Plotting Queen contiguity based neighbours maps</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wm_q</span>, <span class='va'>coords</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>0.6</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, col<span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-16-1.png" width="960" /></p>
+</div>
+<h3 id="plotting-rook-contiguity-based-neighbours-maps">Plotting Rook contiguity based neighbours maps</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wm_r</span>, <span class='va'>coords</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>0.6</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-17-1.png" width="960" /></p>
+</div>
+<h3 id="section"></h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wm_q</span>, <span class='va'>coords</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>0.6</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, col<span class='op'>=</span> <span class='st'>"red"</span>, main<span class='op'>=</span><span class='st'>"Queen Contiguity"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wm_r</span>, <span class='va'>coords</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>0.6</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, col <span class='op'>=</span> <span class='st'>"red"</span>, main<span class='op'>=</span><span class='st'>"Rook Contiguity"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-18-1.png" width="960" /></p>
+</div>
+<h2 id="computing-distance-based-neighbours">Computing distance based neighbours</h2>
+<p>In this section, you will learn how to derive distance-based weight matrices by using <a href="https://r-spatial.github.io/spdep/reference/dnearneigh.html"><em>dnearneigh()</em></a> of <strong>spdep</strong> package.</p>
+<p>The function identifies neighbours of region points by Euclidean distance with a distance band with lower d1= and upper d2= bounds controlled by the bounds= argument. If unprojected coordinates are used and either specified in the coordinates object x or with x as a two column matrix and longlat=TRUE, great circle distances in <strong>km</strong> will be calculated assuming the WGS84 reference ellipsoid.</p>
+<h3 id="determine-the-cut-off-distance">Determine the cut-off distance</h3>
+<p>Firstly, we need to determine the upper limit for distance band by using the steps below:</p>
+<ul>
+<li>Return a matrix with the indices of points belonging to the set of the k nearest neighbours of each other by using <a href="https://r-spatial.github.io/spdep/reference/knearneigh.html"><em>knearneigh()</em></a> of <strong>spdep</strong>.</li>
+<li>Convert the knn object returned by <em>knearneigh()</em> into a neighbours list of class nb with a list of integer vectors containing neighbour region number ids by using <a href="https://r-spatial.github.io/spdep/reference/knn2nb.html"><em>knn2nb()</em></a>.</li>
+<li>Return the length of neighbour relationship edges by using <a href="https://r-spatial.github.io/spdep/reference/nbdists.html"><em>nbdists()</em></a> of <strong>spdep</strong>. The function returns in the units of the coordinates if the coordinates are projected, in km otherwise.</li>
+<li>Remove the list structure of the returned object by using <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unlist"><strong>unlist()</strong></a>.</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#coords &lt;- coordinates(hunan)</span>
+<span class='va'>k1</span> <span class='op'>&lt;-</span> <span class='fu'>knn2nb</span><span class='op'>(</span><span class='fu'>knearneigh</span><span class='op'>(</span><span class='va'>coords</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>k1dists</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'>nbdists</span><span class='op'>(</span><span class='va'>k1</span>, <span class='va'>coords</span>, longlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>k1dists</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  24.79   32.57   38.01   39.07   44.52   61.79 </code></pre>
+</div>
+<p>The summary report shows that the largest first nearest neighbour distance is 61.79 km, so using this as the upper threshold gives certainty that all units will have at least one neighbour.</p>
+<h3 id="computing-fixed-distance-weight-matrix">Computing fixed distance weight matrix</h3>
+<p>Now, we will compute the distance weight matrix by using <em>dnearneigh()</em> as shown in the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wm_d62</span> <span class='op'>&lt;-</span> <span class='fu'>dnearneigh</span><span class='op'>(</span><span class='va'>coords</span>, <span class='fl'>0</span>, <span class='fl'>62</span>, longlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>wm_d62</span>
+</code></pre>
+</div>
+<pre><code>Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 324 
+Percentage nonzero weights: 4.183884 
+Average number of links: 3.681818 </code></pre>
+</div>
+<p><strong>Quiz:</strong> What is the meaning of “Average number of links: 3.681818” shown above?</p>
+<p>Next, we will use <em>str()</em> to display the content of wm_d62 weight matrix.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>wm_d62</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>List of 88
+ $ : int [1:5] 3 4 5 57 64
+ $ : int [1:4] 57 58 78 85
+ $ : int [1:4] 1 4 5 57
+ $ : int [1:3] 1 3 5
+ $ : int [1:4] 1 3 4 85
+ $ : int 69
+ $ : int [1:2] 67 84
+ $ : int [1:4] 9 46 47 78
+ $ : int [1:4] 8 46 68 84
+ $ : int [1:4] 16 22 70 72
+ $ : int [1:3] 14 17 72
+ $ : int [1:5] 13 60 61 63 83
+ $ : int [1:4] 12 15 60 83
+ $ : int [1:2] 11 17
+ $ : int 13
+ $ : int [1:4] 10 17 22 83
+ $ : int [1:3] 11 14 16
+ $ : int [1:3] 20 22 63
+ $ : int [1:5] 20 21 73 74 82
+ $ : int [1:5] 18 19 21 22 82
+ $ : int [1:6] 19 20 35 74 82 86
+ $ : int [1:4] 10 16 18 20
+ $ : int [1:3] 41 77 82
+ $ : int [1:4] 25 28 31 54
+ $ : int [1:4] 24 28 33 81
+ $ : int [1:4] 27 33 42 81
+ $ : int [1:2] 26 29
+ $ : int [1:6] 24 25 33 49 52 54
+ $ : int [1:2] 27 37
+ $ : int 33
+ $ : int [1:2] 24 36
+ $ : int 50
+ $ : int [1:5] 25 26 28 30 81
+ $ : int [1:3] 36 45 80
+ $ : int [1:6] 21 41 46 47 80 82
+ $ : int [1:5] 31 34 45 56 80
+ $ : int [1:2] 29 42
+ $ : int [1:3] 44 77 79
+ $ : int [1:4] 40 42 43 81
+ $ : int [1:3] 39 45 79
+ $ : int [1:5] 23 35 45 79 82
+ $ : int [1:5] 26 37 39 43 81
+ $ : int [1:3] 39 42 44
+ $ : int [1:2] 38 43
+ $ : int [1:6] 34 36 40 41 79 80
+ $ : int [1:5] 8 9 35 47 86
+ $ : int [1:5] 8 35 46 80 86
+ $ : int [1:5] 50 51 52 53 55
+ $ : int [1:4] 28 51 52 54
+ $ : int [1:6] 32 48 51 52 54 55
+ $ : int [1:4] 48 49 50 52
+ $ : int [1:6] 28 48 49 50 51 54
+ $ : int [1:2] 48 55
+ $ : int [1:5] 24 28 49 50 52
+ $ : int [1:4] 48 50 53 75
+ $ : int 36
+ $ : int [1:5] 1 2 3 58 64
+ $ : int [1:5] 2 57 64 66 68
+ $ : int [1:3] 60 87 88
+ $ : int [1:4] 12 13 59 61
+ $ : int [1:5] 12 60 62 63 87
+ $ : int [1:4] 61 63 77 87
+ $ : int [1:5] 12 18 61 62 83
+ $ : int [1:4] 1 57 58 76
+ $ : int 76
+ $ : int [1:5] 58 67 68 76 84
+ $ : int [1:2] 7 66
+ $ : int [1:4] 9 58 66 84
+ $ : int [1:2] 6 75
+ $ : int [1:3] 10 72 73
+ $ : int [1:2] 73 74
+ $ : int [1:3] 10 11 70
+ $ : int [1:4] 19 70 71 74
+ $ : int [1:5] 19 21 71 73 86
+ $ : int [1:2] 55 69
+ $ : int [1:3] 64 65 66
+ $ : int [1:3] 23 38 62
+ $ : int [1:2] 2 8
+ $ : int [1:4] 38 40 41 45
+ $ : int [1:5] 34 35 36 45 47
+ $ : int [1:5] 25 26 33 39 42
+ $ : int [1:6] 19 20 21 23 35 41
+ $ : int [1:4] 12 13 16 63
+ $ : int [1:4] 7 9 66 68
+ $ : int [1:2] 2 5
+ $ : int [1:4] 21 46 47 74
+ $ : int [1:4] 59 61 62 88
+ $ : int [1:2] 59 87
+ - attr(*, &quot;class&quot;)= chr &quot;nb&quot;
+ - attr(*, &quot;region.id&quot;)= chr [1:88] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+ - attr(*, &quot;call&quot;)= language dnearneigh(x = coords, d1 = 0, d2 = 62, longlat = TRUE)
+ - attr(*, &quot;dnn&quot;)= num [1:2] 0 62
+ - attr(*, &quot;bounds&quot;)= chr [1:2] &quot;GE&quot; &quot;LE&quot;
+ - attr(*, &quot;nbtype&quot;)= chr &quot;distance&quot;
+ - attr(*, &quot;sym&quot;)= logi TRUE</code></pre>
+</div>
+<p>Another way to display the structure of the weight matrix is to combine <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/table"><em>table()</em></a> and <a href="https://r-spatial.github.io/spdep/reference/card.html"><em>card()</em></a> of spdep.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>County</span>, <span class='fu'>card</span><span class='op'>(</span><span class='va'>wm_d62</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>               
+                1 2 3 4 5 6
+  Anhua         1 0 0 0 0 0
+  Anren         0 0 0 1 0 0
+  Anxiang       0 0 0 0 1 0
+  Baojing       0 0 0 0 1 0
+  Chaling       0 0 1 0 0 0
+  Changning     0 0 1 0 0 0
+  Changsha      0 0 0 1 0 0
+  Chengbu       0 1 0 0 0 0
+  Chenxi        0 0 0 1 0 0
+  Cili          0 1 0 0 0 0
+  Dao           0 0 0 1 0 0
+  Dongan        0 0 1 0 0 0
+  Dongkou       0 0 0 1 0 0
+  Fenghuang     0 0 0 1 0 0
+  Guidong       0 0 1 0 0 0
+  Guiyang       0 0 0 1 0 0
+  Guzhang       0 0 0 0 0 1
+  Hanshou       0 0 0 1 0 0
+  Hengdong      0 0 0 0 1 0
+  Hengnan       0 0 0 0 1 0
+  Hengshan      0 0 0 0 0 1
+  Hengyang      0 0 0 0 0 1
+  Hongjiang     0 0 0 0 1 0
+  Huarong       0 0 0 1 0 0
+  Huayuan       0 0 0 1 0 0
+  Huitong       0 0 0 1 0 0
+  Jiahe         0 0 0 0 1 0
+  Jianghua      0 0 1 0 0 0
+  Jiangyong     0 1 0 0 0 0
+  Jingzhou      0 1 0 0 0 0
+  Jinshi        0 0 0 1 0 0
+  Jishou        0 0 0 0 0 1
+  Lanshan       0 0 0 1 0 0
+  Leiyang       0 0 0 1 0 0
+  Lengshuijiang 0 0 1 0 0 0
+  Li            0 0 1 0 0 0
+  Lianyuan      0 0 0 0 1 0
+  Liling        0 1 0 0 0 0
+  Linli         0 0 0 1 0 0
+  Linwu         0 0 0 1 0 0
+  Linxiang      1 0 0 0 0 0
+  Liuyang       0 1 0 0 0 0
+  Longhui       0 0 1 0 0 0
+  Longshan      0 1 0 0 0 0
+  Luxi          0 0 0 0 1 0
+  Mayang        0 0 0 0 0 1
+  Miluo         0 0 0 0 1 0
+  Nan           0 0 0 0 1 0
+  Ningxiang     0 0 0 1 0 0
+  Ningyuan      0 0 0 0 1 0
+  Pingjiang     0 1 0 0 0 0
+  Qidong        0 0 1 0 0 0
+  Qiyang        0 0 1 0 0 0
+  Rucheng       0 1 0 0 0 0
+  Sangzhi       0 1 0 0 0 0
+  Shaodong      0 0 0 0 1 0
+  Shaoshan      0 0 0 0 1 0
+  Shaoyang      0 0 0 1 0 0
+  Shimen        1 0 0 0 0 0
+  Shuangfeng    0 0 0 0 0 1
+  Shuangpai     0 0 0 1 0 0
+  Suining       0 0 0 0 1 0
+  Taojiang      0 1 0 0 0 0
+  Taoyuan       0 1 0 0 0 0
+  Tongdao       0 1 0 0 0 0
+  Wangcheng     0 0 0 1 0 0
+  Wugang        0 0 1 0 0 0
+  Xiangtan      0 0 0 1 0 0
+  Xiangxiang    0 0 0 0 1 0
+  Xiangyin      0 0 0 1 0 0
+  Xinhua        0 0 0 0 1 0
+  Xinhuang      1 0 0 0 0 0
+  Xinning       0 1 0 0 0 0
+  Xinshao       0 0 0 0 0 1
+  Xintian       0 0 0 0 1 0
+  Xupu          0 1 0 0 0 0
+  Yanling       0 0 1 0 0 0
+  Yizhang       1 0 0 0 0 0
+  Yongshun      0 0 0 1 0 0
+  Yongxing      0 0 0 1 0 0
+  You           0 0 0 1 0 0
+  Yuanjiang     0 0 0 0 1 0
+  Yuanling      1 0 0 0 0 0
+  Yueyang       0 0 1 0 0 0
+  Zhijiang      0 0 0 0 1 0
+  Zhongfang     0 0 0 1 0 0
+  Zhuzhou       0 0 0 0 1 0
+  Zixing        0 0 1 0 0 0</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>n_comp</span> <span class='op'>&lt;-</span> <span class='fu'>n.comp.nb</span><span class='op'>(</span><span class='va'>wm_d62</span><span class='op'>)</span>
+<span class='va'>n_comp</span><span class='op'>$</span><span class='va'>nc</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>n_comp</span><span class='op'>$</span><span class='va'>comp.id</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+ 1 
+88 </code></pre>
+</div>
+<h3 id="plotting-fixed-distance-weight-matrix">Plotting fixed distance weight matrix</h3>
+<p>Next, we will plot the distance weight matrix by using the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wm_d62</span>, <span class='va'>coords</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, <span class='va'>coords</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, col<span class='op'>=</span><span class='st'>"red"</span>, length<span class='op'>=</span><span class='fl'>0.08</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-25-1.png" width="960" /></p>
+</div>
+<p>The red lines show the links of 1st nearest neighbours and the black lines show the links of neighbours within the cut-off distance of 62km.</p>
+<p>Alternatively, we can plot both of them next to each other by using the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>k1</span>, <span class='va'>coords</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, col<span class='op'>=</span><span class='st'>"red"</span>, length<span class='op'>=</span><span class='fl'>0.08</span>, main<span class='op'>=</span><span class='st'>"1st nearest neighbours"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wm_d62</span>, <span class='va'>coords</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>0.6</span>, main<span class='op'>=</span><span class='st'>"Distance link"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-26-1.png" width="960" /></p>
+</div>
+<h3 id="computing-adaptive-distance-weight-matrix">Computing adaptive distance weight matrix</h3>
+<p>One of the characteristics of fixed distance weight matrix is that more densely settled areas (usually the urban areas) tend to have more neighbours and the less densely settled areas (usually the rural counties) tend to have lesser neighbours. Having many neighbours smoothes the neighbour relationship across more neighbours.</p>
+<p>It is possible to control the numbers of neighbours directly using k-nearest neighbours, either accepting asymmetric neighbours or imposing symmetry as shown in the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>knn6</span> <span class='op'>&lt;-</span> <span class='fu'>knn2nb</span><span class='op'>(</span><span class='fu'>knearneigh</span><span class='op'>(</span><span class='va'>coords</span>, k<span class='op'>=</span><span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>knn6</span>
+</code></pre>
+</div>
+<pre><code>Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 528 
+Percentage nonzero weights: 6.818182 
+Average number of links: 6 
+Non-symmetric neighbours list</code></pre>
+</div>
+<p>Similarly, we can display the content of the matrix by using <em>str()</em>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>knn6</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>List of 88
+ $ : int [1:6] 2 3 4 5 57 64
+ $ : int [1:6] 1 3 57 58 78 85
+ $ : int [1:6] 1 2 4 5 57 85
+ $ : int [1:6] 1 3 5 6 69 85
+ $ : int [1:6] 1 3 4 6 69 85
+ $ : int [1:6] 3 4 5 69 75 85
+ $ : int [1:6] 9 66 67 71 74 84
+ $ : int [1:6] 9 46 47 78 80 86
+ $ : int [1:6] 8 46 66 68 84 86
+ $ : int [1:6] 16 19 22 70 72 73
+ $ : int [1:6] 10 14 16 17 70 72
+ $ : int [1:6] 13 15 60 61 63 83
+ $ : int [1:6] 12 15 60 61 63 83
+ $ : int [1:6] 11 15 16 17 72 83
+ $ : int [1:6] 12 13 14 17 60 83
+ $ : int [1:6] 10 11 17 22 72 83
+ $ : int [1:6] 10 11 14 16 72 83
+ $ : int [1:6] 20 22 23 63 77 83
+ $ : int [1:6] 10 20 21 73 74 82
+ $ : int [1:6] 18 19 21 22 23 82
+ $ : int [1:6] 19 20 35 74 82 86
+ $ : int [1:6] 10 16 18 19 20 83
+ $ : int [1:6] 18 20 41 77 79 82
+ $ : int [1:6] 25 28 31 52 54 81
+ $ : int [1:6] 24 28 31 33 54 81
+ $ : int [1:6] 25 27 29 33 42 81
+ $ : int [1:6] 26 29 30 37 42 81
+ $ : int [1:6] 24 25 33 49 52 54
+ $ : int [1:6] 26 27 37 42 43 81
+ $ : int [1:6] 26 27 28 33 49 81
+ $ : int [1:6] 24 25 36 39 40 54
+ $ : int [1:6] 24 31 50 54 55 56
+ $ : int [1:6] 25 26 28 30 49 81
+ $ : int [1:6] 36 40 41 45 56 80
+ $ : int [1:6] 21 41 46 47 80 82
+ $ : int [1:6] 31 34 40 45 56 80
+ $ : int [1:6] 26 27 29 42 43 44
+ $ : int [1:6] 23 43 44 62 77 79
+ $ : int [1:6] 25 40 42 43 44 81
+ $ : int [1:6] 31 36 39 43 45 79
+ $ : int [1:6] 23 35 45 79 80 82
+ $ : int [1:6] 26 27 37 39 43 81
+ $ : int [1:6] 37 39 40 42 44 79
+ $ : int [1:6] 37 38 39 42 43 79
+ $ : int [1:6] 34 36 40 41 79 80
+ $ : int [1:6] 8 9 35 47 78 86
+ $ : int [1:6] 8 21 35 46 80 86
+ $ : int [1:6] 49 50 51 52 53 55
+ $ : int [1:6] 28 33 48 51 52 54
+ $ : int [1:6] 32 48 51 52 54 55
+ $ : int [1:6] 28 48 49 50 52 54
+ $ : int [1:6] 28 48 49 50 51 54
+ $ : int [1:6] 48 50 51 52 55 75
+ $ : int [1:6] 24 28 49 50 51 52
+ $ : int [1:6] 32 48 50 52 53 75
+ $ : int [1:6] 32 34 36 78 80 85
+ $ : int [1:6] 1 2 3 58 64 68
+ $ : int [1:6] 2 57 64 66 68 78
+ $ : int [1:6] 12 13 60 61 87 88
+ $ : int [1:6] 12 13 59 61 63 87
+ $ : int [1:6] 12 13 60 62 63 87
+ $ : int [1:6] 12 38 61 63 77 87
+ $ : int [1:6] 12 18 60 61 62 83
+ $ : int [1:6] 1 3 57 58 68 76
+ $ : int [1:6] 58 64 66 67 68 76
+ $ : int [1:6] 9 58 67 68 76 84
+ $ : int [1:6] 7 65 66 68 76 84
+ $ : int [1:6] 9 57 58 66 78 84
+ $ : int [1:6] 4 5 6 32 75 85
+ $ : int [1:6] 10 16 19 22 72 73
+ $ : int [1:6] 7 19 73 74 84 86
+ $ : int [1:6] 10 11 14 16 17 70
+ $ : int [1:6] 10 19 21 70 71 74
+ $ : int [1:6] 19 21 71 73 84 86
+ $ : int [1:6] 6 32 50 53 55 69
+ $ : int [1:6] 58 64 65 66 67 68
+ $ : int [1:6] 18 23 38 61 62 63
+ $ : int [1:6] 2 8 9 46 58 68
+ $ : int [1:6] 38 40 41 43 44 45
+ $ : int [1:6] 34 35 36 41 45 47
+ $ : int [1:6] 25 26 28 33 39 42
+ $ : int [1:6] 19 20 21 23 35 41
+ $ : int [1:6] 12 13 15 16 22 63
+ $ : int [1:6] 7 9 66 68 71 74
+ $ : int [1:6] 2 3 4 5 56 69
+ $ : int [1:6] 8 9 21 46 47 74
+ $ : int [1:6] 59 60 61 62 63 88
+ $ : int [1:6] 59 60 61 62 63 87
+ - attr(*, &quot;region.id&quot;)= chr [1:88] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+ - attr(*, &quot;call&quot;)= language knearneigh(x = coords, k = 6)
+ - attr(*, &quot;sym&quot;)= logi FALSE
+ - attr(*, &quot;type&quot;)= chr &quot;knn&quot;
+ - attr(*, &quot;knn-k&quot;)= num 6
+ - attr(*, &quot;class&quot;)= chr &quot;nb&quot;</code></pre>
+</div>
+<p>Notice that each county has six neighbours, no less no more!</p>
+<h3 id="plotting-distance-based-neighbours">Plotting distance based neighbours</h3>
+<p>We can plot the weight matrix using the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>geometry</span>, border<span class='op'>=</span><span class='st'>"lightgrey"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>knn6</span>, <span class='va'>coords</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>0.6</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-29-1.png" width="960" /></p>
+</div>
+<h2 id="weights-based-on-idw">Weights based on IDW</h2>
+<p>In this section, you will learn how to derive a spatial weight matrix based on Inversed Distance method.</p>
+<p>First, we will compute the distances between areas by using <a href="https://r-spatial.github.io/spdep/reference/nbdists.html"><em>nbdists()</em></a> of <strong>spdep</strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dist</span> <span class='op'>&lt;-</span> <span class='fu'>nbdists</span><span class='op'>(</span><span class='va'>wm_q</span>, <span class='va'>coords</span>, longlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>ids</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dist</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>1</span><span class='op'>/</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ids</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+[1] 0.01535405 0.03916350 0.01820896 0.02807922 0.01145113
+
+[[2]]
+[1] 0.01535405 0.01764308 0.01925924 0.02323898 0.01719350
+
+[[3]]
+[1] 0.03916350 0.02822040 0.03695795 0.01395765
+
+[[4]]
+[1] 0.01820896 0.02822040 0.03414741 0.01539065
+
+[[5]]
+[1] 0.03695795 0.03414741 0.01524598 0.01618354
+
+[[6]]
+[1] 0.015390649 0.015245977 0.021748129 0.011883901 0.009810297
+
+[[7]]
+[1] 0.01708612 0.01473997 0.01150924 0.01872915
+
+[[8]]
+[1] 0.02022144 0.03453056 0.02529256 0.01036340 0.02284457 0.01500600
+[7] 0.01515314
+
+[[9]]
+[1] 0.02022144 0.01574888 0.02109502 0.01508028 0.02902705 0.01502980
+
+[[10]]
+[1] 0.02281552 0.01387777 0.01538326 0.01346650 0.02100510 0.02631658
+[7] 0.01874863 0.01500046
+
+[[11]]
+[1] 0.01882869 0.02243492 0.02247473
+
+[[12]]
+[1] 0.02779227 0.02419652 0.02333385 0.02986130 0.02335429
+
+[[13]]
+[1] 0.02779227 0.02650020 0.02670323 0.01714243
+
+[[14]]
+[1] 0.01882869 0.01233868 0.02098555
+
+[[15]]
+[1] 0.02650020 0.01233868 0.01096284 0.01562226
+
+[[16]]
+[1] 0.02281552 0.02466962 0.02765018 0.01476814 0.01671430
+
+[[17]]
+[1] 0.01387777 0.02243492 0.02098555 0.01096284 0.02466962 0.01593341
+[7] 0.01437996
+
+[[18]]
+[1] 0.02039779 0.02032767 0.01481665 0.01473691 0.01459380
+
+[[19]]
+[1] 0.01538326 0.01926323 0.02668415 0.02140253 0.01613589 0.01412874
+
+[[20]]
+[1] 0.01346650 0.02039779 0.01926323 0.01723025 0.02153130 0.01469240
+[7] 0.02327034
+
+[[21]]
+[1] 0.02668415 0.01723025 0.01766299 0.02644986 0.02163800
+
+[[22]]
+[1] 0.02100510 0.02765018 0.02032767 0.02153130 0.01489296
+
+[[23]]
+[1] 0.01481665 0.01469240 0.01401432 0.02246233 0.01880425 0.01530458
+[7] 0.01849605
+
+[[24]]
+[1] 0.02354598 0.01837201 0.02607264 0.01220154 0.02514180
+
+[[25]]
+[1] 0.02354598 0.02188032 0.01577283 0.01949232 0.02947957
+
+[[26]]
+[1] 0.02155798 0.01745522 0.02212108 0.02220532
+
+[[27]]
+[1] 0.02155798 0.02490625 0.01562326
+
+[[28]]
+[1] 0.01837201 0.02188032 0.02229549 0.03076171 0.02039506
+
+[[29]]
+[1] 0.02490625 0.01686587 0.01395022
+
+[[30]]
+[1] 0.02090587
+
+[[31]]
+[1] 0.02607264 0.01577283 0.01219005 0.01724850 0.01229012 0.01609781
+[7] 0.01139438 0.01150130
+
+[[32]]
+[1] 0.01220154 0.01219005 0.01712515 0.01340413 0.01280928 0.01198216
+[7] 0.01053374 0.01065655
+
+[[33]]
+[1] 0.01949232 0.01745522 0.02229549 0.02090587 0.01979045
+
+[[34]]
+[1] 0.03113041 0.03589551 0.02882915
+
+[[35]]
+[1] 0.01766299 0.02185795 0.02616766 0.02111721 0.02108253 0.01509020
+
+[[36]]
+[1] 0.01724850 0.03113041 0.01571707 0.01860991 0.02073549 0.01680129
+
+[[37]]
+[1] 0.01686587 0.02234793 0.01510990 0.01550676
+
+[[38]]
+[1] 0.01401432 0.02407426 0.02276151 0.01719415
+
+[[39]]
+[1] 0.01229012 0.02172543 0.01711924 0.02629732 0.01896385
+
+[[40]]
+[1] 0.01609781 0.01571707 0.02172543 0.01506473 0.01987922 0.01894207
+
+[[41]]
+[1] 0.02246233 0.02185795 0.02205991 0.01912542 0.01601083 0.01742892
+
+[[42]]
+[1] 0.02212108 0.01562326 0.01395022 0.02234793 0.01711924 0.01836831
+[7] 0.01683518
+
+[[43]]
+[1] 0.01510990 0.02629732 0.01506473 0.01836831 0.03112027 0.01530782
+
+[[44]]
+[1] 0.01550676 0.02407426 0.03112027 0.01486508
+
+[[45]]
+[1] 0.03589551 0.01860991 0.01987922 0.02205991 0.02107101 0.01982700
+
+[[46]]
+[1] 0.03453056 0.04033752 0.02689769
+
+[[47]]
+[1] 0.02529256 0.02616766 0.04033752 0.01949145 0.02181458
+
+[[48]]
+[1] 0.02313819 0.03370576 0.02289485 0.01630057 0.01818085
+
+[[49]]
+[1] 0.03076171 0.02138091 0.02394529 0.01990000
+
+[[50]]
+[1] 0.01712515 0.02313819 0.02551427 0.02051530 0.02187179
+
+[[51]]
+[1] 0.03370576 0.02138091 0.02873854
+
+[[52]]
+[1] 0.02289485 0.02394529 0.02551427 0.02873854 0.03516672
+
+[[53]]
+[1] 0.01630057 0.01979945 0.01253977
+
+[[54]]
+[1] 0.02514180 0.02039506 0.01340413 0.01990000 0.02051530 0.03516672
+
+[[55]]
+[1] 0.01280928 0.01818085 0.02187179 0.01979945 0.01882298
+
+[[56]]
+[1] 0.01036340 0.01139438 0.01198216 0.02073549 0.01214479 0.01362855
+[7] 0.01341697
+
+[[57]]
+[1] 0.028079221 0.017643082 0.031423501 0.029114131 0.013520292
+[6] 0.009903702
+
+[[58]]
+[1] 0.01925924 0.03142350 0.02722997 0.01434859 0.01567192
+
+[[59]]
+[1] 0.01696711 0.01265572 0.01667105 0.01785036
+
+[[60]]
+[1] 0.02419652 0.02670323 0.01696711 0.02343040
+
+[[61]]
+[1] 0.02333385 0.01265572 0.02343040 0.02514093 0.02790764 0.01219751
+[7] 0.02362452
+
+[[62]]
+[1] 0.02514093 0.02002219 0.02110260
+
+[[63]]
+[1] 0.02986130 0.02790764 0.01407043 0.01805987
+
+[[64]]
+[1] 0.02911413 0.01689892
+
+[[65]]
+[1] 0.02471705
+
+[[66]]
+[1] 0.01574888 0.01726461 0.03068853 0.01954805 0.01810569
+
+[[67]]
+[1] 0.01708612 0.01726461 0.01349843 0.01361172
+
+[[68]]
+[1] 0.02109502 0.02722997 0.03068853 0.01406357 0.01546511
+
+[[69]]
+[1] 0.02174813 0.01645838 0.01419926
+
+[[70]]
+[1] 0.02631658 0.01963168 0.02278487
+
+[[71]]
+[1] 0.01473997 0.01838483 0.03197403
+
+[[72]]
+[1] 0.01874863 0.02247473 0.01476814 0.01593341 0.01963168
+
+[[73]]
+[1] 0.01500046 0.02140253 0.02278487 0.01838483 0.01652709
+
+[[74]]
+[1] 0.01150924 0.01613589 0.03197403 0.01652709 0.01342099 0.02864567
+
+[[75]]
+[1] 0.011883901 0.010533736 0.012539774 0.018822977 0.016458383
+[6] 0.008217581
+
+[[76]]
+[1] 0.01352029 0.01434859 0.01689892 0.02471705 0.01954805 0.01349843
+[7] 0.01406357
+
+[[77]]
+[1] 0.014736909 0.018804247 0.022761507 0.012197506 0.020022195
+[6] 0.014070428 0.008440896
+
+[[78]]
+[1] 0.02323898 0.02284457 0.01508028 0.01214479 0.01567192 0.01546511
+[7] 0.01140779
+
+[[79]]
+[1] 0.01530458 0.01719415 0.01894207 0.01912542 0.01530782 0.01486508
+[7] 0.02107101
+
+[[80]]
+[1] 0.01500600 0.02882915 0.02111721 0.01680129 0.01601083 0.01982700
+[7] 0.01949145 0.01362855
+
+[[81]]
+[1] 0.02947957 0.02220532 0.01150130 0.01979045 0.01896385 0.01683518
+
+[[82]]
+[1] 0.02327034 0.02644986 0.01849605 0.02108253 0.01742892
+
+[[83]]
+[1] 0.023354289 0.017142433 0.015622258 0.016714303 0.014379961
+[6] 0.014593799 0.014892965 0.018059871 0.008440896
+
+[[84]]
+[1] 0.01872915 0.02902705 0.01810569 0.01361172 0.01342099 0.01297994
+
+[[85]]
+ [1] 0.011451133 0.017193502 0.013957649 0.016183544 0.009810297
+ [6] 0.010656545 0.013416965 0.009903702 0.014199260 0.008217581
+[11] 0.011407794
+
+[[86]]
+[1] 0.01515314 0.01502980 0.01412874 0.02163800 0.01509020 0.02689769
+[7] 0.02181458 0.02864567 0.01297994
+
+[[87]]
+[1] 0.01667105 0.02362452 0.02110260 0.02058034
+
+[[88]]
+[1] 0.01785036 0.02058034</code></pre>
+</div>
+<h2 id="row-standardised-weights-matrix">Row-standardised weights matrix</h2>
+<p>Next, we need to assign weights to each neighboring polygon. In our case, each neighboring polygon will be assigned equal weight (style=“W”). This is accomplished by assigning the fraction 1/(#ofneighbors) to each neighboring county then summing the weighted income values. While this is the most intuitive way to summaries the neighbors’ values it has one drawback in that polygons along the edges of the study area will base their lagged values on fewer polygons thus potentially over- or under-estimating the true nature of the spatial autocorrelation in the data. For this example, we’ll stick with the style=“W” option for simplicity’s sake but note that other more robust options are available, notably style=“B”.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rswm_q</span> <span class='op'>&lt;-</span> <span class='fu'>nb2listw</span><span class='op'>(</span><span class='va'>wm_q</span>, style<span class='op'>=</span><span class='st'>"W"</span>, zero.policy <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>rswm_q</span>
+</code></pre>
+</div>
+<pre><code>Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 448 
+Percentage nonzero weights: 5.785124 
+Average number of links: 5.090909 
+
+Weights style: W 
+Weights constants summary:
+   n   nn S0       S1       S2
+W 88 7744 88 37.86334 365.9147</code></pre>
+</div>
+<p>The zero.policy=TRUE option allows for lists of non-neighbors. This should be used with caution since the user may not be aware of missing neighbors in their dataset however, a zero.policy of FALSE would return an error.</p>
+<p>To see the weight of the first polygon’s four neighbors type:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rswm_q</span><span class='op'>$</span><span class='va'>weights</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+[1] 0.2 0.2 0.2 0.2 0.2</code></pre>
+</div>
+<p>Each neighbor is assigned a 0.2 of the total weight. This means that when R computes the average neighboring income values, each neighbor’s income will be multiplied by 0.2 before being tallied.</p>
+<p>Using the same method, we can also derive a row standardised distance weight matrix by using the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rswm_ids</span> <span class='op'>&lt;-</span> <span class='fu'>nb2listw</span><span class='op'>(</span><span class='va'>wm_q</span>, glist<span class='op'>=</span><span class='va'>ids</span>, style<span class='op'>=</span><span class='st'>"B"</span>, zero.policy<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>rswm_ids</span>
+</code></pre>
+</div>
+<pre><code>Characteristics of weights list object:
+Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 448 
+Percentage nonzero weights: 5.785124 
+Average number of links: 5.090909 
+
+Weights style: B 
+Weights constants summary:
+   n   nn       S0        S1     S2
+B 88 7744 8.786867 0.3776535 3.8137</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rswm_ids</span><span class='op'>$</span><span class='va'>weights</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+[1] 0.01535405 0.03916350 0.01820896 0.02807922 0.01145113</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>rswm_ids</span><span class='op'>$</span><span class='va'>weights</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.008218 0.015088 0.018739 0.019614 0.022823 0.040338 </code></pre>
+</div>
+<h1 id="application-of-spatial-weight-matrix">Application of Spatial Weight Matrix</h1>
+<p>In this section, you will learn how to create four different spatial lagged variables, they are:</p>
+<ul>
+<li>spatial lag with row-standardized weights,</li>
+<li>spatial lag as a sum of neighbouring values,</li>
+<li>spatial window average, and spatial window sum.</li>
+</ul>
+<h2 id="spatial-lag-with-row-standardized-weights">Spatial lag with row-standardized weights</h2>
+<p>Finally, we’ll compute the average neighbor GDPPC value for each polygon. These values are often referred to as <strong>spatially lagged values</strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>GDPPC.lag</span> <span class='op'>&lt;-</span> <span class='fu'>lag.listw</span><span class='op'>(</span><span class='va'>rswm_q</span>, <span class='va'>hunan</span><span class='op'>$</span><span class='va'>GDPPC</span><span class='op'>)</span>
+<span class='va'>GDPPC.lag</span>
+</code></pre>
+</div>
+<pre><code> [1] 24847.20 22724.80 24143.25 27737.50 27270.25 21248.80 43747.00
+ [8] 33582.71 45651.17 32027.62 32671.00 20810.00 25711.50 30672.33
+[15] 33457.75 31689.20 20269.00 23901.60 25126.17 21903.43 22718.60
+[22] 25918.80 20307.00 20023.80 16576.80 18667.00 14394.67 19848.80
+[29] 15516.33 20518.00 17572.00 15200.12 18413.80 14419.33 24094.50
+[36] 22019.83 12923.50 14756.00 13869.80 12296.67 15775.17 14382.86
+[43] 11566.33 13199.50 23412.00 39541.00 36186.60 16559.60 20772.50
+[50] 19471.20 19827.33 15466.80 12925.67 18577.17 14943.00 24913.00
+[57] 25093.00 24428.80 17003.00 21143.75 20435.00 17131.33 24569.75
+[64] 23835.50 26360.00 47383.40 55157.75 37058.00 21546.67 23348.67
+[71] 42323.67 28938.60 25880.80 47345.67 18711.33 29087.29 20748.29
+[78] 35933.71 15439.71 29787.50 18145.00 21617.00 29203.89 41363.67
+[85] 22259.09 44939.56 16902.00 16930.00</code></pre>
+</div>
+<p>We can append the spatially lag GDPPC values onto hunan SpatialPolygonDataFrame by using the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lag.list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>NAME_3</span>, <span class='fu'>lag.listw</span><span class='op'>(</span><span class='va'>rswm_q</span>, <span class='va'>hunan</span><span class='op'>$</span><span class='va'>GDPPC</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lag.res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>lag.list</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>lag.res</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NAME_3"</span>, <span class='st'>"lag GDPPC"</span><span class='op'>)</span>
+<span class='va'>hunan</span> <span class='op'>&lt;-</span> <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>hunan</span>,<span class='va'>lag.res</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>The following table shows the average neighboring income values (stored in the Inc.lag object) for each county.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 6 features and 36 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 110.4922 ymin: 28.61762 xmax: 112.3013 ymax: 30.12812
+Geodetic CRS:  WGS 84
+   NAME_2  ID_3  NAME_3   ENGTYPE_3 Shape_Leng Shape_Area  County
+1 Changde 21098 Anxiang      County   1.869074 0.10056190 Anxiang
+2 Changde 21100 Hanshou      County   2.360691 0.19978745 Hanshou
+3 Changde 21101  Jinshi County City   1.425620 0.05302413  Jinshi
+4 Changde 21102      Li      County   3.474325 0.18908121      Li
+5 Changde 21103   Linli      County   2.289506 0.11450357   Linli
+6 Changde 21104  Shimen      County   4.171918 0.37194707  Shimen
+     City avg_wage deposite     FAI Gov_Rev Gov_Exp     GDP GDPPC
+1 Changde    31935   5517.2  3541.0  243.64  1779.5 12482.0 23667
+2 Changde    32265   7979.0  8665.0  386.13  2062.4 15788.0 20981
+3 Changde    28692   4581.7  4777.0  373.31  1148.4  8706.9 34592
+4 Changde    32541  13487.0 16066.0  709.61  2459.5 20322.0 24473
+5 Changde    32667    564.1  7781.2  336.86  1538.7 10355.0 25554
+6 Changde    33261   8334.4 10531.0  548.33  2178.8 16293.0 27137
+      GIO   Loan  NIPCR  Bed    Emp  EmpR EmpRT Pri_Stu Sec_Stu
+1  5108.9 2806.9 7693.7 1931 336.39 270.5 205.9  19.584  17.819
+2 13491.0 4550.0 8269.9 2560 456.78 388.8 246.7  42.097  33.029
+3 10935.0 2242.0 8169.9  848 122.78  82.1  61.7   8.723   7.592
+4 18402.0 6748.0 8377.0 2038 513.44 426.8 227.1  38.975  33.938
+5  8214.0  358.0 8143.1 1440 307.36 272.2 100.8  23.286  18.943
+6 17795.0 6026.5 6156.0 2502 392.05 329.6 193.8  29.245  26.104
+  Household Household_R NOIP Pop_R   RSCG Pop_T    Agri Service
+1     148.1       135.4   53 346.0 3957.9 528.3 4524.41   14100
+2     240.2       208.7   95 553.2 4460.5 804.6 6545.35   17727
+3      81.9        43.7   77  92.4 3683.0 251.8 2562.46    7525
+4     268.5       256.0   96 539.7 7110.2 832.5 7562.34   53160
+5     129.1       157.2   99 246.6 3604.9 409.3 3583.91    7031
+6     190.6       184.7  122 399.2 6490.7 600.5 5266.51    6981
+  Disp_Inc      RORP    ROREmp lag GDPPC
+1    16610 0.6549309 0.8041262  24847.20
+2    18925 0.6875466 0.8511756  22724.80
+3    19498 0.3669579 0.6686757  24143.25
+4    18985 0.6482883 0.8312558  27737.50
+5    18604 0.6024921 0.8856065  27270.25
+6    19275 0.6647794 0.8407091  21248.80
+                        geometry
+1 POLYGON ((112.0625 29.75523...
+2 POLYGON ((112.2288 29.11684...
+3 POLYGON ((111.8927 29.6013,...
+4 POLYGON ((111.3731 29.94649...
+5 POLYGON ((111.6324 29.76288...
+6 POLYGON ((110.8825 30.11675...</code></pre>
+</div>
+<p>Next, we will plot both the GDPPC and spatial lag GDPPC for comparison using the code chunk below.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gdppc</span> <span class='op'>&lt;-</span> <span class='fu'>qtm</span><span class='op'>(</span><span class='va'>hunan</span>, <span class='st'>"GDPPC"</span><span class='op'>)</span>
+<span class='va'>lag_gdppc</span> <span class='op'>&lt;-</span> <span class='fu'>qtm</span><span class='op'>(</span><span class='va'>hunan</span>, <span class='st'>"lag GDPPC"</span><span class='op'>)</span>
+<span class='fu'>tmap_arrange</span><span class='op'>(</span><span class='va'>gdppc</span>, <span class='va'>lag_gdppc</span>, asp<span class='op'>=</span><span class='fl'>1</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-39-1.png" width="960" /></p>
+</div>
+<h2 id="spatial-window-sum">Spatial window sum</h2>
+<p>The spatial window sum uses and includes the diagonal element. To begin, we will assign knn6 to a new variable because we will directly alter its structure to add the diagonal elements</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>knn6a</span> <span class='op'>&lt;-</span> <span class='va'>knn6</span>
+</code></pre>
+</div>
+</div>
+<p>To add the diagonal element to the neighbour list, we just need to use <em>include.self()</em> from <strong>spdep</strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>include.self</span><span class='op'>(</span><span class='va'>knn6a</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Neighbour list object:
+Number of regions: 88 
+Number of nonzero links: 616 
+Percentage nonzero weights: 7.954545 
+Average number of links: 7 
+Non-symmetric neighbours list</code></pre>
+</div>
+<p>Next, we will assign binary weights to the neighbour structure that includes the diagonal element.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>binary.knn6</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>knn6a</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>0</span><span class='op'>*</span><span class='va'>x</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>binary.knn6</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+[1] 1 1 1 1 1 1</code></pre>
+</div>
+<p>Again, we use <em>nb2listw()</em> and <em>glist()</em> to explicitly assign weight values.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wm_knn6</span> <span class='op'>&lt;-</span> <span class='fu'>nb2listw</span><span class='op'>(</span><span class='va'>knn6a</span>, glist <span class='op'>=</span> <span class='va'>binary.knn6</span>, style <span class='op'>=</span> <span class='st'>"B"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>With our new weight structure, we can compute the lag variable with <em>lag.listw()</em>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lag_knn6</span> <span class='op'>&lt;-</span> <span class='fu'>lag.listw</span><span class='op'>(</span><span class='va'>wm_knn6</span>, <span class='va'>hunan</span><span class='op'>$</span><span class='va'>GDPPC</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Next, we will convert the lag variable listw object into a data.frame by using <em>as.data.frame()</em>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lag.list.knn6</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>hunan</span><span class='op'>$</span><span class='va'>NAME_3</span>, <span class='fu'>lag.listw</span><span class='op'>(</span><span class='va'>wm_knn6</span>, <span class='va'>hunan</span><span class='op'>$</span><span class='va'>GDPPC</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lag_knn6.res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>lag.list.knn6</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>lag_knn6.res</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NAME_3"</span>, <span class='st'>"lag_sum GDPPC"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>hunan</span> <span class='op'>&lt;-</span> <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>hunan</span>,<span class='va'>lag_knn6.res</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gdppc</span> <span class='op'>&lt;-</span> <span class='fu'>qtm</span><span class='op'>(</span><span class='va'>hunan</span>, <span class='st'>"GDPPC"</span><span class='op'>)</span>
+<span class='va'>lag_sum_gdppc</span> <span class='op'>&lt;-</span> <span class='fu'>qtm</span><span class='op'>(</span><span class='va'>hunan</span>, <span class='st'>"lag_sum GDPPC"</span><span class='op'>)</span>
+<span class='fu'>tmap_arrange</span><span class='op'>(</span><span class='va'>gdppc</span>, <span class='va'>lag_sum_gdppc</span>, asp<span class='op'>=</span><span class='fl'>1</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="Hands-on_Ex06-Spatial_Weights_and_Application_files/figure-html5/unnamed-chunk-47-1.png" width="960" /></p>
+</div>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/spdep/vignettes/nb_sf.html">Creating Neighbours using sf objects</a></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

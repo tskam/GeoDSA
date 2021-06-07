@@ -256,7 +256,7 @@ Prof. Luc Anselin on point pattern analysis (YouTube):
 
 * Slides in [html](Topics/Topic06/Topic06-Spatial_Weights.html) and [pdf](Topics/Topic06/Topic06-Spatial_Weights.pdf) formats
 
-* [Handout of Hands-on Exercise](Hands-on_Ex\Hands-on_Ex06\Hands-on_Ex06_Spatial_Weights.html)
+* [Handout of Hands-on Exercise](Hands-on_Ex\Hands-on_Ex06\Hands-on_Ex06-Spatial_Weights_and_Application.html)
 
 ### Self-reading Before Meet-up
 

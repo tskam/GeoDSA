@@ -38,7 +38,6 @@ style_duo_accent(
 .large[
 
 - The concept of spatial autocorrelation and how it help us to understand real world phenomena
-
 - Defining spatial Neighbourhoods and Weights
 - Contiguity-Based Spatial Weights
     - Rook's
