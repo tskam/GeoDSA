@@ -275,8 +275,44 @@ Alternatively
 
 * Tony H. Grubesic and Andrea L. Rosso (2014) ["The Use of Spatially Lagged Explanatory Variables for Modeling Neighborhood Amenities and Mobility in Older Adults"](https://www-jstor-org.libproxy.smu.edu.sg/stable/26326897?sid=primo&seq=1#metadata_info_tab_contents), *Cityscape*, Vol. 16, No. 2, pp. 205-214.
 
+## Lesson 7: Measures of Global Spatial Autocorrelation
 
-## Lesson 7: Localised Geospatial Statistics
+Spatial Autocorrelation is a measure of similarity (correlation) between nearby observations.  It is an important concept in spatial statistics.  This topic aims:
+
+- to discuss the origin and the basic concepts of spatial autocorrelation,
+- to explain the mathematics of measures of spatial autocorrelation,  
+- to explain how to interpret the results of spatial randomness test by using global spatial autocorrelation statistics, and
+- to share the best practices of performing spatial autocorrelation analysis.
+
+### Content
+
+- What is Spatial Autocorrelation
+    - Toble's First Law of Geography
+    - Spatial Dependency
+    - Spatial Autocorrelation
+- Measures of Global Spatial Autocorrelation
+    - Moran’s I
+    - Geary's c
+- Measures of Global High/Low Clustering
+    - Getis-Ord Global G
+
+### Meet-up Slides and Hands-on Notes 
+
+* Slides in [html](Topics/Topic07/Topic07-Measures_of_Spatial_Autocorrelation.html) and [pdf](Topics/Topic07/Topic07-Measures_of_Spatial_Autocorrelation.pdf) formats
+
+* [Handout of Hands-on Exercise](Hands-on_Ex\Hands-on_Ex07\Hands-on_Ex07-Measures_of_Spatial_Autocorrelation.html)
+
+### Self-reading Before Meet-up
+
+To read before class:
+
+- Moran, P. A. P. (1950). ["Notes on Continuous Stochastic Phenomena"](https://www-jstor-org.libproxy.smu.edu.sg/stable/2332142?seq=1#metadata_info_tab_contents). Biometrika. 37 (1): 17–23.
+- Geary, R.C. (1954) ["The Contiguity Ratio and Statistical Mapping"](https://www-jstor-org.libproxy.smu.edu.sg/stable/2986645?sid=primo&origin=crossref&seq=1#metadata_info_tab_contents). *The Incorporated Statistician*, Vol. 5, No. 3, pp. 115-127. 
+- Getis, A., & Ord, K. (1992). ["The Analysis of Spatial Association by Use of Distance Statistics"](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4632.1992.tb00261.x). *Geographical Analysis*, 24, 189–206.
+
+These three papers are classics of Global Spatial Autocorrelation.  The first two links bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
+
+## Lesson 8: Localised Geospatial Statistics
 
 Localised Geospatial Statistics are a collection of spatial statistical analysis methods for analysing the location related tendency (clusters or outliers) in the attributes of geographically referenced data (points or areas).  These spatial statistics are well suited for:
 
@@ -305,20 +341,11 @@ Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topic
 
 To read before class:
 
-- Chapter 3. Spatial autocorrelation indices of Handbook of Spatial Analysis.  Section 3.3 including the sub-section. 
-or
-- Chapter 9: Modelling Areal Data of Applied Spatial Data Analysis with R (2nd Edition).  This book is available in smu digital library.  Section 9.3.2.
-
-The following two papers are classics of Global Spatial Autocorrelation.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
-
-- Moran, P. A. P. (1950). "Notes on Continuous Stochastic Phenomena". Biometrika, 37 (1): 17–23. 
-- R. C. Geary (1954)"The Contiguity Ratio and Statistical Mapping". The Incorporated Statistician, Vol. 5, No. 3 (Nov., 1954), pp. 115-127+129-146 (31 pages)
-
-The following three articles are classics of Local Spatial Statistics.  The links provided bring you directly into smu digital library.  You should login the library using smu account.  Be warned: All classic papers assume that the readers are academic researchers.
-
 - Anselin, L. (1995). "Local indicators of spatial association – LISA". Geographical Analysis, 27(4): 93-115. 
 - Getis, A. and Ord, J.K. (1992) “The analysis of spatial association by use of distance statistics”. Geographical Analysis, 24(3): 189-206.
 - Ord, J.K. and Getis, A. (2010) “Local spatial autocorrelation statistics: Distributional issues and an application”. Geographical Analysis, 27(4): 286-306.
+
+These three articles are classics of Local Spatial Statistics.  Be warned: All classic papers assume that the readers are academic researchers.
 
 ### References
 - D. A. Griffith (2009) “Spatial autocorrelation”.
@@ -330,7 +357,7 @@ The following three articles are classics of Local Spatial Statistics.  The link
 - TAN, Yong Ying and KAM, Tin Seong (2019). “Exploring and Visualizing Household Electricity Consumption Patterns in Singapore: A Geospatial Analytics Approach”, Information in Contemporary Society: 14th International Conference, iConference 2019, Washington, DC, USA, March 31–April 3, 2019, Proceedings. Pp 785-796. 
 - Singh A., Pathak P.K., Chauhan R.K., and Pan, W. (2011) “Infant and Child Mortality in India in the Last Two Decades: A Geospatial Analysis”. PLoS ONE 6(11), 1:19.
 
-## Lesson 8: Geographical Segmentation with Spatially Constrained Cluster Analysis
+## Lesson 9: Geographical Segmentation with Spatially Constrained Cluster Analysis
 
 ### Content
 - Basic concepts of geographic segmentation
@@ -363,7 +390,7 @@ To read before class:
     - Chavent, M., Kuentz-Simonet, V., Labenne,A. and Saracco, J. 2018. “ClustGeo: an R package for hierarchical clustering with spatial constraints” Computational Statistics. 33: 1799-1822.
 
 
-## Lesson 9: Geographically Weighted Regression
+## Lesson 10: Geographically Weighted Regression
 
 ### Content
 - Basic concepts and principles of linear regression
@@ -400,7 +427,7 @@ To read before class:
 - spgwr implements of geographically weighted regression methods for exploring possible non-stationarity.
 - gwrr: its geographically weighted regression (GWR) models and has tools to diagnose and remediate collinearity in the GWR models. Also fits geographically weighted ridge regression (GWRR) and geographically weighted lasso (GWL) models.  
 
-## Lesson 10: Modelling Geographic of Accessibility
+## Lesson 11: Modelling Geographic of Accessibility
 
 ### Content
 - Basic concepts of geographic accessibility
