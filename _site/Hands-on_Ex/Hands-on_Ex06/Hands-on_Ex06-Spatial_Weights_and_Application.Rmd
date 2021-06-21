@@ -41,7 +41,7 @@ Two data sets will be used in this hands-on exercise, they are:
 Before we get started, we need to ensure that **spdep**, **sf**, **tmap** and **tidyverse** packages of R are currently installed in your R.   
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
-packages = c('rgdal', 'sf', 'spdep', 'tmap', 'tidyverse')
+packages = c('sf', 'spdep', 'tmap', 'tidyverse')
 for (p in packages){
   if(!require(p, character.only = T)){
     install.packages(p)
@@ -113,7 +113,7 @@ Polygon 1 has 5 neighbors. The numbers represent the polygon IDs as stored in hu
 We can retrive the county name of Polygon ID=1 by using the code chunk below: 
 
 ```{r}
-hunan$NAME_3[1]
+hunan$County[1]
 ```
 
 The output reveals that Polygon ID=1 is Anxiang county.
@@ -333,7 +333,7 @@ The zero.policy=TRUE option allows for lists of non-neighbors. This should be us
 To see the weight of the first polygon's four neighbors type:
 
 ```{r}
-rswm_q$weights[1]
+rswm_q$weights[10]
 ```
 
 Each neighbor is assigned a 0.2 of the total weight. This means that when R computes the average neighboring income values, each neighbor's income will be multiplied by 0.2 before being tallied.
@@ -427,7 +427,7 @@ With  our new weight structure, we can compute the lag variable with *lag.listw(
 lag_knn6 <- lag.listw(wm_knn6, hunan$GDPPC)
 ```
 
-Next, we will convert the lag variable listw object into a data.frame by using *as.data.frame()*.
+Next, we will convert the lag variable listw object into a data.frame by using *as.data.frame()*.  
 
 ```{r}
 lag.list.knn6 <- list(hunan$NAME_3, lag.listw(wm_knn6, hunan$GDPPC))
@@ -435,11 +435,15 @@ lag_knn6.res <- as.data.frame(lag.list.knn6)
 colnames(lag_knn6.res) <- c("NAME_3", "lag_sum GDPPC")
 ```
 
+Note: The third command line on the code chunk above renames the field names of *lag_knn6.res* object into *NAME_3* and *lag_sum GDPPC* respectively. 
+
+Next, the code chunk below will be used to append *lag_sum GDPPC* values onto *hunan* sf data.frame by using *left_join()* of **dplyr** package.  
+
 ```{r}
-
-
-hunan <- left_join(hunan,lag_knn6.res)
+hunan <- left_join(hunan, lag_knn6.res)
 ```
+
+Lastly, *qtm()* of **tmap** package is used to plot the GDPPC and lag_sum GDPPC map next to each other for quick comparison. 
 
 ```{r}
 gdppc <- qtm(hunan, "GDPPC")
@@ -447,16 +451,7 @@ lag_sum_gdppc <- qtm(hunan, "lag_sum GDPPC")
 tmap_arrange(gdppc, lag_sum_gdppc, asp=1, ncol=2)
 ```
 
-
-
-
-
-
-
-
-
-
-
+Note: For more effective comparison, it is advicible to use the core tmap mapping functions. 
 
 # References
 
