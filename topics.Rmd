@@ -300,7 +300,7 @@ Spatial Autocorrelation is a measure of similarity (correlation) between nearby 
 
 * Slides in [html](Topics/Topic07/Topic07-Measures_of_Spatial_Autocorrelation.html) and [pdf](Topics/Topic07/Topic07-Measures_of_Spatial_Autocorrelation.pdf) formats
 
-* [Handout of Hands-on Exercise](Hands-on_Ex\Hands-on_Ex07\Hands-on_Ex07-Measures_of_Spatial_Autocorrelation.html)
+* [Handout of Hands-on Exercise](Hands-on_Ex\Hands-on_Ex07\In-class_Ex07-Spatial_Autocorrelation.html)
 
 ### Self-reading Before Meet-up
 
