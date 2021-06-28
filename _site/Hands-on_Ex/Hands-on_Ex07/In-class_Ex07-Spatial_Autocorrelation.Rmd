@@ -39,11 +39,11 @@ style_duo_accent(
 # Content
 
 .vlarge[
-- THe Geospatial Analysis Question
+- The Geospatial Analysis Question
 - Getting Started
 - Global Moran's I
 - Global Geary's C
-- Getis & Ord G
+- Getis & Ord Global G
 ]
 
 ---
