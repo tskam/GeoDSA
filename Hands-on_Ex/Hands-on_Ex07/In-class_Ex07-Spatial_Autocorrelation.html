@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>In-class Exercise 7: Measures of Global Spatial Autocorrelation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Kam Tin Seong Assoc. Professor of Information Systems" />
+    <script src="libs/header-attrs-2.8/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/text.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# In-class Exercise 7: Measures of Global Spatial Autocorrelation
+### Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems
+### School of Computing and Information Systems,<br/>Singapore Management University
+### 2021-06/28 (updated: 2021-06-28)
+
+---
+
+
+
+
+
+
+# Content
+
+.vlarge[
+- THe Geospatial Analysis Question
+- Getting Started
+- Global Moran's I
+- Global Geary's C
+- Getis &amp; Ord G
+]
+
+---
+# The Geospatial Analysis Question
+
+.pull-left[
+Figure below shows the distribution of GDP per capita of Hunan Province, People Republic of China.  
+- The administrative boundary is county
+- The GDP Per capita data are for 2012. 
+
+![](image/image7-1.png)
+.center[
+**Is the pattern revealed by the choropleth map distributed at random over spatial?**
+]
+]
+
+--
+.pull-right[
+To provide an answer to the question above, two hypothesis can be formulated:
+
+- H0: The geospatial pattern reveals is randomly distributed
+- H1: The geospatial pattern reveals is not randomly distributed
+
+Before we go ahead performing the statistical test, we need to select a confidence level.
+
+- 95% confidence level, hence `$$\alpha = 0.05$$`
+]
+
+---
+# Getting Started
+
+.pull-left[
+Use the code chunk below to install and launch the necessary R packages into R.
+
+
+```r
+packages = c('sf', 'spdep', 'tmap', 
+             'tidyverse')
+for (p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+]
+
+.pull-right[
+Things to learn from the code chunk on the left:
+
+- **spdep** package provides functions for performing spatial autocorrelation analysis and spatial autocorrelation test.
+]
+
+---
+# Importing Data
+
+.pull-left[
+The code chunk below uses [*st_read()*](https://r-spatial.github.io/sf/reference/st_read.html) of **sf** package to import Hunan shapefile into R.  The imported shapefile will be **simple features** Object of **sf**.
+
+
+```r
+hunan &lt;- st_read(dsn = "data/geospatial", 
+                 layer = "Hunan")
+```
+
+```
+## Reading layer `Hunan' from data source 
+##   `D:\tskam\GeoDSA\Hands-on_Ex\Hands-on_Ex07\data\geospatial' 
+##   using driver `ESRI Shapefile'
+## Simple feature collection with 88 features and 7 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 108.7831 ymin: 24.6342 xmax: 114.2544 ymax: 30.12812
+## Geodetic CRS:  WGS 84
+```
+]
+
+--
+
+.pull-right[
+Next, we will import *Hunan_2012.csv* into R by using *read_csv()* of **readr** package.  The output is R dataframe class.
+
+
+```r
+hunan2012 &lt;- read_csv("data/aspatial/Hunan_2012.csv")
+```
+]
+
+---
+## Performing relational join
+
+.pull-left[
+Use the code chunk below to update the attribute table of *hunan*'s SpatialPolygonsDataFrame with the attribute fields of *hunan2012* dataframe.  This is performed by using *left_join()* of **dplyr** package.
+
+
+```r
+hunan &lt;- left_join(hunan,hunan2012)
+```
+]
+
+--
+.pull-right[
+Things to learn from the code chunk on the left:
+
+- In general, a *by* argument is required to define the unique identifier field from the join tables.  Since both data.frames have a similar fields, we can ignore the *by* argument.  
+]
+
+---
+# Computing Spatial Weights
+
+.pull-left[
+In the code chunk below, [*poly2nd()*](https://r-spatial.github.io/spdep/reference/poly2nb.html) of spdep package is used to compute Queen contiguity weight matrix.
+
+
+```r
+wm_q &lt;- poly2nb(hunan, 
+                queen=TRUE)
+wm_q
+```
+
+```
+## Neighbour list object:
+## Number of regions: 88 
+## Number of nonzero links: 448 
+## Percentage nonzero weights: 5.785124 
+## Average number of links: 5.090909
+```
+]
+
+.pull-right[
+Things to learn from the code chunk:
+
+- For Rook method, queen = FALSE argument should be used.
+]
+
+---
+## Row-standardised weight matrix
+
+.pull-left[
+Next, [*nb2listw*](https://r-spatial.github.io/spdep/reference/nb2listw.html) of **spdep** package is used to create a raw-standardised weight matrix.
+
+
+```r
+rswm_q &lt;- nb2listw(wm_q, 
+                   style="W", 
+                   zero.policy = TRUE)
+rswm_q
+```
+
+```
+## Characteristics of weights list object:
+## Neighbour list object:
+## Number of regions: 88 
+## Number of nonzero links: 448 
+## Percentage nonzero weights: 5.785124 
+## Average number of links: 5.090909 
+## 
+## Weights style: W 
+## Weights constants summary:
+##    n   nn S0       S1       S2
+## W 88 7744 88 37.86334 365.9147
+```
+]
+
+--
+.pull-right[
+Things to learn from the code chunk:
+
+- Equal weight is used (style="W"). Other more robust options are available, notably style="B".
+
+- The zero.policy=TRUE option allows for lists of non-neighbors. This should be used with caution since the user may not be aware of missing neighbors in their dataset however, a zero.policy of FALSE would return an error.
+]
+
+---
+## Measure of Global Spatial Autocorrelation
+### Maron's I test
+
+.pull-left[
+The code chunk below performs Moran's I statistical testing using [*moran.test()*](https://r-spatial.github.io/spdep/reference/moran.test.html) of **spdep**.
+
+
+```r
+moran.test(hunan$GDPPC, 
+           listw=rswm_q, 
+           zero.policy = TRUE, 
+           na.action=na.omit)
+```
+
+```
+## 
+## 	Moran I test under randomisation
+## 
+## data:  hunan$GDPPC  
+## weights: rswm_q    
+## 
+## Moran I statistic standard deviate = 4.7351, p-value = 1.095e-06
+## alternative hypothesis: greater
+## sample estimates:
+## Moran I statistic       Expectation          Variance 
+##       0.300749970      -0.011494253       0.004348351
+```
+]
+
+--
+.pull-right[
+Interpretation:
+
+- Since the p-value of 0.000001095 (i.e. 1.095e-06) is smaller than the alpha values of 0.05. We reject the null hypothesis that the spatial patterns are randomly distribution at 95% confidence level.
+- The Moran's I of 0.300749970 is positive, hence we can safely infer that the pattern resembles clustering distribution.
+]
+
+---
+### Computing Monte Carlo Moran's I
+
+.pull-left[
+The code chunk below performs permutation test for Moran's I statistic by using [*moran.mc()*](https://r-spatial.github.io/spdep/reference/moran.mc.html) of **spdep**.
+
+
+```r
+set.seed(1234)
+moran_mc &lt;- moran.mc(hunan$GDPPC, 
+                listw=rswm_q, 
+                nsim=999, 
+                zero.policy = TRUE, 
+                na.action=na.omit)
+moran_mc
+```
+
+```
+## 
+## 	Monte-Carlo simulation of Moran I
+## 
+## data:  hunan$GDPPC 
+## weights: rswm_q  
+## number of simulations + 1: 1000 
+## 
+## statistic = 0.30075, observed rank = 1000, p-value = 0.001
+## alternative hypothesis: greater
+```
+]
+
+.pull-right[
+Thing to learn from the code chunk:
+
+- set.seed() is used the ensure that the analysis is reproducible.
+- nsim = 999 means that 1000 simulation will be performs. 
+
+Interpretation:
+
+- Since the p-value of 0.001 is smaller than the alpha values of 0.05. We reject the null hypothesis that the spatial patterns are randomly distribution at 95% confidence level.
+- The Moran's I of 0.30075 is positive, hence we can safely infer that the pattern resembles clustering distribution.
+]
+
+---
+### Visualising Monte Carlo Moran's I
+
+.pull-left[
+
+The code chunk is used to print out the basic statistics of the modelling results.
+
+
+```r
+mean(moran_mc$res[1:1000])
+var(moran_mc$res[1:1000])
+summary(moran_mc$res[1:1000])
+```
+
+
+```
+## [1] -0.01472993
+```
+
+```
+## [1] 0.004466925
+```
+
+```
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -0.18339 -0.06167 -0.02113 -0.01473  0.02617  0.30075
+```
+]
+
+.pull-right[
+
+The code chunk below plots the simulated Moran's I as a histogram.
+
+
+```r
+hist(moran_mc$res, 
+     freq=TRUE, 
+     breaks=20, 
+     xlab="Simulated Moran's I")
+abline(v=0, col="red") 
+```
+
+.center[
+&lt;img src="In-class_Ex07-Spatial_Autocorrelation_files/figure-html/unnamed-chunk-12-1.png" width="432" /&gt;
+]
+]
+
+---
+## Geary's
+### Computing Geary's C
+
+.pull-left[
+The code chunk below performs Geary's C test for spatial autocorrelation by using  [*geary.test()*](https://r-spatial.github.io/spdep/reference/geary.test.html) of **spdep**.
+
+
+```r
+geary.test(hunan$GDPPC, 
+           listw=rswm_q)
+```
+
+```
+## 
+## 	Geary C test under randomisation
+## 
+## data:  hunan$GDPPC 
+## weights: rswm_q 
+## 
+## Geary C statistic standard deviate = 3.6108, p-value = 0.0001526
+## alternative hypothesis: Expectation greater than statistic
+## sample estimates:
+## Geary C statistic       Expectation          Variance 
+##         0.6907223         1.0000000         0.0073364
+```
+]
+
+--
+.pull-right[
+Interpretation:
+
+- Since the p-value of 0.0001526 is smaller than the alpha values of 0.05. We reject the null hypothesis that the spatial patterns are randomly distribution at 95% confidence level.
+- The Geary's C of 0.6907223 is approaching 0, hence we can safely infer that the pattern resembles clustering distribution.
+]
+
+---
+### A Monte Carlo similation approach of Geary's C
+
+.pull-left[
+The code chunk below performs permutation test for Geary's C statistic by using  [*geary.mc()*](https://r-spatial.github.io/spdep/reference/geary.mc.html) of **spdep**.
+
+
+```r
+set.seed(1234)
+geary_mc=geary.mc(hunan$GDPPC, 
+               listw=rswm_q, 
+               nsim=999)
+geary_mc
+```
+
+```
+## 
+## 	Monte-Carlo simulation of Geary C
+## 
+## data:  hunan$GDPPC 
+## weights: rswm_q 
+## number of simulations + 1: 1000 
+## 
+## statistic = 0.69072, observed rank = 1, p-value = 0.001
+## alternative hypothesis: greater
+```
+]
+
+--
+.pull-right[
+Interpretation:
+
+- Since the p-value of 0.001 is smaller than the alpha values of 0.05. We reject the null hypothesis that the spatial patterns are randomly distribution at 95% confidence level.
+- The Geary's C of 0.69072 is approaching 0, hence we can safely infer that the pattern resembles clustering distribution.
+]
+
+
+---
+### Visualising the Monte Carlo Geary's C
+
+.pull-left[
+The code chunk below prints the summary statistics of the simulation results.
+
+
+```r
+mean(geary_mc$res[1:1000])
+var(geary_mc$res[1:1000])
+summary(geary_mc$res[1:1000])
+```
+
+
+```
+## [1] 1.004089
+```
+
+```
+## [1] 0.007527444
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.6907  0.9501  1.0050  1.0041  1.0594  1.2722
+```
+]
+
+--
+.pull-right[
+The code chunk below plots the simulated Geary's C as a histogram.
+
+
+```r
+hist(geary_mc$res, 
+     freq=TRUE, 
+     breaks=20, 
+     xlab="Simulated Geary c")
+abline(v=1, col="red") 
+```
+
+.center[
+&lt;img src="In-class_Ex07-Spatial_Autocorrelation_files/figure-html/unnamed-chunk-18-1.png" width="432" /&gt;
+]
+
+]
+
+---
+## Spatial Correlogram
+
+.pull-left[
+Spatial correlograms are great to examine patterns of spatial autocorrelation in your data or model residuals. 
+They show how correlated are pairs of spatial observations when you increase the distance (lag) between them - they are plots of some index of autocorrelation (Moran's I or Geary's c) against distance.
+
+Although correlograms are not as fundamental as variograms (a keystone concept of geostatistics), they are very useful as an exploratory and descriptive tool. For this purpose they actually provide richer information than variograms.
+]
+
+.pull-right[
+Spatial correlogram can be computed by using [sp.correlogram()](https://r-spatial.github.io/spdep/reference/sp.correlogram.html) of spdep package.
+]
+
+
+---
+### Compute Moran'I Correlogram 
+
+.pull-left[
+The code chunk below is used to compute and plot the Moran's I correlagrom 
+
+
+```r
+MI_corr &lt;- sp.correlogram(wm_q, 
+                          hunan$GDPPC, 
+                          order=6, 
+                          method="I", 
+                          style="W")
+plot(MI_corr)
+```
+
+&lt;img src="In-class_Ex07-Spatial_Autocorrelation_files/figure-html/unnamed-chunk-19-1.png" width="432" /&gt;
+]
+
+--
+.pull-right[
+The code chunk below is used to print the results of the Moran's I correlagrom
+
+
+```r
+print(MI_corr)
+```
+
+```
+## Spatial correlogram for hunan$GDPPC 
+## method: Moran's I
+##          estimate expectation   variance standard deviate Pr(I) two sided    
+## 1 (88)  0.3007500  -0.0114943  0.0043484           4.7351       2.189e-06 ***
+## 2 (88)  0.2060084  -0.0114943  0.0020962           4.7505       2.029e-06 ***
+## 3 (88)  0.0668273  -0.0114943  0.0014602           2.0496        0.040400 *  
+## 4 (88)  0.0299470  -0.0114943  0.0011717           1.2107        0.226015    
+## 5 (88) -0.1530471  -0.0114943  0.0012440          -4.0134       5.984e-05 ***
+## 6 (88) -0.1187070  -0.0114943  0.0016791          -2.6164        0.008886 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+]
+
+---
+### Compute Geary's C Correlogram
+
+.pull-left[
+The code chunk below is used to compute and plot Geory's C correlogram 
+
+
+
+```r
+GC_corr &lt;- sp.correlogram(wm_q, 
+                          hunan$GDPPC, 
+                          order=6, 
+                          method="C", 
+                          style="W")
+plot(GC_corr)
+```
+
+&lt;img src="In-class_Ex07-Spatial_Autocorrelation_files/figure-html/unnamed-chunk-21-1.png" width="432" /&gt;
+]
+
+--
+.pull-right[
+The code chunk below is used to print the results of Geory's C correlogram 
+
+
+```r
+print(GC_corr)
+```
+
+```
+## Spatial correlogram for hunan$GDPPC 
+## method: Geary's C
+##         estimate expectation  variance standard deviate Pr(I) two sided    
+## 1 (88) 0.6907223   1.0000000 0.0073364          -3.6108       0.0003052 ***
+## 2 (88) 0.7630197   1.0000000 0.0049126          -3.3811       0.0007220 ***
+## 3 (88) 0.9397299   1.0000000 0.0049005          -0.8610       0.3892612    
+## 4 (88) 1.0098462   1.0000000 0.0039631           0.1564       0.8757128    
+## 5 (88) 1.2008204   1.0000000 0.0035568           3.3673       0.0007592 ***
+## 6 (88) 1.0773386   1.0000000 0.0058042           1.0151       0.3100407    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+---
+## Getis-Ord Global G
+
+.pull-left[
+
+```r
+longitude &lt;- map_dbl(hunan$geometry,
+                     ~st_centroid(.x)[[1]])
+latitude &lt;- map_dbl(hunan$geometry,
+                    ~st_centroid(.x)[[2]])
+coords &lt;- cbind(longitude, latitude)
+knn6 &lt;- knn2nb(knearneigh(coords, k=6))
+lw_knn6 &lt;- nb2listw(knn6, 
+                    style="B", 
+                    zero.policy=TRUE)
+ZGi &lt;- globalG.test(hunan$GDPPC, lw_knn6,
+                    zero.policy=TRUE)
+print(ZGi)
+```
+
+```
+## 
+## 	Getis-Ord global G statistic
+## 
+## data:  hunan$GDPPC 
+## weights: lw_knn6 
+## 
+## standard deviate = 4.8127, p-value = 7.446e-07
+## alternative hypothesis: greater
+## sample estimates:
+## Global G statistic        Expectation           Variance 
+##       7.855682e-02       6.896552e-02       3.971766e-06
+```
+]
+
+--
+.pull-right[
+Interpretation:
+
+- Since the p-value of 0.0000007446 (i.e. 7.446e-07) is smaller than the alpha values of 0.005. We reject the null hypothesis that the spatial patterns are randomly distribution at 95% confidence level.
+- The Global G of 0.07855682 (i.e.7.855682e-02) is positive, hence we can safely infer that counties with higher GDP per capita tend to cluster together.
+
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
