@@ -406,5 +406,5 @@ Boxplots are used to reveal the statistical distributions of electricity consump
 
 ```{r echo=FALSE, eval=FALSE}
 library(pagedown)
-pagedown::chrome_print("Lesson07-Localised-Geospatial-Statistics.html")
+pagedown::chrome_print("Topic08-Localised_Geospatial_Statistics.html")
 ```
