@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Topic 8: Localised Geospatial Statistics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Kam Tin Seong Assoc. Professor of Information Systems" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/text.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Topic 8: Localised Geospatial Statistics
+### Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems
+### School of Computing and Information Systems,<br/>Singapore Management University
+### 2020-5-1 (updated: 2021-07-05)
+
+---
+
+
+
+
+
+
+# Content
+
+.large[
+
+- Introducing Localised Geospatial Analysis
+    - Local Indicators of Spatial Association (LISA)
+
+- Cluster and Outlier Analysis
+    - Local Moran and Local Geary
+    - Moran scatterplot
+    - LISA Cluster Map
+
+- Hot Spot and Cold Spot Areas Analysis
+    - Getis and Ord’s G-statistics
+
+- Case Studies
+]
+
+---
+# Localised Geospatial Analysis
+
+.large[
+- A collection of spatial statistical analysis methods for analysing the **location related tendency** (clusters or outliers)
+in the attributes of **geographically referenced data** (points or areas).
+
+- Can be indecies decomposited from their global measures such as local Moran's I, local Geary's c, and Getis-Ord Gi*.
+
+- These spatial statistics are well suited for:
+
+    - detecting clusters or outliers;
+    - identifying hot spot or cold spot areas;
+    - assessing the assumptions of stationarity; and
+    - identifying distances beyond which no discernible association obtains.
+]
+
+---
+## Local Indicator of Spatial Association (LISA)
+
+.large[
+
+- A subset of localised geospatial analysis methods.
+
+- Any spatial statistics that satisfies the following two requirements (Anselin, L. 1995):
+
+    - the LISA for each observation gives an indication of the extent of significant spatial clustering of similar values around that observation;
+    
+    - the sum of LISAs for all observations is proportional to a global indicator of spatial association.
+]
+
+---
+## What is geographically referenced attributes?
+
+.large[
+- Attributes that are recorded based on a geographical entity such as postal code, postal area, census block, district, state, province, and country 
+    - informal geographical entities includes regular grids or hexagons.   
+
+- These geographical entities can be in either point or polygon features.
+
+- The attributes can be in absolute counts (i.e. number of people age 65 and above) or rates (i.e. proportion of population age 65 and above).
+
+- It is univariate in nature. 
+]
+
+
+---
+# Detecting Spatial Clusters and Outliers
+.large[
+- Given a set of geospatial features (i.e. points or polygons) and an analysis field, the spatial statistics identify **spatial clusters** of features with high or low values.  The tool also identifies **spatial outliers**.
+
+- local Moran's I is the most popular spatial statistical method used, other methods include local Geary's c. 
+
+- In general, the analysis will calculate a local statistic value, a z-score, a pseudo p-value, and a code representing the cluster type for each statistically significant feature. The z-scores and pseudo p-values represent the statistical significance of the computed index values.
+]
+.center[
+![:scale 50%](img/image7-1.jpg)]
+
+---
+## Local Moran's I 
+
+.large[Given a geographically referenced attribute field, X the formula of local Moran's I is:]
+.center[
+![:scale 60%](img/image7-2.jpg)]
+
+---
+## Local Moran and Moran’s I
+
+.large[
+- The summation of local Moran is
+]
+.center[
+![:scale 40%](img/image7-3.jpg)]
+
+.large[
+- Moran’s I
+]
+.center[
+![:scale 40%](img/image7-4.jpg)]
+
+---
+## Test statistics of Local Moran
+
+.center[
+![:scale 60%](img/image7-5.jpg)]
+
+---
+## Interpretation of Local Moran
+
+.large[
+- An **outlier**: significant and negative if location i is associated with relatively low values in  surrounding locations.
+
+- A **cluster**: significant and positive if location i is associated with relatively high values of the surrounding locations.
+
+- In either instance, the p-value for the feature must be small enough for the cluster or outlier to be considered statistically significant.
+
+- The commonly used alpha-values are 0.1, 0.05, 0.01, 0.001 corresponding the 90%, 95, 99% and 99.9% confidence intervals respectively.] 
+
+---
+## Interpretation of Local Moran and Scatterplot
+
+.center[
+![:scale 50%](img/image7-6.jpg)]
+
+---
+## Other forms of LISA
+
+- Local Geary
+
+.center[
+![:scale 30%](img/image7-7.jpg)]
+
+![:scale 80%](img/image7-8.jpg)
+
+---
+# Detecting hot and cold spot areas
+.large[
+- Given a set of geospatial features (i.e. points or polygons) and an analysis field, the spatial statistics tell you where features with either high (i.e. hot spots) or low values (cold spots) cluster spatially. 
+
+- The spatial statistic used is called Getis-Ord Gi* statistic (pronounced G-i-star). 
+]
+
+---
+## Getis-Ord Gi*
+
+.large[
+Getis and Ord (1992) define the local G and G∗ statistics for region i (i=1,···,n) as]
+
+.center[
+![:scale 60%](img/image7-9.jpg)]
+
+---
+## Getis-Ord Gi* 
+
+.large[For variable x to be nonpositive and the weight matrix W(d) to be nonbinary the G and G* statistics are defined as]
+
+.center[
+![:scale 45%](img/image7-10.jpg)]
+
+---
+## Interpretation of Getis-Ord Gi and Gi*
+
+.large[
+- A hot spot area: significant and positive if location i is associated with relatively high values of the surrounding locations.
+
+- A cold spot area: significant and negative if location i is associated with relatively low values in surrounding locations.]
+
+---
+## Fixed weighting scheme
+
+.pull-left[
+Things to consider if fixed distance is used:
+- All features should have at least one neighbour.
+
+- No feature should have all other features as neighbours.
+
+- Especially if the values for the input field are skewed, you want features to have about eight neighbors each. 
+
+- Might produce large estimate variances where data are sparse, while mask subtle local variations where data are dense.
+
+- In extreme condition, fixed schemes might not be able to calibrate in local areas where data are too sparse to satisfy the calibration requirements (observations must be more than parameters).
+]
+
+.pull-right[
+![](img/image7-11.jpg)]
+
+---
+## Adaptive weighting schemes
+
+.pull-left[
+.large[
+- Adaptive schemes adjust itself according to the density of data
+
+    - Shorter bandwidths where data are dense and longer where sparse.
+
+    - Finding nearest neighbors are one of the often used approaches.
+]]
+
+.pull-right[
+![](img/image7-12.jpg)]
+
+---
+## Best practice guidelines
+
+- Results are only reliable if the input feature class contains at least 30 features.
+
+- The input field mst be in continuous data type such as a count, rate, or other numeric measurement, no categorical attribute field is allowed.
+
+---
+## Best practice guidelines
+### Select an appropriate spatial weighting method 
+
+.large[
+- The **polygon contiguity** method is effective when polygons are similar in size and distribution, and when spatial relationships are a function of polygon proximity (the idea that if two polygons share a boundary, spatial interaction between them increases). 
+    - When you select a polygon contiguity conceptualization, you will almost always want to select row standardization for tools that have the Row Standardization parameter.
+
+- The **fixed distance** method works well for point data. It is often a good option for polygon data when there is a large variation in polygon size (very large polygons at the edge of the study area and very small polygons at the center of the study area, for example), and you want to ensure a consistent scale of analysis.]
+
+---
+## Best practice guidelines
+### Select an appropriate spatial weighting method 
+.large[
+- The **inverse distance** method is most appropriate with continuous data or to model processes where the closer two features are in space, the more likely they are to interact/influence each other.
+    - Be warned that with this method, every feature is potentially a neighbour of every other feature, and with large datasets, the number of computations involved will be enormous. 
+]
+
+---
+## Best practice guidelines
+### Select an appropriate spatial weighting method
+
+.large[
+- The **k-nearest neighbours** method is effective when you want to ensure you have a minimum number of neighbors for your analysis. 
+    - Especially when the values associated with your features are skewed (are not normally distributed), it is important that each feature is evaluated within the context of at least eight or so neighbors (this is a rule of thumb only). 
+    
+    - When the distribution of your data varies across your study area so that some features are far away from all other features, this method works well.
+    
+    - Note, however, that the spatial context of your analysis changes depending on variations in the sparsity/density of your features. 
+    
+    - When fixing the scale of analysis is less important than fixing the number of neighbors, the k-nearest neighbours method is appropriate.
+]
+
+---
+### Futher guide on selecting a fixed-distance band value
+
+.large[
+- Select a distance based on what you know about the geographic extent of the spatial processes promoting clustering for the phenomena you are studying.
+
+- Use a distance band that is large enough to ensure all features will have at least one neighbor, or results will not be valid. 
+
+- Try not to get stuck on the idea that there is only one correct distance band. Reality is never that simple. Most likely, there are multiple/interacting spatial processes promoting observed clustering.  
+
+- Select an appropriate distance band or threshold distance.
+    - All features should have at least one neighbour.
+    - No feature should have all other features as a neighbour.
+    - Especially if the values for the input field are skewed, each feature should have about eight neighbours.
+]
+
+---
+## In colclusion
+
+.large[
+Spatial statistics methods are not a blackbox.  Before performing the analysis, a geospatial analyst should consider the followings:
+
+- What is the **geographical** question?
+
+- What is the **geospatial feature**?
+
+- What is the **analysis field**?
+
+- Which **conceptualization of spatial relationships** is appropriate? 
+]
+  
+---
+# Case Study 1: Area-based 
+.center[
+![:scale 70%](img/image7-13.jpg)]
+
+.small[Reference: https://ink.library.smu.edu.sg/sis_research/4331/]
+
+---
+## Objectives
+.large[
+- Using micro-level event data of armed conflicts in Africa, this study aims to show how a data-driven geospatial analytics approach can be used reveal useful spatio-temporal pattern of the conflict events,
+
+- Demonstrating how a reproducible research can be conducted  by using R Markdown, Rstudio and other appropriate R packages, and
+
+- Sharing the findings and more importantly, the approaches we used to the practice political researchers so that they are confident to conduct similar studies by themselves. 
+]
+
+---
+## Violence against civilians in Africa, 1997-2017
+
+.center[
+![:scale 60%](img/image7-14.jpg)]
+]
+
+---
+## LISA Cluster Map for Phase I - from 1997 to 2003
+
+.center[
+![:scale 80%](img/image7-15.jpg)]
+
+---
+## LISA Cluster Map Phase II - from 2004 to 2010
+
+.center[
+![:scale 80%](img/image7-16.jpg)]
+
+---
+## LISA Cluster Map Phase III - from 2011 to 2017
+
+.center[
+![:scale 80%](img/image7-17.jpg)]
+
+---
+# Case Study 2: Point-based 
+.center[
+![:scale 70%](img/image7-18.jpg)]
+
+.small[Reference: https://ink.library.smu.edu.sg/sis_research/4376/]
+
+---
+## Objectives
+
+.large[
+This project aims to contribute new knowledge towards the study of electricity consumption and its analyses in two ways. 
+
+- Firstly, we will analyze electricity consumption using mainly two spatial analysis methods, Local Indicators of Spatial Association (LISA) and Geographically-Weighted Principal Components Analysis (GWPCA) to discover spatial patterns on electricity consumption patterns.
+
+- Secondly, this project aims to be a proof-of-concept of using R to achieve an end-to-end analytics solution, from data cleaning and preparation all the way to visualization of results. The visualizations should not only present the analysis results in a clear manner but also prompt users to do their own exploration of electricity consumption in Singapore and derive insights that fit their purpose.
+]
+
+---
+## Exploratory Data Analysis
+
+.large[
+Boxplots are used to reveal the statistical distributions of electricity consumption by dwelling types.]
+
+.center[
+![:scale 70%](img/image7-19.jpg)]
+
+---
+## LISA Map of average electricity consumptions
+### At the national level
+
+.center[
+![:scale 70%](img/image7-20.jpg)]
+
+---
+## LISA Map of average electricity consumptions
+### At the planning area level
+
+.center[
+![:scale 60%](img/image7-21.jpg)]
+
+---
+## LISA Map of average electricity consumptions
+### At the local level
+
+.center[
+![:scale 70%](img/image7-22.jpg)]
+
+---
+# Reference
+
+- Anselin, L. (1995). "Local indicators of spatial association – LISA". *Geographical Analysis*, 27(4): 93-115. 
+
+- Getis, A. and Ord, J.K. (1992) “The analysis of spatial association by use of distance statistics”. *Geographical Analysis*, 24(3): 189-206.
+
+- Ord, J.K. and Getis, A. (2010) “Local spatial autocorrelation statistics: Distributional issues and an application”. *Geographical Analysis*, 27(4): 286-306.
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/macros.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
