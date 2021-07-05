@@ -334,7 +334,7 @@ Localised Geospatial Statistics are a collection of spatial statistical analysis
 
 ### Meet-up Slides and Hands-on Notes 
 
-Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+Slides in [html](Topics/Topic08/Topic08-Localised_Geospatial_Statistics.html) and [pdf](Topics/Topic08/Topic08-Localised_Geospatial_Statistics.pdf) formats
 
 
 ### Self-reading Before Meet-up
@@ -368,7 +368,7 @@ These three articles are classics of Local Spatial Statistics.  Be warned: All c
 
 ### Meet-up Slides and Hands-on Notes 
 
-Slides and hands-on notes in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
+Slides in [html](Topics/Topic03/Topic04.html) and [pdf](Topics/Topic03/Topic04.pdf) formats
 
 
 ### Self-reading Before Meet-up
