@@ -1,0 +1,60 @@
+---
+title: "Hands-on Exercise 8: Localised Geospatial Statistics"
+subtitle: ""
+author: "Dr. Kam Tin Seong<br/>Assoc. Professor of Information Systems"
+institute: "School of Computing and Information Systems,<br/>Singapore Management University"
+date: "2021-06/28 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, "css/text.css"]
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "js/macros.js"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE, 
+  message = FALSE,
+  fig.width=6, 
+  fig.height=4, 
+  fig.retina = 3
+  )
+```
+
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+## Introduction
+
+In this hands-on exercise, you will gain hands-on experience on using appropriate localised geospatial statistics analysis and thematic mapping functions of R to perform spatial clustering on geographically referenced attribute. There are two major analysis, namely:
+
+- cluster and outlier analysis; and
+- hot spot and cold spot areas analysis
+
+
+---
+## Learning Outcome
+
+By the end of this hands-on exercise, you will able:
+
+- to convert GIS polygon data into R’s SpatialPolygonDataFrame object by using appropriate functions of rgdal package of R.
+- to computer spatial weight matrix by using appropriate functions from spdep package;
+- to detect clusters and/or outliers by using Local Indicator of Spatial Association (LISA) of spdep package;
+- to detect hot spot or/and cold spot area by using Getis-Ord’s Gi-statistics of spdep package; and
+- to visualise the analysis output by using ggplot2 and tmap package.
+
+---
+
